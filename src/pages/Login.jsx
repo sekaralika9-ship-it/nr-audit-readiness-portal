@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Eye, Lock, Mail } from 'lucide-react'
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Logo from '../components/layout/Logo.jsx'
@@ -55,7 +55,7 @@ export default function Login() {
 
             <div className="mt-14">
               <h1 className="text-2xl font-bold tracking-tight text-[#0B1F3A]">
-                Audit Readiness Portal
+                Sign in to Audit Readiness Portal
               </h1>
               <p className="mt-2 text-sm font-medium text-slate-600">
                 One Portal for Every Audit
@@ -95,14 +95,21 @@ export default function Login() {
               </label>
 
               <div className="flex justify-end">
-                <button type="button" className="text-sm font-semibold text-[#005BAC]">
+                <Link to="/forgot-password" className="text-sm font-semibold text-[#005BAC]">
                   Forgot password?
-                </button>
+                </Link>
               </div>
 
               <Button type="submit" className="w-full">
                 Sign In
               </Button>
+
+              <p className="text-center text-sm text-slate-600">
+                Don&apos;t have an account?{' '}
+                <Link to="/signup" className="font-bold text-[#005BAC]">
+                  Create account
+                </Link>
+              </p>
             </form>
           </div>
 
@@ -113,7 +120,6 @@ export default function Login() {
 
         <div className="relative hidden overflow-hidden bg-[#0B1F3A] lg:block">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_25%,rgba(0,166,81,0.55),transparent_24%),radial-gradient(circle_at_30%_55%,rgba(0,91,172,0.55),transparent_28%),linear-gradient(145deg,#0B1F3A,#06264A_55%,#003F77)]" />
-          <div className="absolute inset-x-10 top-16 h-72 rounded-full border border-white/10 bg-white/5 blur-3xl" />
           <div className="absolute inset-0 opacity-35">
             <div className="absolute bottom-24 left-14 h-72 w-12 rounded-t-3xl bg-white/20" />
             <div className="absolute bottom-24 left-32 h-96 w-14 rounded-t-3xl bg-white/15" />

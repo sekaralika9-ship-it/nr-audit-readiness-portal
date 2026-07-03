@@ -1,6 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppShell from './layouts/AppShell.jsx'
 import Login from './pages/Login.jsx'
+import SignUp from './pages/SignUp.jsx'
+import ForgotPassword from './pages/ForgotPassword.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import AuditReadiness from './pages/AuditReadiness.jsx'
 import IsoLibrary from './pages/IsoLibrary.jsx'
@@ -18,6 +20,8 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
       <Route element={<AppShell />}>
         <Route path="/dashboard" element={<Dashboard />} />
