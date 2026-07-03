@@ -16,7 +16,7 @@ import Card from '../components/ui/Card.jsx'
 import MetricCard from '../components/ui/MetricCard.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
-import { portalCapabilities, zeroMetrics } from '../data/portalData.js'
+import { zeroMetrics } from '../data/portalData.js'
 import { isoStandards } from '../data/isoReadinessData.js'
 
 const metricIcons = [ClipboardCheck, FolderOpen, FileCheck2, ShieldCheck]
@@ -25,7 +25,6 @@ const capabilityCards = [
   {
     title: 'ISO Readiness Library',
     description: 'Access ISO clauses, practical audit questions, and preparation references.',
-    sprint: 'Sprint 2',
     path: '/iso-library',
     icon: Library,
     tone: 'blue',
@@ -33,7 +32,6 @@ const capabilityCards = [
   {
     title: 'Audit Preparation Checklist',
     description: 'Create readiness workspace and work through ISO checklist questions.',
-    sprint: 'Sprint 2',
     path: '/audit-readiness',
     icon: ClipboardCheck,
     tone: 'blue',
@@ -41,7 +39,6 @@ const capabilityCards = [
   {
     title: 'Evidence Management',
     description: 'Upload, organize, and track evidence required for audit readiness.',
-    sprint: 'Sprint 3',
     path: '/evidence-library',
     icon: Archive,
     tone: 'green',
@@ -49,7 +46,6 @@ const capabilityCards = [
   {
     title: 'SOP & Knowledge Center',
     description: 'Find SOPs, work instructions, templates, and audit references.',
-    sprint: 'Sprint 3',
     path: '/knowledge-center',
     icon: FolderOpen,
     tone: 'green',
@@ -57,7 +53,6 @@ const capabilityCards = [
   {
     title: 'Executive Reports',
     description: 'Monitor readiness score, heatmaps, trends, and export reports.',
-    sprint: 'Sprint 4',
     path: '/reports',
     icon: ShieldCheck,
     tone: 'purple',
@@ -65,18 +60,11 @@ const capabilityCards = [
   {
     title: 'System Configuration',
     description: 'Configure functions, roles, standards, and system preferences.',
-    sprint: 'Sprint 4',
     path: '/settings',
     icon: Settings,
     tone: 'purple',
   },
 ]
-
-function toneBadge(tone) {
-  if (tone === 'green') return 'green'
-  if (tone === 'purple') return 'purple'
-  return 'blue'
-}
 
 function toneIcon(tone) {
   if (tone === 'green') return 'bg-emerald-50 text-[#00A651]'
@@ -175,12 +163,9 @@ export default function Dashboard() {
                   {item.description}
                 </p>
 
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <Badge tone={toneBadge(item.tone)}>
-                    Available in {item.sprint}
-                  </Badge>
+                <div className="mt-4 flex items-center justify-end">
                   <ArrowRight
-                    size={17}
+                    size={18}
                     className="text-slate-400 transition group-hover:translate-x-1 group-hover:text-[#005BAC]"
                   />
                 </div>
