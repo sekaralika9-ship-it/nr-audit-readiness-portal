@@ -1,225 +1,112 @@
-import { useState } from 'react'
-import {
-  Building2,
-  Database,
-  KeyRound,
-  Plus,
-  Settings as SettingsIcon,
-  ShieldCheck,
-  Users,
-} from 'lucide-react'
-import Card from '../components/ui/Card.jsx'
-import EmptyState from '../components/ui/EmptyState.jsx'
-import PageHeader from '../components/ui/PageHeader.jsx'
-import Button from '../components/ui/Button.jsx'
-import Badge from '../components/ui/Badge.jsx'
-import {
-  documentTypes,
-  ownerFunctions,
-  supportedStandardsForDocuments,
-} from '../data/evidenceManagementData.js'
-
-function ConfigCard({ title, description, icon: Icon, children }) {
+export default function Settings() {
   return (
-    <Card className="p-6">
-      <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-[#005BAC]">
-          <Icon size={23} />
-        </div>
-        <div>
-          <h2 className="text-lg font-bold text-[#0B1F3A]">{title}</h2>
-          <p className="mt-1 text-sm leading-6 text-slate-600">{description}</p>
-        </div>
-      </div>
-      <div className="mt-5">{children}</div>
-    </Card>
-  )
-}
+    <div style={{ padding: '24px' }}>
+      <div
+        style={{
+          background: '#ffffff',
+          border: '1px solid #e2e8f0',
+          borderRadius: '24px',
+          padding: '24px',
+          boxShadow: '0 12px 30px rgba(15, 23, 42, 0.06)',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '12px',
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            color: '#64748b',
+            textTransform: 'uppercase',
+            margin: 0,
+          }}
+        >
+          System Configuration
+        </p>
 
-function TagList({ items, tone = 'slate' }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {items.map((item) => (
-        <Badge key={typeof item === 'string' ? item : item.code} tone={tone}>
-          {typeof item === 'string' ? item : item.code}
-        </Badge>
-      ))}
-    </div>
-  )
-}
+        <h1
+          style={{
+            marginTop: '8px',
+            marginBottom: 0,
+            fontSize: '28px',
+            fontWeight: 800,
+            color: '#0f172a',
+          }}
+        >
+          Settings
+        </h1>
 
-function ManualConfigForm({ onCreate }) {
-  const [form, setForm] = useState({
-    name: '',
-    category: 'Function',
-  })
-
-  function submit(event) {
-    event.preventDefault()
-
-    onCreate({
-      id: `CFG-${Date.now()}`,
-      ...form,
-    })
-
-    setForm({
-      name: '',
-      category: 'Function',
-    })
-  }
-
-  return (
-    <Card className="p-6">
-      <div className="mb-5 flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-bold text-[#0B1F3A]">Manual configuration entry</h2>
-          <p className="mt-1 text-sm leading-6 text-slate-600">
-            Add configuration entries manually for presentation. This remains UI-only and does not connect to backend storage.
-          </p>
-        </div>
-        <Badge tone="green">Sprint 4</Badge>
-      </div>
-
-      <form onSubmit={submit} className="grid gap-4 lg:grid-cols-[1fr_220px_auto]">
-        <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Configuration Name</span>
-          <input
-            value={form.name}
-            onChange={(event) =>
-              setForm((current) => ({ ...current, name: event.target.value }))
-            }
-            required
-            placeholder="Enter configuration name"
-            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
-          />
-        </label>
-
-        <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Category</span>
-          <select
-            value={form.category}
-            onChange={(event) =>
-              setForm((current) => ({ ...current, category: event.target.value }))
-            }
-            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
-          >
-            <option>Function</option>
-            <option>Role</option>
-            <option>Document Type</option>
-            <option>Readiness Status</option>
-            <option>Workflow</option>
-          </select>
-        </label>
-
-        <div className="flex items-end">
-          <Button type="submit">
-            <Plus size={18} />
-            Add
-          </Button>
-        </div>
-      </form>
-    </Card>
-  )
-}
-
-function ManualRegister({ items }) {
-  if (!items.length) {
-    return (
-      <Card>
-        <EmptyState
-          icon={SettingsIcon}
-          title="No manual configuration has been added."
-          description="Configuration records will appear here after the presenter manually adds the first configuration entry."
-          compact
-        />
-      </Card>
-    )
-  }
-
-  return (
-    <Card className="overflow-hidden">
-      <div className="border-b border-slate-100 p-5">
-        <h2 className="text-lg font-bold text-[#0B1F3A]">Configuration Register</h2>
-        <p className="mt-1 text-sm text-slate-600">
-          UI-only configuration records added during presentation.
+        <p
+          style={{
+            marginTop: '10px',
+            maxWidth: '760px',
+            fontSize: '14px',
+            lineHeight: 1.7,
+            color: '#475569',
+          }}
+        >
+          This page has been restored so the application can run normally.
+          Audit master database data from Supabase should be connected through
+          Audit Knowledge Base and Audit Readiness Checklist, not through this
+          Settings page.
         </p>
       </div>
 
-      <div className="divide-y divide-slate-100">
-        {items.map((item) => (
-          <div key={item.id} className="flex items-center justify-between gap-4 p-5">
-            <div>
-              <p className="font-bold text-[#0B1F3A]">{item.name}</p>
-              <p className="mt-1 text-sm text-slate-500">{item.category}</p>
-            </div>
-            <Badge tone="blue">Manual</Badge>
-          </div>
-        ))}
-      </div>
-    </Card>
-  )
-}
-
-export default function Settings() {
-  const [manualItems, setManualItems] = useState([])
-
-  return (
-    <div>
-      <PageHeader
-        title="Settings"
-        subtitle="Configure system preferences, master data, readiness categories, and governance structure."
-      />
-
-      <div className="grid gap-6 xl:grid-cols-[1fr_420px]">
-        <div className="space-y-6">
-          <ManualConfigForm
-            onCreate={(item) => setManualItems((current) => [item, ...current])}
-          />
-
-          <ManualRegister items={manualItems} />
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+          gap: '16px',
+          marginTop: '20px',
+        }}
+      >
+        <div
+          style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '20px',
+            padding: '20px',
+          }}
+        >
+          <h2 style={{ fontSize: '16px', color: '#0f172a', margin: 0 }}>
+            User Roles & Access
+          </h2>
+          <p style={{ marginTop: '8px', fontSize: '14px', color: '#64748b' }}>
+            Manage user access configuration.
+          </p>
         </div>
 
-        <div className="space-y-6">
-          <ConfigCard
-            title="Function Master"
-            description="Supported function structure for audit readiness ownership."
-            icon={Building2}
-          >
-            <TagList items={ownerFunctions} tone="blue" />
-          </ConfigCard>
+        <div
+          style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '20px',
+            padding: '20px',
+          }}
+        >
+          <h2 style={{ fontSize: '16px', color: '#0f172a', margin: 0 }}>
+            Workflow Governance
+          </h2>
+          <p style={{ marginTop: '8px', fontSize: '14px', color: '#64748b' }}>
+            Configure audit workflow governance.
+          </p>
+        </div>
 
-          <ConfigCard
-            title="ISO Standards"
-            description="Configured audit scopes available in the readiness portal."
-            icon={ShieldCheck}
-          >
-            <TagList items={supportedStandardsForDocuments} tone="green" />
-          </ConfigCard>
-
-          <ConfigCard
-            title="Document Types"
-            description="Document categories used in evidence and document library."
-            icon={Database}
-          >
-            <TagList items={documentTypes} tone="slate" />
-          </ConfigCard>
+        <div
+          style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '20px',
+            padding: '20px',
+          }}
+        >
+          <h2 style={{ fontSize: '16px', color: '#0f172a', margin: 0 }}>
+            System Preferences
+          </h2>
+          <p style={{ marginTop: '8px', fontSize: '14px', color: '#64748b' }}>
+            Configure application preferences.
+          </p>
         </div>
       </div>
-
-      <section className="mt-6 grid gap-4 md:grid-cols-3">
-        {[
-          ['User Roles & Access', Users],
-          ['Workflow Governance', KeyRound],
-          ['System Preferences', SettingsIcon],
-        ].map(([label, Icon]) => (
-          <Card key={label} className="p-5">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-[#005BAC]">
-              <Icon size={21} />
-            </div>
-            <p className="mt-4 text-sm font-semibold leading-5 text-slate-700">{label}</p>
-          </Card>
-        ))}
-      </section>
     </div>
   )
 }

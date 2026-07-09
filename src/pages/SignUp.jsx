@@ -1,30 +1,24 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Building2, Eye, Lock, Mail, UserCircle } from 'lucide-react'
+import { Building2, Lock, Mail, User } from 'lucide-react'
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Logo from '../components/layout/Logo.jsx'
 import Button from '../components/ui/Button.jsx'
-import { ownerFunctions } from '../data/evidenceManagementData.js'
-import { saveSession, saveStoredProfile } from '../utils/portalStorage.js'
-
-const roleOptions = [
-  'Employee',
-  'Function Owner',
-  'Document Owner',
-  'PIC Audit Readiness',
-  'Management Representative',
-  'Administrator',
-]
+import { useAuth } from '../context/AuthContext.jsx'
 
 export default function SignUp() {
   const navigate = useNavigate()
+  const { signup } = useAuth()
+
   const [form, setForm] = useState({
     fullName: '',
+    fungsi: '',
     email: '',
     password: '',
-    role: 'Employee',
-    department: 'Quality Management',
   })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
 
   function updateField(field, value) {
     setForm((current) => ({
@@ -33,22 +27,31 @@ export default function SignUp() {
     }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
+    setError('')
+    setSuccess('')
+    setLoading(true)
 
-    const profile = {
-      fullName: form.fullName.trim(),
-      email: form.email.trim(),
-      role: form.role,
-      department: form.department,
-      employeeId: '',
-      phone: '',
+    try {
+      const data = await signup({
+        fullName: form.fullName.trim(),
+        fungsi: form.fungsi.trim(),
+        email: form.email.trim(),
+        password: form.password,
+      })
+
+      if (!data.session) {
+        setSuccess('Account created. Please check your email to confirm your account before signing in.')
+        return
+      }
+
+      navigate('/dashboard', { replace: true })
+    } catch (err) {
+      setError(err.message || 'Signup gagal.')
+    } finally {
+      setLoading(false)
     }
-
-    saveStoredProfile(profile)
-    saveSession({ email: profile.email })
-
-    navigate('/dashboard')
   }
 
   return (
@@ -58,92 +61,94 @@ export default function SignUp() {
           <div>
             <Logo compact />
 
-            <div className="mt-12">
-              <h1 className="text-2xl font-bold tracking-tight text-[#0B1F3A]">
-                Create your account
+            <div className="mt-14">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#005BAC]">
+                Account Registration
+              </p>
+              <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">
+                Create your portal account
               </h1>
-              <p className="mt-2 text-sm font-medium text-slate-600">
-                Register your local demo profile for the Audit Readiness Portal.
+              <p className="mt-3 max-w-md text-sm leading-6 text-slate-600">
+                Register your account before accessing the audit readiness workspace.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 max-w-md space-y-4">
+            <form onSubmit={handleSubmit} className="mt-8 max-w-md space-y-5">
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+                  {success}
+                </div>
+              )}
+
               <label className="block">
                 <span className="text-sm font-semibold text-slate-700">Full Name</span>
-                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
-                  <UserCircle size={17} className="text-slate-400" />
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                  <User size={17} className="text-slate-400" />
                   <input
                     value={form.fullName}
                     onChange={(event) => updateField('fullName', event.target.value)}
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                    placeholder="Enter your full name"
+                    autoComplete="name"
                     required
-                    className="w-full border-0 bg-transparent text-sm outline-none placeholder:text-slate-400"
-                    placeholder="Enter full name"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="text-sm font-semibold text-slate-700">Fungsi</span>
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+                  <Building2 size={17} className="text-slate-400" />
+                  <input
+                    value={form.fungsi}
+                    onChange={(event) => updateField('fungsi', event.target.value)}
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                    placeholder="Example: Human Capital, HSSE, SPI"
+                    required
                   />
                 </div>
               </label>
 
               <label className="block">
                 <span className="text-sm font-semibold text-slate-700">Email</span>
-                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
                   <Mail size={17} className="text-slate-400" />
                   <input
                     type="email"
                     value={form.email}
                     onChange={(event) => updateField('email', event.target.value)}
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                    placeholder="Enter your email"
+                    autoComplete="email"
                     required
-                    className="w-full border-0 bg-transparent text-sm outline-none placeholder:text-slate-400"
-                    placeholder="Enter email"
                   />
                 </div>
               </label>
 
               <label className="block">
                 <span className="text-sm font-semibold text-slate-700">Password</span>
-                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
                   <Lock size={17} className="text-slate-400" />
                   <input
                     type="password"
                     value={form.password}
                     onChange={(event) => updateField('password', event.target.value)}
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                    placeholder="Create your password"
+                    autoComplete="new-password"
                     required
-                    className="w-full border-0 bg-transparent text-sm outline-none placeholder:text-slate-400"
-                    placeholder="Create password"
                   />
-                  <Eye size={17} className="text-slate-400" />
                 </div>
               </label>
 
-              <label className="block">
-                <span className="text-sm font-semibold text-slate-700">Role</span>
-                <select
-                  value={form.role}
-                  onChange={(event) => updateField('role', event.target.value)}
-                  className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
-                >
-                  {roleOptions.map((item) => (
-                    <option key={item}>{item}</option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="block">
-                <span className="text-sm font-semibold text-slate-700">Department / Function</span>
-                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
-                  <Building2 size={17} className="text-slate-400" />
-                  <select
-                    value={form.department}
-                    onChange={(event) => updateField('department', event.target.value)}
-                    className="w-full border-0 bg-transparent text-sm outline-none"
-                  >
-                    {ownerFunctions.map((item) => (
-                      <option key={item}>{item}</option>
-                    ))}
-                  </select>
-                </div>
-              </label>
-
-              <Button type="submit" className="w-full">
-                Create Account
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Creating account...' : 'Create Account'}
               </Button>
 
               <p className="text-center text-sm text-slate-600">
@@ -156,7 +161,7 @@ export default function SignUp() {
           </div>
 
           <p className="mt-10 text-xs leading-5 text-slate-500">
-            Account registration is simulated for prototype presentation.
+            This is an internal system for PT Nusantara Regas employees only.
           </p>
         </div>
 
@@ -165,9 +170,9 @@ export default function SignUp() {
           <div className="relative flex h-full flex-col justify-end p-12 text-white">
             <div className="max-w-sm">
               <p className="text-2xl font-bold leading-snug">
-                Start Prepared,
+                One secure account,
                 <br />
-                Stay Audit Ready.
+                one portal for every audit.
               </p>
               <div className="mt-5 h-1 w-16 rounded-full bg-[#00A651]" />
             </div>

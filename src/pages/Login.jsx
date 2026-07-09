@@ -1,32 +1,24 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Eye, Lock, Mail } from 'lucide-react'
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Logo from '../components/layout/Logo.jsx'
 import Button from '../components/ui/Button.jsx'
-import {
-  getStoredProfile,
-  saveSession,
-  saveStoredProfile,
-} from '../utils/portalStorage.js'
+import { useAuth } from '../context/AuthContext.jsx'
 
 export default function Login() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { login } = useAuth()
+
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  useEffect(() => {
-    const profile = getStoredProfile()
-
-    if (profile.email) {
-      setForm((current) => ({
-        ...current,
-        email: profile.email,
-      }))
-    }
-  }, [])
+  const from = location.state?.from?.pathname || '/dashboard'
 
   function updateField(field, value) {
     setForm((current) => ({
@@ -35,15 +27,19 @@ export default function Login() {
     }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
+    setError('')
+    setLoading(true)
 
-    const email = form.email.trim()
-
-    saveSession({ email })
-    saveStoredProfile({ email })
-
-    navigate('/dashboard')
+    try {
+      await login(form.email.trim(), form.password)
+      navigate(from, { replace: true })
+    } catch (err) {
+      setError(err.message || 'Login gagal. Periksa email dan password.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -54,41 +50,52 @@ export default function Login() {
             <Logo compact />
 
             <div className="mt-14">
-              <h1 className="text-2xl font-bold tracking-tight text-[#0B1F3A]">
-                Sign in to Audit Readiness Portal
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#005BAC]">
+                Secure Access
+              </p>
+              <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">
+                Sign in to NR Audit Readiness Portal
               </h1>
-              <p className="mt-2 text-sm font-medium text-slate-600">
-                One Portal for Every Audit
+              <p className="mt-3 max-w-md text-sm leading-6 text-slate-600">
+                Use your registered account to access audit readiness workspace, evidence library, and ISO knowledge center.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-10 max-w-md space-y-5">
+            <form onSubmit={handleSubmit} className="mt-8 max-w-md space-y-5">
+              {error && (
+                <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  {error}
+                </div>
+              )}
+
               <label className="block">
                 <span className="text-sm font-semibold text-slate-700">Email</span>
-                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
                   <Mail size={17} className="text-slate-400" />
                   <input
                     type="email"
                     value={form.email}
                     onChange={(event) => updateField('email', event.target.value)}
-                    required
-                    className="w-full border-0 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
                     placeholder="Enter your email"
+                    autoComplete="email"
+                    required
                   />
                 </div>
               </label>
 
               <label className="block">
                 <span className="text-sm font-semibold text-slate-700">Password</span>
-                <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
+                <div className="mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
                   <Lock size={17} className="text-slate-400" />
                   <input
                     type="password"
                     value={form.password}
                     onChange={(event) => updateField('password', event.target.value)}
-                    required
-                    className="w-full border-0 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
                     placeholder="Enter your password"
+                    autoComplete="current-password"
+                    required
                   />
                   <Eye size={17} className="text-slate-400" />
                 </div>
@@ -100,8 +107,8 @@ export default function Login() {
                 </Link>
               </div>
 
-              <Button type="submit" className="w-full">
-                Sign In
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Signing in...' : 'Sign In'}
               </Button>
 
               <p className="text-center text-sm text-slate-600">

@@ -1,4 +1,4 @@
-import { getAllQuestions, isoStandards } from './isoReadinessData.js'
+import { getAuditThemes, getAuditQuestions } from '../services/auditMasterServies';
 
 export const ownerFunctions = [
   'Human Capital',
@@ -19,31 +19,29 @@ export const evidenceStatuses = [
   'Needs Revision',
 ]
 
-export const documentTypes = [
-  'SOP',
-  'Work Instruction',
-  'Form',
-  'Record',
-  'Policy',
-  'Report',
-  'Register',
-  'Template',
-  'Evidence Attachment',
-]
 
-export const evidenceRequirementCatalog = getAllQuestions().map((question) => ({
-  id: question.id,
-  standardId: question.standardId,
-  standardCode: question.standardCode,
-  standardTitle: question.standardTitle,
-  clause: question.clause,
-  clauseTitle: question.clauseTitle,
-  auditQuestion: question.auditQuestion,
-  requiredEvidence: question.requiredEvidence,
-  referenceSop: question.referenceSop,
-  recommendedPic: question.pic,
-  recommendation: question.recommendation,
-}))
+
+export async function fetchEvidenceRequirementCatalog() {
+  try {
+    const questions = await getAuditQuestions();
+    return questions.map((question) => ({
+      id: question.question_key,
+      standardId: question.theme_code,
+      standardCode: question.system_domain,
+      standardTitle: question.objective,
+      clause: question.clause,
+      clauseTitle: question.what_to_verify,
+      auditQuestion: question.audit_question,
+      requiredEvidence: question.evidence,
+      referenceSop: question.reference_sop,
+      recommendedPic: question.pic,
+      recommendation: question.recommendation,
+    }));
+  } catch (error) {
+    console.error('Error fetching evidence requirement catalog:', error.message);
+    return [];
+  }
+}
 
 function normalizeId(value) {
   return value
@@ -51,7 +49,7 @@ function normalizeId(value) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
 }
-
+export const evidenceRequirementCatalog = []
 export const sopReferenceCatalog = Array.from(
   new Map(
     evidenceRequirementCatalog.map((item) => [
@@ -171,8 +169,55 @@ export const knowledgeGuides = [
   },
 ]
 
-export const supportedStandardsForDocuments = isoStandards.map((standard) => ({
-  id: standard.id,
-  code: standard.code,
-  title: standard.title,
-}))
+export async function fetchSupportedStandardsForDocuments() {
+  try {
+    const themes = await getAuditThemes();
+    return themes.map((theme) => ({
+      id: theme.theme_id,
+      code: theme.audit_theme,
+      title: theme.audit_objective,
+    }));
+  } catch (error) {
+    console.error('Error fetching supported standards for documents:', error.message);
+    return [];
+  }
+}
+
+export const documentTypes = [
+  {
+    name: 'Audit Plan',
+    category: 'Planning Document',
+  },
+  {
+    name: 'TOR',
+    category: 'Training Evidence',
+  },
+  {
+    name: 'Invitation Letter',
+    category: 'Communication Evidence',
+  },
+  {
+    name: 'Attendance List',
+    category: 'Implementation Evidence',
+  },
+  {
+    name: 'Training Report',
+    category: 'Reporting Evidence',
+  },
+  {
+    name: 'RKAP Approval',
+    category: 'Budget Evidence',
+  },
+]
+
+export async function fetchDocumentTypes() {
+  return documentTypes
+}
+
+export const supportedStandardsForDocuments = [
+  'ISO 9001',
+  'ISO 14001',
+  'ISO 45001',
+  'ISO 37001',
+  'ISO 22301',
+]
