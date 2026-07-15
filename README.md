@@ -14,3 +14,22 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Automated testing
+
+Run unit and component tests:
+
+```bash
+npm run test:run
+```
+
+Run the browser tests that do not require an account:
+
+```bash
+npm run test:e2e
+```
+
+To verify authenticated Supabase writes and RLS, copy `.env.e2e.example` to
+`.env.e2e.local` and add a dedicated non-production test account. The local file is
+ignored by Git. Authenticated tests create a temporary document and restore profile
+changes after verification.

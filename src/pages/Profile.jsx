@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
+  AlertCircle,
+  Loader2,
   LogOut,
   Mail,
   Save,
@@ -12,12 +14,9 @@ import PageHeader from '../components/ui/PageHeader.jsx'
 import Button from '../components/ui/Button.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import { ownerFunctions } from '../data/evidenceManagementData.js'
-import {
-  clearSession,
-  getSession,
-  getStoredProfile,
-  saveStoredProfile,
-} from '../utils/portalStorage.js'
+import { getStoredProfile, saveStoredProfile } from '../utils/portalStorage.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import { getCurrentProfile, saveCurrentProfile } from '../services/profileService.js'
 
 const roleOptions = [
   'Employee',
@@ -28,7 +27,7 @@ const roleOptions = [
   'Administrator',
 ]
 
-function TextField({ label, value, onChange, placeholder, type = 'text' }) {
+function TextField({ label, value, onChange, placeholder, type = 'text', disabled = false }) {
   return (
     <label className="block">
       <span className="text-sm font-semibold text-slate-700">{label}</span>
@@ -37,24 +36,35 @@ function TextField({ label, value, onChange, placeholder, type = 'text' }) {
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
+        disabled={disabled}
+        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100 disabled:bg-slate-50 disabled:text-slate-500"
       />
     </label>
   )
 }
 
-function SelectField({ label, value, onChange, options }) {
+function SelectField({ label, value, onChange, options, disabled = false }) {
   return (
     <label className="block">
       <span className="text-sm font-semibold text-slate-700">{label}</span>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
+        disabled={disabled}
+        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100 disabled:bg-slate-50"
       >
         <option value="">Select option</option>
-        {options.map((item) => (
-          <option key={item}>{item}</option>
+        {options.map((item, index) => (
+          <option
+            key={
+              typeof item === 'string'
+                ? `${item}-${index}`
+                : `${item?.category ?? 'item'}-${item?.name ?? item?.id ?? item?.code ?? 'unknown'}-${index}`
+            }
+            value={typeof item === 'string' ? item : item?.name ?? item?.id ?? item?.code ?? ''}
+          >
+            {typeof item === 'string' ? item : item?.name ?? item?.label ?? item?.code ?? ''}
+          </option>
         ))}
       </select>
     </label>
@@ -63,7 +73,11 @@ function SelectField({ label, value, onChange, options }) {
 
 export default function Profile() {
   const navigate = useNavigate()
+  const { logout } = useAuth()
   const [saved, setSaved] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
   const [form, setForm] = useState({
     fullName: '',
     email: '',
@@ -74,17 +88,35 @@ export default function Profile() {
   })
 
   useEffect(() => {
-    const profile = getStoredProfile()
-    const session = getSession()
+    let active = true
 
-    setForm({
-      fullName: profile.fullName || '',
-      email: profile.email || session.email || '',
-      role: profile.role || '',
-      department: profile.department || '',
-      employeeId: profile.employeeId || '',
-      phone: profile.phone || '',
-    })
+    async function loadProfile() {
+      try {
+        setLoading(true)
+        setError('')
+        const localProfile = getStoredProfile()
+        const { profile, user } = await getCurrentProfile()
+
+        if (!active) return
+        setForm({
+          fullName: profile?.full_name || user.user_metadata?.full_name || '',
+          email: user.email || '',
+          role: profile?.role || '',
+          department: profile?.fungsi || user.user_metadata?.fungsi || '',
+          employeeId: localProfile.employeeId || '',
+          phone: localProfile.phone || '',
+        })
+      } catch (loadError) {
+        if (active) setError(loadError.message || 'Unable to load your profile.')
+      } finally {
+        if (active) setLoading(false)
+      }
+    }
+
+    loadProfile()
+    return () => {
+      active = false
+    }
   }, [])
 
   function updateField(field, value) {
@@ -95,15 +127,43 @@ export default function Profile() {
     }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    saveStoredProfile(form)
-    setSaved(true)
+    if (saving) return
+
+    try {
+      setSaving(true)
+      setSaved(false)
+      setError('')
+      const { profile, user } = await saveCurrentProfile({
+        full_name: form.fullName,
+        fungsi: form.department,
+        role: form.role,
+      })
+
+      saveStoredProfile({
+        ...form,
+        fullName: profile.full_name || '',
+        department: profile.fungsi || '',
+        role: profile.role || '',
+        email: user.email || form.email,
+      })
+      setSaved(true)
+    } catch (saveError) {
+      setError(saveError.message || 'Unable to save your profile.')
+    } finally {
+      setSaving(false)
+    }
   }
 
-  function handleLogout() {
-    clearSession()
-    navigate('/login')
+  async function handleLogout() {
+    try {
+      setError('')
+      await logout()
+      navigate('/login')
+    } catch (logoutError) {
+      setError(logoutError.message || 'Unable to sign out.')
+    }
   }
 
   const displayName = form.fullName || form.email?.split('@')[0] || 'Profile'
@@ -121,6 +181,24 @@ export default function Profile() {
         }
       />
 
+      {error ? (
+        <Card className="mb-6 border-red-100 bg-red-50 p-4">
+          <div className="flex items-start gap-3 text-red-700">
+            <AlertCircle size={19} className="mt-0.5 shrink-0" />
+            <p className="text-sm leading-6">{error}</p>
+          </div>
+        </Card>
+      ) : null}
+
+      {loading ? (
+        <Card className="p-6">
+          <div className="flex items-center gap-3 text-slate-600">
+            <Loader2 size={18} className="animate-spin" />
+            <p className="text-sm font-semibold">Loading your profile from Supabase...</p>
+          </div>
+        </Card>
+      ) : (
+
       <div className="grid gap-6 xl:grid-cols-[360px_1fr]">
         <Card className="p-6">
           <div className="flex flex-col items-center text-center">
@@ -137,9 +215,9 @@ export default function Profile() {
 
             <div className="mt-5 flex flex-wrap justify-center gap-2">
               <Badge tone={form.fullName ? 'green' : 'orange'}>
-                {form.fullName ? 'Profile Saved' : 'Profile Incomplete'}
+                {form.fullName ? 'Profile Available' : 'Profile Incomplete'}
               </Badge>
-              <Badge tone="blue">Local Demo Profile</Badge>
+              <Badge tone="blue">Supabase Profile</Badge>
             </div>
           </div>
         </Card>
@@ -178,6 +256,7 @@ export default function Profile() {
                 onChange={(value) => updateField('email', value)}
                 placeholder="Enter email"
                 type="email"
+                disabled
               />
 
               <SelectField
@@ -185,6 +264,7 @@ export default function Profile() {
                 value={form.role}
                 onChange={(value) => updateField('role', value)}
                 options={roleOptions}
+                disabled={saving}
               />
 
               <SelectField
@@ -192,6 +272,7 @@ export default function Profile() {
                 value={form.department}
                 onChange={(value) => updateField('department', value)}
                 options={ownerFunctions}
+                disabled={saving}
               />
 
               <TextField
@@ -199,6 +280,7 @@ export default function Profile() {
                 value={form.employeeId}
                 onChange={(value) => updateField('employeeId', value)}
                 placeholder="Enter employee ID"
+                disabled={saving}
               />
 
               <TextField
@@ -206,13 +288,17 @@ export default function Profile() {
                 value={form.phone}
                 onChange={(value) => updateField('phone', value)}
                 placeholder="Enter phone number"
+                disabled={saving}
               />
 
               <div className="lg:col-span-2">
-                <Button type="submit">
-                  <Save size={18} />
-                  Save Profile
+                <Button type="submit" disabled={saving}>
+                  {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+                  {saving ? 'Saving...' : 'Save Profile'}
                 </Button>
+                <p className="mt-3 text-xs leading-5 text-slate-500">
+                  Full name, role, and function are saved to Supabase. Employee ID and phone remain local because those columns are not present in profiles.
+                </p>
               </div>
             </form>
           </Card>
@@ -225,7 +311,7 @@ export default function Profile() {
               <div>
                 <h2 className="text-base font-bold text-[#0B1F3A]">Security</h2>
                 <p className="text-sm text-slate-500">
-                  Authentication is UI-only for this prototype.
+                  Authentication is managed by Supabase Auth.
                 </p>
               </div>
             </div>
@@ -238,12 +324,13 @@ export default function Profile() {
 
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <p className="text-sm font-bold text-slate-600">Session Status</p>
-                <p className="mt-1 text-sm text-[#0B1F3A]">Signed in locally</p>
+                <p className="mt-1 text-sm text-[#0B1F3A]">Signed in with Supabase</p>
               </div>
             </div>
           </Card>
         </div>
       </div>
+      )}
     </div>
   )
 }

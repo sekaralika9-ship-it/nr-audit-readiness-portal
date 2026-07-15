@@ -11,8 +11,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (!supabase) {
-      setLoading(false)
-      setError(supabaseConfigError)
       return
     }
 
@@ -147,6 +145,8 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
+// AuthProvider and its companion hook intentionally share this module.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext)
 

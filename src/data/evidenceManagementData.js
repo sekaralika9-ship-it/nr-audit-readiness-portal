@@ -1,4 +1,4 @@
-import { getAuditThemes, getAuditQuestions } from '../services/auditMasterServies';
+import { getAuditThemes, getAuditQuestions } from '../services/auditMasterService';
 
 export const ownerFunctions = [
   'Human Capital',

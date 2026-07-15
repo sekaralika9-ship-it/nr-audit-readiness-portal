@@ -1,13 +1,19 @@
-import { isoStandards } from './isoReadinessData.js'
-import { ownerFunctions } from './evidenceManagementData.js'
+import { getAuditThemes } from '../services/auditMasterService';
+import { auditeeOptions } from './auditeeData.js'
 
-export const reportFunctions = ownerFunctions
-
-export const reportIsoStandards = isoStandards.map((standard) => ({
-  id: standard.id,
-  code: standard.code,
-  title: standard.title,
-}))
+export async function fetchReportIsoStandards() {
+  try {
+    const themes = await getAuditThemes();
+    return themes.map((theme) => ({
+      id: theme.theme_id,
+      code: theme.audit_theme,
+      title: theme.audit_objective,
+    }));
+  } catch (error) {
+    console.error('Error fetching ISO standards:', error.message);
+    return [];
+  }
+}
 
 export const readinessLevels = [
   {
@@ -56,6 +62,10 @@ export function calculateExecutiveSummary(records) {
       totalOpenActions: 0,
       totalEvidenceGaps: 0,
       averageScore: 0,
+      totalOk: 0,
+      totalOfi: 0,
+      totalMinor: 0,
+      totalMajor: 0,
     }
   }
 
@@ -68,6 +78,10 @@ export function calculateExecutiveSummary(records) {
     (sum, record) => sum + Number(record.evidenceGaps || 0),
     0,
   )
+  const sumResult = (field) => records.reduce(
+    (sum, record) => sum + Number(record[field] || 0),
+    0,
+  )
 
   return {
     readinessScore: Math.round(totalScore / records.length),
@@ -77,6 +91,10 @@ export function calculateExecutiveSummary(records) {
     totalOpenActions,
     totalEvidenceGaps,
     averageScore: Math.round(totalScore / records.length),
+    totalOk: sumResult('okCount'),
+    totalOfi: sumResult('ofiCount'),
+    totalMinor: sumResult('minorCount'),
+    totalMajor: sumResult('majorCount'),
   }
 }
 
@@ -85,6 +103,7 @@ export function groupByFunction(records) {
     if (!result[record.functionName]) {
       result[record.functionName] = {
         functionName: record.functionName,
+        auditeeCode: record.auditeeCode || record.functionName,
         scoreTotal: 0,
         count: 0,
         openActions: 0,
@@ -102,6 +121,7 @@ export function groupByFunction(records) {
 
   return Object.values(grouped).map((item) => ({
     functionName: item.functionName,
+    auditeeCode: item.auditeeCode,
     readinessScore: Math.round(item.scoreTotal / item.count),
     openActions: item.openActions,
     evidenceGaps: item.evidenceGaps,
@@ -139,29 +159,60 @@ export function groupByStandard(records) {
 export function buildCsv(records) {
   const headers = [
     'Report Name',
-    'Function',
+    'Auditee Code',
+    'Auditee Name',
     'ISO Standard',
-    'Readiness Score',
+    'Readiness Score (%)',
     'Open Actions',
     'Evidence Gaps',
+    'OK',
+    'OFI',
+    'Minor',
+    'Major',
     'Executive Notes',
+    'Created Date (UTC)',
   ]
 
   const rows = records.map((record) => [
     record.reportName,
-    record.functionName,
+    record.auditeeCode,
+    record.auditeeName || record.functionName,
     record.standardCode,
-    record.score,
-    record.openActions,
-    record.evidenceGaps,
+    Number(record.score || 0),
+    Number(record.openActions || 0),
+    Number(record.evidenceGaps || 0),
+    Number(record.okCount || 0),
+    Number(record.ofiCount || 0),
+    Number(record.minorCount || 0),
+    Number(record.majorCount || 0),
     record.notes,
+    record.createdAt
+      ? `${new Date(record.createdAt).toISOString().slice(0, 19).replace('T', ' ')} UTC`
+      : '',
   ])
 
-  return [headers, ...rows]
+  function formatCell(cell) {
+    if (typeof cell === 'number' && Number.isFinite(cell)) return String(cell)
+
+    let value = String(cell ?? '')
+    if (/^[=+\-@]/.test(value)) value = `'${value}`
+    return `"${value.replaceAll('"', '""')}"`
+  }
+
+  const content = [headers, ...rows]
     .map((row) =>
-      row
-        .map((cell) => `"${String(cell ?? '').replaceAll('"', '""')}"`)
-        .join(','),
+      row.map(formatCell).join(','),
     )
-    .join('\n')
+    .join('\r\n')
+
+  return `\uFEFFsep=,\r\n${content}`
 }
+export const reportIsoStandards = [
+  { id: 'all-iso', name: 'All ISO', code: 'All ISO' },
+  'ISO 9001',
+  'ISO 14001',
+  'ISO 45001',
+  'ISO 37001',
+  'ISO 22301',
+]
+export const reportAuditees = auditeeOptions

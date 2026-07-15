@@ -25,29 +25,48 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import PageHeader from '../components/ui/PageHeader.jsx'
 import Button from '../components/ui/Button.jsx'
 import Badge from '../components/ui/Badge.jsx'
+import { getReportRecords, saveReportRecord } from '../services/reportService.js'
 import {
   buildCsv,
   calculateExecutiveSummary,
   getReadinessLevel,
   groupByFunction,
   groupByStandard,
-  reportFunctions,
+  reportAuditees,
   reportIsoStandards,
 } from '../data/executiveDashboardData.js'
+function getOptionLabel(option) {
+  if (typeof option === 'string') return option
+  if (!option) return 'Unknown'
+  return option.label || option.name || option.title || option.category || 'Unknown'
+}
 
-function ReportForm({ onCreate }) {
+function getOptionValue(option) {
+  if (typeof option === 'string') return option
+  if (!option) return ''
+  return option.id || option.name || option.title || option.label || option.category || ''
+}
+
+  function ReportForm({ onCreate }) {
   const [form, setForm] = useState({
     reportName: '',
-    functionName: reportFunctions[0] || 'Quality Management',
-    standardId: reportIsoStandards[0]?.id || 'iso-9001',
+    auditeeCode: getOptionValue(reportAuditees[0]) || 'A01',
+    standardId: getOptionValue(reportIsoStandards[0]) || 'ISO 9001',
     score: 0,
     openActions: 0,
     evidenceGaps: 0,
+    okCount: 0,
+    ofiCount: 0,
+    minorCount: 0,
+    majorCount: 0,
     notes: '',
   })
 
   const selectedStandard = reportIsoStandards.find(
-    (standard) => standard.id === form.standardId,
+    (standard) => getOptionValue(standard) === form.standardId,
+  )
+  const selectedAuditee = reportAuditees.find(
+    (auditee) => getOptionValue(auditee) === form.auditeeCode,
   )
 
   function updateField(field, value) {
@@ -60,10 +79,20 @@ function ReportForm({ onCreate }) {
     onCreate({
       id: `RPT-${Date.now()}`,
       ...form,
-      standardCode: selectedStandard?.code || '',
+      auditeeCode: selectedAuditee?.code || form.auditeeCode,
+      auditeeName: selectedAuditee?.name || '',
+      functionName: selectedAuditee?.name || '',
+      standardCode:
+        typeof selectedStandard === 'string'
+          ? selectedStandard
+          : selectedStandard?.code || selectedStandard?.name || '',
       score: Number(form.score),
       openActions: Number(form.openActions),
       evidenceGaps: Number(form.evidenceGaps),
+      okCount: Number(form.okCount),
+      ofiCount: Number(form.ofiCount),
+      minorCount: Number(form.minorCount),
+      majorCount: Number(form.majorCount),
       createdAt: new Date().toISOString(),
     })
 
@@ -73,6 +102,10 @@ function ReportForm({ onCreate }) {
       score: 0,
       openActions: 0,
       evidenceGaps: 0,
+      okCount: 0,
+      ofiCount: 0,
+      minorCount: 0,
+      majorCount: 0,
       notes: '',
     }))
   }
@@ -88,7 +121,7 @@ function ReportForm({ onCreate }) {
             Add real presentation data manually. Executive charts will only appear after records are entered.
           </p>
         </div>
-        <Badge tone="green">Sprint 4</Badge>
+        <Badge tone="green">Executive Readiness</Badge>
       </div>
 
       <form onSubmit={submit} className="grid gap-4 lg:grid-cols-2">
@@ -104,17 +137,30 @@ function ReportForm({ onCreate }) {
         </label>
 
         <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Function</span>
-          <select
-            value={form.functionName}
-            onChange={(event) => updateField('functionName', event.target.value)}
-            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
-          >
-            {reportFunctions.map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </select>
-        </label>
+  <span className="text-sm font-semibold text-slate-700">
+    Auditee
+  </span>
+
+  <select
+    value={form.auditeeCode}
+    onChange={(event) =>
+      updateField("auditeeCode", event.target.value)
+    }
+    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm"
+  >
+    <option value="">Select Auditee</option>
+
+    {reportAuditees.map((item, index) => (
+      <option
+        key={`${getOptionValue(item)}-${index}`}
+        value={getOptionValue(item)}
+      >
+        {getOptionLabel(item)}
+      </option>
+    ))}
+  </select>
+</label>
+
 
         <label className="block">
           <span className="text-sm font-semibold text-slate-700">ISO Standard</span>
@@ -124,10 +170,13 @@ function ReportForm({ onCreate }) {
             className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
           >
             {reportIsoStandards.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.code}
-              </option>
-            ))}
+  <option
+    key={getOptionValue(item)}
+    value={getOptionValue(item)}
+  >
+    {getOptionLabel(item)}
+  </option>
+))}
           </select>
         </label>
 
@@ -167,6 +216,24 @@ function ReportForm({ onCreate }) {
           />
         </label>
 
+        {[
+          ['OK Count', 'okCount'],
+          ['OFI Count', 'ofiCount'],
+          ['Minor Count', 'minorCount'],
+          ['Major Count', 'majorCount'],
+        ].map(([label, field]) => (
+          <label key={field} className="block">
+            <span className="text-sm font-semibold text-slate-700">{label}</span>
+            <input
+              type="number"
+              min="0"
+              value={form[field]}
+              onChange={(event) => updateField(field, event.target.value)}
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
+            />
+          </label>
+        ))}
+
         <label className="block lg:col-span-2">
           <span className="text-sm font-semibold text-slate-700">Executive Notes</span>
           <textarea
@@ -193,20 +260,22 @@ function SummaryCard({ label, value, description, icon: Icon, tone = 'blue' }) {
   const toneClass =
     tone === 'green'
       ? 'bg-emerald-50 text-[#00A651]'
+      : tone === 'red'
+        ? 'bg-red-50 text-red-700'
       : tone === 'orange'
         ? 'bg-orange-50 text-orange-700'
         : 'bg-blue-50 text-[#005BAC]'
 
   return (
-    <Card className="p-5">
-      <div className="flex items-start gap-4">
-        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${toneClass}`}>
+    <Card className="min-w-0 p-5">
+      <div className="flex min-w-0 items-start gap-3">
+        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${toneClass}`}>
           <Icon size={22} />
         </div>
-        <div>
-          <p className="text-sm font-semibold text-slate-600">{label}</p>
+        <div className="min-w-0 flex-1">
+          <p className="break-words text-sm font-semibold leading-5 text-slate-600">{label}</p>
           <p className="mt-2 text-3xl font-bold text-[#0B1F3A]">{value}</p>
-          <p className="mt-1 text-sm text-slate-500">{description}</p>
+          <p className="mt-1 break-words text-sm leading-5 text-slate-500">{description}</p>
         </div>
       </div>
     </Card>
@@ -227,9 +296,9 @@ function ExecutiveSummary({ records }) {
         tone={summary.readinessScore >= 75 ? 'green' : 'orange'}
       />
       <SummaryCard
-        label="Functions Reviewed"
+        label="Auditees Reviewed"
         value={summary.totalFunctions}
-        description="Unique functions in report records."
+        description="Unique auditees in report records."
         icon={Map}
       />
       <SummaryCard
@@ -245,6 +314,10 @@ function ExecutiveSummary({ records }) {
         description="Total evidence gaps recorded."
         icon={FileSpreadsheet}
       />
+      <SummaryCard label="Total OK" value={summary.totalOk} description="Compliant checklist results." icon={FileSpreadsheet} tone="green" />
+      <SummaryCard label="Total OFI" value={summary.totalOfi} description="Opportunities for improvement." icon={TrendingUp} />
+      <SummaryCard label="Total Minor" value={summary.totalMinor} description="Minor nonconformities." icon={TrendingUp} tone="orange" />
+      <SummaryCard label="Total Major" value={summary.totalMajor} description="Major nonconformities." icon={TrendingUp} tone="red" />
     </div>
   )
 }
@@ -265,13 +338,20 @@ function EmptyAnalytics() {
 function ReadinessCharts({ records }) {
   const functionData = groupByFunction(records)
   const standardData = groupByStandard(records)
+  const summary = calculateExecutiveSummary(records)
+  const resultData = [
+    { result: 'OK', count: summary.totalOk, fill: '#00A651' },
+    { result: 'OFI', count: summary.totalOfi, fill: '#005BAC' },
+    { result: 'MINOR', count: summary.totalMinor, fill: '#F59E0B' },
+    { result: 'MAJOR', count: summary.totalMajor, fill: '#DC2626' },
+  ]
 
   if (!records.length) return <EmptyAnalytics />
 
   return (
     <div className="grid gap-6 xl:grid-cols-2">
       <Card className="p-6">
-        <h2 className="text-lg font-bold text-[#0B1F3A]">Readiness by Function</h2>
+        <h2 className="text-lg font-bold text-[#0B1F3A]">Readiness by Auditee</h2>
         <p className="mt-1 text-sm text-slate-600">
           Average readiness score based on manually entered records.
         </p>
@@ -280,7 +360,7 @@ function ReadinessCharts({ records }) {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={functionData}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="functionName" tick={{ fontSize: 11 }} />
+              <XAxis dataKey="auditeeCode" tick={{ fontSize: 11 }} />
               <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
               <Tooltip />
               <Bar dataKey="readinessScore" radius={[8, 8, 0, 0]}>
@@ -290,6 +370,24 @@ function ReadinessCharts({ records }) {
                     fill={entry.readinessScore >= 75 ? '#00A651' : '#005BAC'}
                   />
                 ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </Card>
+
+      <Card className="p-6 xl:col-span-2">
+        <h2 className="text-lg font-bold text-[#0B1F3A]">Checklist Result Distribution</h2>
+        <p className="mt-1 text-sm text-slate-600">OK, OFI, minor, and major results from manually entered reports.</p>
+        <div className="mt-6 h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={resultData}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="result" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Bar dataKey="count" radius={[8, 8, 0, 0]}>
+                {resultData.map((entry) => <Cell key={entry.result} fill={entry.fill} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -367,7 +465,7 @@ function Heatmap({ records }) {
                 {record.standardCode}
               </p>
               <h3 className="mt-1 text-sm font-bold text-[#0B1F3A]">
-                {record.functionName}
+                {record.auditeeCode ? `${record.auditeeCode} — ` : ''}{record.functionName}
               </h3>
               <p className="mt-3 text-3xl font-bold text-[#0B1F3A]">{record.score}%</p>
               <p className="mt-1 text-sm font-semibold text-slate-600">{level.label}</p>
@@ -396,11 +494,15 @@ function ReportRegister({ records }) {
           <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
             <tr>
               <th className="px-5 py-3">Report</th>
-              <th className="px-5 py-3">Function</th>
+              <th className="px-5 py-3">Auditee</th>
               <th className="px-5 py-3">ISO</th>
               <th className="px-5 py-3">Score</th>
               <th className="px-5 py-3">Open Actions</th>
               <th className="px-5 py-3">Evidence Gaps</th>
+              <th className="px-5 py-3">OK</th>
+              <th className="px-5 py-3">OFI</th>
+              <th className="px-5 py-3">MINOR</th>
+              <th className="px-5 py-3">MAJOR</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -410,7 +512,7 @@ function ReportRegister({ records }) {
                   <p className="font-bold text-[#0B1F3A]">{record.reportName}</p>
                   <p className="mt-1 text-xs text-slate-500">{record.notes || 'No executive notes.'}</p>
                 </td>
-                <td className="px-5 py-4 text-slate-600">{record.functionName}</td>
+                <td className="px-5 py-4 text-slate-600"><span className="font-bold text-[#0B1F3A]">{record.auditeeCode}</span><span className="mt-1 block text-xs">{record.functionName}</span></td>
                 <td className="px-5 py-4 text-slate-600">{record.standardCode}</td>
                 <td className="px-5 py-4">
                   <Badge tone={record.score >= 75 ? 'green' : 'orange'}>
@@ -419,6 +521,10 @@ function ReportRegister({ records }) {
                 </td>
                 <td className="px-5 py-4 text-slate-600">{record.openActions}</td>
                 <td className="px-5 py-4 text-slate-600">{record.evidenceGaps}</td>
+                <td className="px-5 py-4 font-semibold text-emerald-700">{record.okCount}</td>
+                <td className="px-5 py-4 font-semibold text-[#005BAC]">{record.ofiCount}</td>
+                <td className="px-5 py-4 font-semibold text-orange-700">{record.minorCount}</td>
+                <td className="px-5 py-4 font-semibold text-red-700">{record.majorCount}</td>
               </tr>
             ))}
           </tbody>
@@ -429,7 +535,7 @@ function ReportRegister({ records }) {
 }
 
 export default function Reports() {
-  const [records, setRecords] = useState([])
+  const [records, setRecords] = useState(() => getReportRecords())
 
   const csv = useMemo(() => buildCsv(records), [records])
 
@@ -441,7 +547,8 @@ export default function Reports() {
     const link = document.createElement('a')
 
     link.href = url
-    link.setAttribute('download', 'audit-readiness-executive-report.csv')
+    const exportDate = new Date().toISOString().slice(0, 10)
+    link.setAttribute('download', `audit-readiness-report-${exportDate}.csv`)
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -466,7 +573,10 @@ export default function Reports() {
       />
 
       <div className="grid gap-6 xl:grid-cols-[460px_1fr]">
-        <ReportForm onCreate={(record) => setRecords((current) => [record, ...current])} />
+        <ReportForm onCreate={(record) => {
+          const saved = saveReportRecord(record)
+          setRecords((current) => [saved, ...current.filter((item) => item.id !== saved.id)])
+        }} />
         <div className="space-y-6">
           <ExecutiveSummary records={records} />
           <ReadinessCharts records={records} />

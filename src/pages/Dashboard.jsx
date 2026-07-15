@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Archive,
@@ -16,8 +17,9 @@ import Card from '../components/ui/Card.jsx'
 import MetricCard from '../components/ui/MetricCard.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
-import { zeroMetrics } from '../data/portalData.js'
 import { isoStandards } from '../data/isoReadinessData.js'
+import { getEvidenceItems } from '../services/evidenceService.js'
+import { getStoredWorkspaces, setActiveStoredWorkspace } from '../utils/portalStorage.js'
 
 const metricIcons = [ClipboardCheck, FolderOpen, FileCheck2, ShieldCheck]
 
@@ -73,6 +75,39 @@ function toneIcon(tone) {
 }
 
 export default function Dashboard() {
+  const [workspaces, setWorkspaces] = useState(() => getStoredWorkspaces())
+  const [evidenceItems, setEvidenceItems] = useState(() => getEvidenceItems())
+
+  useEffect(() => {
+    const refreshWorkspaces = () => setWorkspaces(getStoredWorkspaces())
+    const refreshEvidence = () => setEvidenceItems(getEvidenceItems())
+    window.addEventListener('nr-workspaces-updated', refreshWorkspaces)
+    window.addEventListener('nr-evidence-updated', refreshEvidence)
+    window.addEventListener('focus', refreshWorkspaces)
+    window.addEventListener('focus', refreshEvidence)
+    return () => {
+      window.removeEventListener('nr-workspaces-updated', refreshWorkspaces)
+      window.removeEventListener('nr-evidence-updated', refreshEvidence)
+      window.removeEventListener('focus', refreshWorkspaces)
+      window.removeEventListener('focus', refreshEvidence)
+    }
+  }, [])
+
+  const metrics = useMemo(() => {
+    const openActions = workspaces.reduce((total, workspace) => {
+      const states = workspace.questionStates || workspace.questionUpdates || {}
+      return total + Object.values(states).filter((item) =>
+        item.status === 'In Progress' || item.status === 'Needs Review',
+      ).length
+    }, 0)
+    return [
+      { label: 'Active Audits', value: workspaces.length, description: workspaces.length ? 'Saved audit preparation workspaces.' : 'No audit has been created.', tone: 'blue' },
+      { label: 'Readiness Workspaces', value: workspaces.length, description: workspaces.length ? 'Available for review and presentation.' : 'No workspace has been configured.', tone: 'green' },
+      { label: 'Evidence Items', value: evidenceItems.length, description: evidenceItems.length ? 'Evidence records linked to audit questions.' : 'No evidence has been uploaded.', tone: 'blue' },
+      { label: 'Open Actions', value: openActions, description: openActions ? 'Questions in progress or needing review.' : 'No readiness action has been assigned.', tone: 'orange' },
+    ]
+  }, [evidenceItems.length, workspaces])
+
   return (
     <div>
       <PageHeader
@@ -87,7 +122,7 @@ export default function Dashboard() {
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {zeroMetrics.map((metric, index) => (
+        {metrics.map((metric, index) => (
           <MetricCard
             key={metric.label}
             {...metric}
@@ -98,13 +133,39 @@ export default function Dashboard() {
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_420px]">
         <Card className="overflow-hidden">
-          <EmptyState
-            icon={ClipboardCheck}
-            title="No audit readiness workspace has been created."
-            description="Create the first workspace manually to start preparing audit scope, selected ISO standard, assigned function, required evidence, readiness status, and preparation progress."
-            actionLabel="Create First Readiness Workspace"
-            actionTo="/audit-readiness"
-          />
+          {workspaces.length ? (
+            <div>
+              <div className="border-b border-slate-100 p-5">
+                <h2 className="text-lg font-bold text-[#0B1F3A]">Saved readiness workspaces</h2>
+                <p className="mt-1 text-sm text-slate-600">Open a workspace to continue preparation or present its current status.</p>
+              </div>
+              <div className="divide-y divide-slate-100">
+                {workspaces.slice(0, 5).map((workspace) => (
+                  <Link
+                    key={workspace.id}
+                    to="/audit-readiness"
+                    state={{ workspaceId: workspace.id }}
+                    onClick={() => setActiveStoredWorkspace(workspace.id)}
+                    className="flex items-center justify-between gap-4 p-5 transition hover:bg-slate-50"
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-bold text-[#0B1F3A]">{workspace.name || 'Untitled Workspace'}</p>
+                      <p className="mt-1 text-xs text-slate-500">{workspace.isoCode || 'ISO scope'} · {workspace.functionName || 'Auditee not selected'}</p>
+                    </div>
+                    <Badge tone="orange">{workspace.status || 'Draft Preparation'}</Badge>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <EmptyState
+              icon={ClipboardCheck}
+              title="No audit readiness workspace has been created."
+              description="Create the first workspace manually to start preparing audit scope, selected ISO standard, assigned function, required evidence, readiness status, and preparation progress."
+              actionLabel="Create First Readiness Workspace"
+              actionTo="/audit-readiness"
+            />
+          )}
         </Card>
 
         <Card className="p-6">
