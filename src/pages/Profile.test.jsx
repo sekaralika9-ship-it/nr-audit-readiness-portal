@@ -37,10 +37,10 @@ describe('Profile', () => {
     expect(await screen.findByDisplayValue('Ayu')).toBeInTheDocument()
     expect(screen.getByDisplayValue('ayu@example.com')).toBeDisabled()
     expect(screen.getByDisplayValue('HSSE')).toBeInTheDocument()
-    expect(screen.getByText('Supabase Profile')).toBeInTheDocument()
+    expect(screen.getByText('PostgreSQL Profile')).toBeInTheDocument()
   })
 
-  it('upserts the editable Supabase fields and shows success', async () => {
+  it('updates editable PostgreSQL profile fields and shows success', async () => {
     const user = userEvent.setup()
     mocks.saveCurrentProfile.mockResolvedValue({
       profile: { full_name: 'Ayu Updated', fungsi: 'SPI', role: 'Function Owner' },
@@ -51,15 +51,19 @@ describe('Profile', () => {
     const fullName = await screen.findByLabelText('Full Name')
     await user.clear(fullName)
     await user.type(fullName, 'Ayu Updated')
-    await user.selectOptions(screen.getByLabelText('Role / Position'), 'Function Owner')
     await user.selectOptions(screen.getByLabelText('Department / Function'), 'SPI')
+    await user.type(screen.getByLabelText('Employee ID'), 'EMP-1')
+    await user.type(screen.getByLabelText('Phone Number'), '0812')
     await user.click(screen.getByRole('button', { name: 'Save Profile' }))
 
     await waitFor(() => {
       expect(mocks.saveCurrentProfile).toHaveBeenCalledWith({
         full_name: 'Ayu Updated',
         fungsi: 'SPI',
-        role: 'Function Owner',
+        role: 'Employee',
+        department: 'SPI',
+        employee_id: 'EMP-1',
+        phone: '0812',
       })
     })
     expect(await screen.findByText('Saved')).toBeInTheDocument()

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using AuditReadiness.Api;
 using AuditReadiness.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -26,10 +27,11 @@ builder.Services.Configure<Microsoft.AspNetCore.Mvc.ApiBehaviorOptions>(options 
     options.InvalidModelStateResponseFactory = context => ValidationProblemFactory.Create(context);
 });
 
-var issuer = builder.Configuration["SUPABASE_JWT_ISSUER"]
-    ?? (builder.Configuration["SUPABASE_URL"]?.TrimEnd('/') + "/auth/v1");
-var audience = builder.Configuration["SUPABASE_JWT_AUDIENCE"] ?? "authenticated";
-var jwtKey = builder.Configuration["SUPABASE_JWT_KEY"];
+var issuer = builder.Configuration["JWT_ISSUER"] ?? "nr-audit-readiness-api";
+var audience = builder.Configuration["JWT_AUDIENCE"] ?? "nr-audit-readiness-portal";
+var jwtKey = builder.Configuration["JWT_SIGNING_KEY"];
+if (string.IsNullOrWhiteSpace(jwtKey) || Encoding.UTF8.GetByteCount(jwtKey) < 32)
+    throw new InvalidOperationException("JWT_SIGNING_KEY with at least 32 bytes is required.");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -43,10 +45,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         NameClaimType = "email", RoleClaimType = "role",
         ClockSkew = TimeSpan.FromMinutes(1)
     };
-    if (!string.IsNullOrWhiteSpace(jwtKey))
-        options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
-    else if (!string.IsNullOrWhiteSpace(issuer))
-        options.ConfigurationManager = new SupabaseJwksConfigurationManager(issuer);
+    options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 });
 
 builder.Services.AddAuthorizationBuilder()
@@ -66,7 +65,8 @@ builder.Services.AddCors(options => options.AddPolicy("Frontend", policy =>
     policy.WithOrigins([.. allowedOrigins]).AllowAnyHeader().AllowAnyMethod()));
 
 builder.Services.AddInfrastructure(builder.Configuration);
-var connectionString = builder.Configuration["DATABASE_CONNECTION_STRING"] ?? builder.Configuration.GetConnectionString("Database")!;
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+var connectionString = DatabaseConnection.Resolve(builder.Configuration);
 builder.Services.AddHealthChecks().AddNpgSql(connectionString, name: "postgresql", tags: ["ready"]);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -77,6 +77,12 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+if (builder.Configuration.GetValue<bool>("APPLY_MIGRATIONS"))
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var database = scope.ServiceProvider.GetRequiredService<AuditReadinessDbContext>();
+    await database.Database.MigrateAsync();
+}
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseSwagger();

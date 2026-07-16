@@ -1,21 +1,44 @@
 using AuditReadiness.Domain;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuditReadiness.Infrastructure;
 
-public sealed class AuditReadinessDbContext(DbContextOptions<AuditReadinessDbContext> options) : DbContext(options)
+public sealed class AuditReadinessDbContext(DbContextOptions<AuditReadinessDbContext> options)
+    : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options)
 {
     public DbSet<AuditWorkspace> Workspaces => Set<AuditWorkspace>();
     public DbSet<AuditWorkspaceMember> WorkspaceMembers => Set<AuditWorkspaceMember>();
     public DbSet<AuditQuestionAssessment> Assessments => Set<AuditQuestionAssessment>();
     public DbSet<AuditEvidence> Evidence => Set<AuditEvidence>();
     public DbSet<AuditActivityLog> ActivityLogs => Set<AuditActivityLog>();
+    public DbSet<AuditDocument> Documents => Set<AuditDocument>();
     public DbSet<AuditMasterTheme> MasterThemes => Set<AuditMasterTheme>();
     public DbSet<AuditMasterQuestion> MasterQuestions => Set<AuditMasterQuestion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.HasPostgresExtension("uuid-ossp");
+
+        modelBuilder.Entity<ApplicationUser>(entity =>
+        {
+            entity.ToTable("app_users");
+            entity.Property(x => x.FullName).HasColumnName("full_name").HasMaxLength(200);
+            entity.Property(x => x.Function).HasColumnName("function").HasMaxLength(200);
+            entity.Property(x => x.Department).HasColumnName("department").HasMaxLength(200);
+            entity.Property(x => x.EmployeeId).HasColumnName("employee_id").HasMaxLength(100);
+            entity.Property(x => x.Phone).HasColumnName("phone").HasMaxLength(50);
+            entity.Property(x => x.CreatedAt).HasColumnName("created_at");
+            entity.Property(x => x.UpdatedAt).HasColumnName("updated_at");
+        });
+        modelBuilder.Entity<IdentityRole<Guid>>().ToTable("app_roles");
+        modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("app_user_roles");
+        modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("app_user_claims");
+        modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("app_user_logins");
+        modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("app_role_claims");
+        modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("app_user_tokens");
 
         modelBuilder.Entity<AuditWorkspace>(entity =>
         {
@@ -128,6 +151,28 @@ public sealed class AuditReadinessDbContext(DbContextOptions<AuditReadinessDbCon
             entity.HasOne(x => x.Workspace).WithMany().HasForeignKey(x => x.WorkspaceId).OnDelete(DeleteBehavior.Cascade);
             entity.HasQueryFilter(x => !x.Workspace.IsDeleted);
             entity.HasIndex(x => new { x.WorkspaceId, x.CreatedAt });
+        });
+
+        modelBuilder.Entity<AuditDocument>(entity =>
+        {
+            entity.ToTable("audit_documents");
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Id).HasColumnName("id");
+            entity.Property(x => x.UserId).HasColumnName("user_id");
+            entity.Property(x => x.Title).HasColumnName("title").HasMaxLength(250);
+            entity.Property(x => x.Description).HasColumnName("description").HasMaxLength(2000);
+            entity.Property(x => x.Category).HasColumnName("category").HasMaxLength(100);
+            entity.Property(x => x.Function).HasColumnName("function").HasMaxLength(200);
+            entity.Property(x => x.FilePath).HasColumnName("file_path").HasMaxLength(2048);
+            entity.Property(x => x.FileName).HasColumnName("file_name").HasMaxLength(255);
+            entity.Property(x => x.FileType).HasColumnName("file_type").HasMaxLength(150);
+            entity.Property(x => x.FileSize).HasColumnName("file_size");
+            entity.Property(x => x.Status).HasColumnName("status").HasMaxLength(50);
+            entity.Property(x => x.UploadedBy).HasColumnName("uploaded_by");
+            entity.Property(x => x.CreatedAt).HasColumnName("created_at");
+            entity.Property(x => x.UpdatedAt).HasColumnName("updated_at");
+            entity.HasIndex(x => x.UserId);
+            entity.HasIndex(x => x.CreatedAt);
         });
 
         modelBuilder.Entity<AuditMasterTheme>(entity =>

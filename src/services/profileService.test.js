@@ -1,79 +1,37 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const mocks = vi.hoisted(() => ({
-  from: vi.fn(),
-  getUser: vi.fn(),
-}))
-
-vi.mock('../lib/supabaseClient.js', () => ({
-  supabase: {
-    from: mocks.from,
-    auth: { getUser: mocks.getUser },
-  },
-  supabaseConfigError: null,
-}))
+const api = vi.hoisted(() => ({ get: vi.fn(), put: vi.fn() }))
+vi.mock('../lib/apiClient.js', () => ({ apiClient: api }))
 
 import { getCurrentProfile, saveCurrentProfile } from './profileService.js'
 
 describe('profileService', () => {
-  beforeEach(() => {
-    mocks.from.mockReset()
-    mocks.getUser.mockReset()
-    mocks.getUser.mockResolvedValue({
-      data: { user: { id: 'user-123', email: 'ayu@example.com' } },
-      error: null,
-    })
-  })
+  beforeEach(() => Object.values(api).forEach((mock) => mock.mockReset()))
 
-  it('loads only the authenticated user profile', async () => {
-    const maybeSingle = vi.fn().mockResolvedValue({
-      data: { id: 'user-123', full_name: 'Ayu' },
-      error: null,
+  it('loads and adapts the authenticated API user', async () => {
+    api.get.mockResolvedValue({
+      id: 'user-123', email: 'ayu@example.com', fullName: 'Ayu', function: 'HSSE',
+      roles: ['Auditor'], department: 'Operations', employeeId: 'EMP-1', phone: '0812',
     })
-    const eq = vi.fn().mockReturnValue({ maybeSingle })
-    const select = vi.fn().mockReturnValue({ eq })
-    mocks.from.mockReturnValue({ select })
 
     const result = await getCurrentProfile()
 
-    expect(mocks.from).toHaveBeenCalledWith('profiles')
-    expect(eq).toHaveBeenCalledWith('id', 'user-123')
-    expect(result.profile.full_name).toBe('Ayu')
+    expect(api.get).toHaveBeenCalledWith('auth/me')
+    expect(result.profile).toMatchObject({
+      full_name: 'Ayu', fungsi: 'HSSE', role: 'Auditor', employee_id: 'EMP-1', phone: '0812',
+    })
     expect(result.user.email).toBe('ayu@example.com')
   })
 
-  it('upserts only confirmed profile columns with auth id', async () => {
-    const single = vi.fn().mockResolvedValue({
-      data: { id: 'user-123', full_name: 'Ayu', fungsi: 'HSSE', role: 'Employee' },
-      error: null,
-    })
-    const select = vi.fn().mockReturnValue({ single })
-    const upsert = vi.fn().mockReturnValue({ select })
-    mocks.from.mockReturnValue({ upsert })
+  it('updates only supported portal profile fields', async () => {
+    api.put.mockResolvedValue({ id: 'user-123', email: 'ayu@example.com', roles: ['Auditor'] })
 
     await saveCurrentProfile({
-      full_name: 'Ayu',
-      fungsi: 'HSSE',
-      role: 'Employee',
-      phone: 'not-a-column',
+      full_name: 'Ayu', fungsi: 'HSSE', department: 'Operations', employee_id: 'EMP-1', phone: '0812',
     })
 
-    expect(upsert).toHaveBeenCalledWith(
-      {
-        id: 'user-123',
-        full_name: 'Ayu',
-        fungsi: 'HSSE',
-        role: 'Employee',
-      },
-      { onConflict: 'id' },
-    )
-  })
-
-  it('stops before querying when authentication has no user', async () => {
-    mocks.getUser.mockResolvedValue({ data: { user: null }, error: null })
-    await expect(getCurrentProfile()).rejects.toThrow(
-      'You must be signed in to access your profile.',
-    )
-    expect(mocks.from).not.toHaveBeenCalled()
+    expect(api.put).toHaveBeenCalledWith('auth/me', {
+      fullName: 'Ayu', function: 'HSSE', department: 'Operations', employeeId: 'EMP-1', phone: '0812',
+    })
   })
 })

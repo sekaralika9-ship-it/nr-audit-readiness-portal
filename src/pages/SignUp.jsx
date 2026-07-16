@@ -34,17 +34,12 @@ export default function SignUp() {
     setLoading(true)
 
     try {
-      const data = await signup({
+      await signup({
         fullName: form.fullName.trim(),
         fungsi: form.fungsi.trim(),
         email: form.email.trim(),
         password: form.password,
       })
-
-      if (!data.session) {
-        setSuccess('Account created. Please check your email to confirm your account before signing in.')
-        return
-      }
 
       navigate('/dashboard', { replace: true })
     } catch (err) {

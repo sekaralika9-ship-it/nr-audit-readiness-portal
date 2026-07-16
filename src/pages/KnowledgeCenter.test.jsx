@@ -77,7 +77,7 @@ describe('KnowledgeCenter', () => {
     expect(screen.getByText('No audit questions found')).toBeInTheDocument()
   })
 
-  it('derives preparation guides and SOP references from Supabase questions', async () => {
+  it('derives preparation guides and SOP references from PostgreSQL questions', async () => {
     const user = userEvent.setup()
     mocks.getAuditQuestions.mockResolvedValue([
       {

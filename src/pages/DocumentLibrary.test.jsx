@@ -34,7 +34,7 @@ describe('DocumentLibrary', () => {
     ])
 
     render(<DocumentLibrary />)
-    expect(screen.getByText('Loading documents from Supabase...')).toBeInTheDocument()
+    expect(screen.getByText('Loading documents from PostgreSQL...')).toBeInTheDocument()
     expect(await screen.findByText('Emergency Response Plan')).toBeInTheDocument()
     expect(screen.getAllByText('HSSE').length).toBeGreaterThan(1)
     expect(screen.getByText('/controlled/erp.pdf')).toBeInTheDocument()

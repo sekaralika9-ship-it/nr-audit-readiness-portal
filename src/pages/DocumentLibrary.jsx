@@ -171,7 +171,7 @@ function DocumentRegister({ documents, loading, error }) {
       <Card className="p-6">
         <div className="flex items-center gap-3 text-slate-600">
           <Loader2 size={18} className="animate-spin" />
-          <p className="text-sm font-semibold">Loading documents from Supabase...</p>
+          <p className="text-sm font-semibold">Loading documents from PostgreSQL...</p>
         </div>
       </Card>
     )

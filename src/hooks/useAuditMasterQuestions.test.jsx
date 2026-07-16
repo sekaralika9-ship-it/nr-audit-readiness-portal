@@ -24,7 +24,7 @@ describe('useAuditMasterQuestions', () => {
     mocks.fetchAuditQuestions.mockReset()
   })
 
-  it('uses normalized Supabase questions as the source of truth', async () => {
+  it('uses normalized PostgreSQL questions as the source of truth', async () => {
     mocks.fetchAuditQuestions.mockResolvedValue([
       { id: 'live-1', standardCodes: ['ISO 45001'], auditQuestion: 'Live question' },
     ])
@@ -36,7 +36,7 @@ describe('useAuditMasterQuestions', () => {
     expect(result.current.message).toBe('')
   })
 
-  it('uses fallback content when Supabase returns no rows', async () => {
+  it('uses fallback content when PostgreSQL returns no rows', async () => {
     mocks.fetchAuditQuestions.mockResolvedValue([])
     const { result } = renderHook(() => useAuditMasterQuestions(fallback))
 

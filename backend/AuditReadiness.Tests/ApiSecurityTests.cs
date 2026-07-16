@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using AuditReadiness.Infrastructure;
+using AuditReadiness.Api;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -28,9 +29,29 @@ public sealed class ApiSecurityTests : IClassFixture<AuditApiFactory>
     }
 
     [Fact]
-    public async Task SupabaseStyleJwt_AllowsAuthMe()
+    public async Task RegisterAndLogin_IssuePortalJwtThatAllowsAuthMe()
     {
-        var client = AuthenticatedClient();
+        var client = _factory.CreateClient();
+        var email = $"auditor-{Guid.NewGuid():N}@example.com";
+        var register = await client.PostAsJsonAsync("/api/v1/auth/register", new
+        {
+            email,
+            password = "AuditPortal123!",
+            fullName = "API Test Auditor",
+            function = "Internal Audit"
+        });
+        register.StatusCode.Should().Be(HttpStatusCode.OK, await register.Content.ReadAsStringAsync());
+
+        var login = await client.PostAsJsonAsync("/api/v1/auth/login", new
+        {
+            email,
+            password = "AuditPortal123!"
+        });
+        login.StatusCode.Should().Be(HttpStatusCode.OK);
+        var authentication = await login.Content.ReadFromJsonAsync<ApiResponse<AuthTokenDto>>();
+        authentication!.Data!.AccessToken.Should().NotBeNullOrWhiteSpace();
+
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authentication.Data.AccessToken);
         var response = await client.GetAsync("/api/v1/auth/me");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
@@ -56,16 +77,16 @@ public sealed class ApiSecurityTests : IClassFixture<AuditApiFactory>
 
 public sealed class AuditApiFactory : WebApplicationFactory<Program>
 {
-    public const string Issuer = "https://test.supabase.co/auth/v1";
-    public const string Audience = "authenticated";
+    public const string Issuer = "nr-audit-readiness-api-tests";
+    public const string Audience = "nr-audit-readiness-portal-tests";
     public const string Key = "test-signing-key-that-is-at-least-thirty-two-bytes-long";
 
     public AuditApiFactory()
     {
         Environment.SetEnvironmentVariable("DATABASE_CONNECTION_STRING", "Host=localhost;Database=test;Username=test;Password=test");
-        Environment.SetEnvironmentVariable("SUPABASE_JWT_ISSUER", Issuer);
-        Environment.SetEnvironmentVariable("SUPABASE_JWT_AUDIENCE", Audience);
-        Environment.SetEnvironmentVariable("SUPABASE_JWT_KEY", Key);
+        Environment.SetEnvironmentVariable("JWT_ISSUER", Issuer);
+        Environment.SetEnvironmentVariable("JWT_AUDIENCE", Audience);
+        Environment.SetEnvironmentVariable("JWT_SIGNING_KEY", Key);
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

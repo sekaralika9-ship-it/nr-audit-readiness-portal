@@ -103,6 +103,24 @@ public sealed class AuditMasterTheme
     public DateTimeOffset? CreatedAt { get; set; }
 }
 
+public sealed class AuditDocument
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid UserId { get; set; }
+    public required string Title { get; set; }
+    public string? Description { get; set; }
+    public string? Category { get; set; }
+    public string? Function { get; set; }
+    public string? FilePath { get; set; }
+    public string? FileName { get; set; }
+    public string? FileType { get; set; }
+    public long? FileSize { get; set; }
+    public required string Status { get; set; }
+    public Guid UploadedBy { get; set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
+}
+
 public sealed class AuditMasterQuestion
 {
     public required string QuestionKey { get; set; }

@@ -7,7 +7,7 @@ const serviceMocks = vi.hoisted(() => ({
   fetchAuditQuestions: vi.fn(),
 }))
 
-const supabaseQuestion = {
+const databaseQuestion = {
   id: 'MASTER-Q-1',
   standardCodes: ['ISO 45001'],
   standardCode: 'ISO 45001',
@@ -76,7 +76,7 @@ describe('local interactive workflows', () => {
 
   it('persists checklist status and auditor results when a workspace is reopened', async () => {
     const user = userEvent.setup()
-    serviceMocks.fetchAuditQuestions.mockResolvedValue([supabaseQuestion])
+    serviceMocks.fetchAuditQuestions.mockResolvedValue([databaseQuestion])
     render(
       <MemoryRouter>
         <AuditReadiness />
@@ -90,11 +90,11 @@ describe('local interactive workflows', () => {
     await user.click(screen.getByText('Persistent Workspace').closest('[role="button"]'))
 
     await user.selectOptions(
-      await screen.findByLabelText(`Status for ${supabaseQuestion.auditQuestion}`),
+      await screen.findByLabelText(`Status for ${databaseQuestion.auditQuestion}`),
       'Ready',
     )
     await user.selectOptions(
-      screen.getByLabelText(`Auditor Check for ${supabaseQuestion.auditQuestion}`),
+      screen.getByLabelText(`Auditor Check for ${databaseQuestion.auditQuestion}`),
       'OK',
     )
     expect(screen.getByText('Workspace readiness summary').parentElement.parentElement)
@@ -102,8 +102,8 @@ describe('local interactive workflows', () => {
 
     await user.click(screen.getByRole('button', { name: 'New Workspace' }))
     await user.click(screen.getByText('Persistent Workspace').closest('[role="button"]'))
-    expect(await screen.findByLabelText(`Status for ${supabaseQuestion.auditQuestion}`)).toHaveValue('Ready')
-    expect(screen.getByLabelText(`Auditor Check for ${supabaseQuestion.auditQuestion}`)).toHaveValue('OK')
+    expect(await screen.findByLabelText(`Status for ${databaseQuestion.auditQuestion}`)).toHaveValue('Ready')
+    expect(screen.getByLabelText(`Auditor Check for ${databaseQuestion.auditQuestion}`)).toHaveValue('OK')
   })
 
   it('shows safe fallback dates for legacy saved workspaces', async () => {
@@ -216,9 +216,9 @@ describe('local interactive workflows', () => {
     expect(screen.getByText(/Audit creation is ready/)).toBeInTheDocument()
   })
 
-  it('uses Supabase master questions for workspace filtering and details', async () => {
+  it('uses PostgreSQL master questions for workspace filtering and details', async () => {
     const user = userEvent.setup()
-    serviceMocks.fetchAuditQuestions.mockResolvedValue([supabaseQuestion])
+    serviceMocks.fetchAuditQuestions.mockResolvedValue([databaseQuestion])
     render(
       <MemoryRouter>
         <AuditReadiness />
@@ -227,9 +227,9 @@ describe('local interactive workflows', () => {
 
     await user.selectOptions(screen.getByLabelText('ISO Standard'), 'iso-45001')
     await user.selectOptions(screen.getByLabelText('Auditee'), 'A06')
-    await user.type(screen.getByLabelText('Workspace Name'), 'Supabase HSSE Workspace')
+    await user.type(screen.getByLabelText('Workspace Name'), 'PostgreSQL HSSE Workspace')
     await user.click(screen.getByRole('button', { name: 'Create Workspace' }))
-    await user.click(screen.getByText('Supabase HSSE Workspace').closest('[role="button"]'))
+    await user.click(screen.getByText('PostgreSQL HSSE Workspace').closest('[role="button"]'))
     await user.click(
       await screen.findByRole('button', {
         name: /Has the emergency response drill been evaluated/,
@@ -242,8 +242,8 @@ describe('local interactive workflows', () => {
     expect(screen.getAllByText('Emergency response risk register').length).toBeGreaterThan(0)
   })
 
-  it('shows Supabase questions in ISO Library and Evidence Requirement Catalog', async () => {
-    serviceMocks.fetchAuditQuestions.mockResolvedValue([supabaseQuestion])
+  it('shows PostgreSQL questions in ISO Library and Evidence Requirement Catalog', async () => {
+    serviceMocks.fetchAuditQuestions.mockResolvedValue([databaseQuestion])
     const user = userEvent.setup()
 
     const { unmount } = render(
@@ -252,12 +252,12 @@ describe('local interactive workflows', () => {
       </MemoryRouter>,
     )
     await user.click(screen.getByRole('button', { name: /ISO 45001/ }))
-    expect(await screen.findByText(supabaseQuestion.auditQuestion)).toBeInTheDocument()
-    expect(screen.getByText(supabaseQuestion.requiredEvidence)).toBeInTheDocument()
+    expect(await screen.findByText(databaseQuestion.auditQuestion)).toBeInTheDocument()
+    expect(screen.getByText(databaseQuestion.requiredEvidence)).toBeInTheDocument()
     unmount()
 
     render(<EvidenceLibrary />)
-    expect(await screen.findByText(supabaseQuestion.auditQuestion)).toBeInTheDocument()
+    expect(await screen.findByText(databaseQuestion.auditQuestion)).toBeInTheDocument()
     expect(screen.getByRole('option', { name: /emergency response drill/ })).toBeInTheDocument()
   })
 

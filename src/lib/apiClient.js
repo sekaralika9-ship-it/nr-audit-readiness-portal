@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient.js'
+import { clearAuthSession, getAuthSession } from './authSession.js'
 
 const configuredBaseUrl = String(import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
 
@@ -13,22 +13,14 @@ export class ApiError extends Error {
   }
 }
 
-async function accessToken() {
-  if (!supabase) throw new ApiError('Supabase authentication is not configured.', 401)
-  const { data, error } = await supabase.auth.getSession()
-  if (error) throw new ApiError(error.message || 'Unable to read the current session.', 401)
-  if (!data.session?.access_token) throw new ApiError('Your session has expired. Please sign in again.', 401)
-  return data.session.access_token
-}
-
 export async function apiRequest(path, options = {}) {
   if (!isBackendApiConfigured) throw new ApiError('Backend API is not configured.', 503)
-  const token = await accessToken()
+  const token = getAuthSession()?.accessToken
   const response = await fetch(`${configuredBaseUrl}/${String(path).replace(/^\//, '')}`, {
     ...options,
     headers: {
       Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(options.body ? { 'Content-Type': 'application/json' } : {}),
       ...options.headers,
     },
@@ -37,6 +29,7 @@ export async function apiRequest(path, options = {}) {
   if (response.status === 204) return null
   const payload = await response.json().catch(() => null)
   if (!response.ok) {
+    if (response.status === 401 && token) clearAuthSession()
     const validationMessage = payload?.errors
       ? Object.values(payload.errors).flat().join(' ')
       : null

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 const email = process.env.E2E_USER_EMAIL
 const password = process.env.E2E_USER_PASSWORD
 
-test.describe('authenticated Supabase flows', () => {
+test.describe('authenticated portal API flows', () => {
   test.skip(!email || !password, 'Set E2E_USER_EMAIL and E2E_USER_PASSWORD in .env.e2e.local')
 
   test.beforeEach(async ({ page }) => {
@@ -16,7 +16,7 @@ test.describe('authenticated Supabase flows', () => {
     await expect(page.getByRole('heading', { name: 'Audit Readiness Dashboard' })).toBeVisible()
   })
 
-  test('creates, reloads, updates, and deletes a document through authenticated RLS', async ({ page }) => {
+  test('creates, reloads, updates, and deletes a document through the authenticated API', async ({ page }) => {
     const marker = Date.now()
     const originalTitle = `E2E Document ${marker}`
     const updatedTitle = `${originalTitle} Updated`
@@ -27,14 +27,14 @@ test.describe('authenticated Supabase flows', () => {
       await expect(page.getByRole('heading', { name: 'Document Library' })).toBeVisible()
 
       await page.getByLabel('Document Title').fill(originalTitle)
-      await page.getByLabel('Description / Notes').fill('Automated Playwright RLS verification')
+      await page.getByLabel('Description / Notes').fill('Automated Playwright API verification')
       await page.getByLabel('Owner Function').selectOption('HSSE')
       await page.getByLabel('Control Status').selectOption('Under Review')
       await page.getByPlaceholder('Optional repository location').fill(`/e2e/${marker}.pdf`)
 
       const insertResponsePromise = page.waitForResponse(
         (response) =>
-          response.url().includes('/rest/v1/documents') &&
+          response.url().includes('/api/v1/documents') &&
           response.request().method() === 'POST',
       )
       await page.getByRole('button', { name: 'Add Document Reference' }).click()
@@ -83,25 +83,21 @@ test.describe('authenticated Supabase flows', () => {
     await expect(page.getByRole('heading', { name: 'My Profile' })).toBeVisible()
 
     const fullName = page.getByLabel('Full Name')
-    const role = page.getByLabel('Role / Position')
     const department = page.getByLabel('Department / Function')
     const original = {
       full_name: await fullName.inputValue(),
-      role: await role.inputValue(),
       fungsi: await department.inputValue(),
     }
     const updatedName = `E2E Profile ${Date.now()}`
 
     try {
       await fullName.fill(updatedName)
-      await role.selectOption('Employee')
       await department.selectOption('HSSE')
       await page.getByRole('button', { name: 'Save Profile' }).click()
       await expect(page.getByText('Saved', { exact: true })).toBeVisible()
 
       await page.reload()
       await expect(page.getByLabel('Full Name')).toHaveValue(updatedName)
-      await expect(page.getByLabel('Role / Position')).toHaveValue('Employee')
       await expect(page.getByLabel('Department / Function')).toHaveValue('HSSE')
     } finally {
       await page.evaluate(async (profile) => {

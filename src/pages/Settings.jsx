@@ -45,7 +45,7 @@ export default function Settings() {
           }}
         >
           This page has been restored so the application can run normally.
-          Audit master database data from Supabase should be connected through
+          Audit master data from PostgreSQL is connected through
           Audit Knowledge Base and Audit Readiness Checklist, not through this
           Settings page.
         </p>

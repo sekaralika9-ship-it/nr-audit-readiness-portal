@@ -1,26 +1,23 @@
-import { renderHook, waitFor } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => ({
-  getSession: vi.fn(),
-  onAuthStateChange: vi.fn(),
-  signInWithPassword: vi.fn(),
-  signUp: vi.fn(),
-  signOut: vi.fn(),
-  unsubscribe: vi.fn(),
+  get: vi.fn(),
+  post: vi.fn(),
+  getAuthSession: vi.fn(),
+  saveAuthSession: vi.fn(),
+  clearAuthSession: vi.fn(),
 }))
 
-vi.mock('../lib/supabaseClient', () => ({
-  supabase: {
-    auth: {
-      getSession: mocks.getSession,
-      onAuthStateChange: mocks.onAuthStateChange,
-      signInWithPassword: mocks.signInWithPassword,
-      signUp: mocks.signUp,
-      signOut: mocks.signOut,
-    },
-  },
-  supabaseConfigError: null,
+vi.mock('../lib/apiClient.js', () => ({
+  apiClient: { get: mocks.get, post: mocks.post },
+  isBackendApiConfigured: true,
+}))
+
+vi.mock('../lib/authSession.js', () => ({
+  getAuthSession: mocks.getAuthSession,
+  saveAuthSession: mocks.saveAuthSession,
+  clearAuthSession: mocks.clearAuthSession,
 }))
 
 import { AuthProvider, useAuth } from './AuthContext.jsx'
@@ -31,73 +28,62 @@ function wrapper({ children }) {
 
 describe('AuthProvider', () => {
   beforeEach(() => {
-    for (const mock of Object.values(mocks)) mock.mockReset()
-    mocks.getSession.mockResolvedValue({ data: { session: null }, error: null })
-    mocks.onAuthStateChange.mockReturnValue({
-      data: { subscription: { unsubscribe: mocks.unsubscribe } },
-    })
-    mocks.signOut.mockResolvedValue({ error: null })
+    Object.values(mocks).forEach((mock) => mock.mockReset())
+    mocks.getAuthSession.mockReturnValue(null)
   })
 
-  it('loads and exposes the existing Supabase session', async () => {
-    const session = { user: { id: 'user-1', email: 'ayu@example.com' } }
-    mocks.getSession.mockResolvedValue({ data: { session }, error: null })
+  it('validates and exposes a saved portal session', async () => {
+    const saved = { accessToken: 'token', expiresAt: '2099-01-01', user: { id: 'old' } }
+    const user = { id: 'user-1', email: 'ayu@example.com' }
+    mocks.getAuthSession.mockReturnValue(saved)
+    mocks.get.mockResolvedValue(user)
 
     const { result } = renderHook(() => useAuth(), { wrapper })
 
     await waitFor(() => expect(result.current.loading).toBe(false))
-    expect(result.current.session).toEqual(session)
-    expect(result.current.user).toEqual(session.user)
+    expect(mocks.get).toHaveBeenCalledWith('auth/me')
+    expect(result.current.user).toEqual(user)
+    expect(result.current.isAuthenticated).toBe(true)
+    expect(mocks.saveAuthSession).toHaveBeenCalledWith({ ...saved, user })
+  })
+
+  it('signs in through the ASP.NET API and stores its JWT', async () => {
+    const response = {
+      accessToken: 'jwt-token',
+      expiresAt: '2099-01-01',
+      user: { id: 'user-1' },
+    }
+    mocks.post.mockResolvedValue(response)
+    const { result } = renderHook(() => useAuth(), { wrapper })
+
+    await act(() => result.current.login('ayu@example.com', 'secret123'))
+
+    expect(mocks.post).toHaveBeenCalledWith('auth/login', {
+      email: 'ayu@example.com',
+      password: 'secret123',
+    })
+    expect(mocks.saveAuthSession).toHaveBeenCalledWith(response)
     expect(result.current.isAuthenticated).toBe(true)
   })
 
-  it('signs in with Supabase credentials and updates context state', async () => {
-    const session = { user: { id: 'user-1' } }
-    mocks.signInWithPassword.mockResolvedValue({
-      data: { session, user: session.user },
-      error: null,
-    })
+  it('registers a portal user and immediately stores the session', async () => {
+    const response = { accessToken: 'jwt-token', user: { id: 'user-1' } }
+    mocks.post.mockResolvedValue(response)
     const { result } = renderHook(() => useAuth(), { wrapper })
-    await waitFor(() => expect(result.current.loading).toBe(false))
 
-    await result.current.login('ayu@example.com', 'secret123')
+    await act(() => result.current.signup({
+      email: 'ayu@example.com', password: 'secret123', fullName: 'Ayu Auditor', fungsi: 'SPI',
+    }))
 
-    expect(mocks.signInWithPassword).toHaveBeenCalledWith({
-      email: 'ayu@example.com',
-      password: 'secret123',
+    expect(mocks.post).toHaveBeenCalledWith('auth/register', {
+      email: 'ayu@example.com', password: 'secret123', fullName: 'Ayu Auditor', function: 'SPI',
     })
-    await waitFor(() => expect(result.current.isAuthenticated).toBe(true))
+    expect(result.current.isAuthenticated).toBe(true)
   })
 
-  it('passes signup profile metadata to Supabase Auth', async () => {
-    mocks.signUp.mockResolvedValue({
-      data: { user: { id: 'user-1' }, session: null },
-      error: null,
-    })
+  it('rejects incomplete credentials before calling the API', async () => {
     const { result } = renderHook(() => useAuth(), { wrapper })
-    await waitFor(() => expect(result.current.loading).toBe(false))
-
-    await result.current.signup({
-      email: 'ayu@example.com',
-      password: 'secret123',
-      fullName: 'Ayu Auditor',
-      fungsi: 'SPI',
-    })
-
-    expect(mocks.signUp).toHaveBeenCalledWith({
-      email: 'ayu@example.com',
-      password: 'secret123',
-      options: { data: { full_name: 'Ayu Auditor', fungsi: 'SPI' } },
-    })
-  })
-
-  it('rejects incomplete credentials before calling Supabase', async () => {
-    const { result } = renderHook(() => useAuth(), { wrapper })
-    await waitFor(() => expect(result.current.loading).toBe(false))
-
-    await expect(result.current.login('', '')).rejects.toThrow(
-      'Email dan password wajib diisi.',
-    )
-    expect(mocks.signInWithPassword).not.toHaveBeenCalled()
+    await expect(result.current.login('', '')).rejects.toThrow('Email dan password wajib diisi.')
+    expect(mocks.post).not.toHaveBeenCalled()
   })
 })

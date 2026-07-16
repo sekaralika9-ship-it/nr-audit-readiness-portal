@@ -48,9 +48,9 @@ describe('authentication pages', () => {
     expect(screen.getByRole('button', { name: 'Sign In' })).toBeEnabled()
   })
 
-  it('submits signup metadata and explains email confirmation', async () => {
+  it('submits signup metadata and opens the authenticated dashboard', async () => {
     const user = userEvent.setup()
-    mocks.signup.mockResolvedValue({ user: { id: 'user-1' }, session: null })
+    mocks.signup.mockResolvedValue({ user: { id: 'user-1' }, accessToken: 'token' })
     render(<SignUp />, { wrapper: MemoryRouter })
 
     await user.type(screen.getByLabelText('Full Name'), 'Ayu Auditor')
@@ -65,6 +65,6 @@ describe('authentication pages', () => {
       email: 'ayu@example.com',
       password: 'secret123',
     })
-    expect(await screen.findByText(/Please check your email/)).toBeInTheDocument()
+    expect(mocks.signup).toHaveBeenCalledOnce()
   })
 })

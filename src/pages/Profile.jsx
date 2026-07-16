@@ -19,6 +19,7 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { getCurrentProfile, saveCurrentProfile } from '../services/profileService.js'
 
 const roleOptions = [
+  'Auditor',
   'Employee',
   'Function Owner',
   'Document Owner',
@@ -103,8 +104,8 @@ export default function Profile() {
           email: user.email || '',
           role: profile?.role || '',
           department: profile?.fungsi || user.user_metadata?.fungsi || '',
-          employeeId: localProfile.employeeId || '',
-          phone: localProfile.phone || '',
+          employeeId: profile?.employee_id || localProfile.employeeId || '',
+          phone: profile?.phone || localProfile.phone || '',
         })
       } catch (loadError) {
         if (active) setError(loadError.message || 'Unable to load your profile.')
@@ -139,6 +140,9 @@ export default function Profile() {
         full_name: form.fullName,
         fungsi: form.department,
         role: form.role,
+        department: form.department,
+        employee_id: form.employeeId,
+        phone: form.phone,
       })
 
       saveStoredProfile({
@@ -194,7 +198,7 @@ export default function Profile() {
         <Card className="p-6">
           <div className="flex items-center gap-3 text-slate-600">
             <Loader2 size={18} className="animate-spin" />
-            <p className="text-sm font-semibold">Loading your profile from Supabase...</p>
+            <p className="text-sm font-semibold">Loading your profile from PostgreSQL...</p>
           </div>
         </Card>
       ) : (
@@ -217,7 +221,7 @@ export default function Profile() {
               <Badge tone={form.fullName ? 'green' : 'orange'}>
                 {form.fullName ? 'Profile Available' : 'Profile Incomplete'}
               </Badge>
-              <Badge tone="blue">Supabase Profile</Badge>
+              <Badge tone="blue">PostgreSQL Profile</Badge>
             </div>
           </div>
         </Card>
@@ -260,11 +264,11 @@ export default function Profile() {
               />
 
               <SelectField
-                label="Role / Position"
+                label="Account Role"
                 value={form.role}
                 onChange={(value) => updateField('role', value)}
                 options={roleOptions}
-                disabled={saving}
+                disabled
               />
 
               <SelectField
@@ -297,7 +301,7 @@ export default function Profile() {
                   {saving ? 'Saving...' : 'Save Profile'}
                 </Button>
                 <p className="mt-3 text-xs leading-5 text-slate-500">
-                  Full name, role, and function are saved to Supabase. Employee ID and phone remain local because those columns are not present in profiles.
+                  Full name, function, employee ID, and phone are stored securely in PostgreSQL. Account roles are managed by an administrator.
                 </p>
               </div>
             </form>
@@ -311,7 +315,7 @@ export default function Profile() {
               <div>
                 <h2 className="text-base font-bold text-[#0B1F3A]">Security</h2>
                 <p className="text-sm text-slate-500">
-                  Authentication is managed by Supabase Auth.
+                  Authentication is managed by the NR Audit Readiness API.
                 </p>
               </div>
             </div>
@@ -324,7 +328,7 @@ export default function Profile() {
 
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <p className="text-sm font-bold text-slate-600">Session Status</p>
-                <p className="mt-1 text-sm text-[#0B1F3A]">Signed in with Supabase</p>
+                <p className="mt-1 text-sm text-[#0B1F3A]">Signed in with portal JWT</p>
               </div>
             </div>
           </Card>

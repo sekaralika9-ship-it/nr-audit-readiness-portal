@@ -244,7 +244,7 @@ export default function KnowledgeCenter() {
     [questions],
   )
 
-  const supabaseReferences = useMemo(
+  const databaseReferences = useMemo(
     () =>
       normalizedQuestions
         .filter((question) => question.referenceSop || question.whatToVerify)
@@ -262,7 +262,7 @@ export default function KnowledgeCenter() {
     [normalizedQuestions],
   )
 
-  const supabaseGuides = useMemo(
+  const databaseGuides = useMemo(
     () =>
       normalizedQuestions.map((question) => ({
         id: question.id,
@@ -283,12 +283,12 @@ export default function KnowledgeCenter() {
   )
 
   const guideSource = useMemo(
-    () => (supabaseGuides.length ? supabaseGuides : knowledgeGuides || []),
-    [supabaseGuides],
+    () => (databaseGuides.length ? databaseGuides : knowledgeGuides || []),
+    [databaseGuides],
   )
   const referenceSource = useMemo(
-    () => (supabaseReferences.length ? supabaseReferences : sopReferenceCatalog || []),
-    [supabaseReferences],
+    () => (databaseReferences.length ? databaseReferences : sopReferenceCatalog || []),
+    [databaseReferences],
   )
 
   const filteredReferences = useMemo(() => {
@@ -422,7 +422,7 @@ export default function KnowledgeCenter() {
       </Card>
 
       {loading && !['guides', 'sop'].includes(activeTab) && (
-        <LoadingState label="Loading audit master data from Supabase..." />
+        <LoadingState label="Loading audit master data from PostgreSQL..." />
       )}
 
       {error && !['guides', 'sop'].includes(activeTab) && (

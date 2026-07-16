@@ -1,5 +1,4 @@
-import { supabase, supabaseConfigError } from '../lib/supabaseClient.js'
-import { apiClient, isBackendApiConfigured } from '../lib/apiClient.js'
+import { apiClient } from '../lib/apiClient.js'
 
 const isoColumns = [
   ['iso_9001', 'ISO 9001'],
@@ -8,12 +7,6 @@ const isoColumns = [
   ['iso_37001', 'ISO 37001'],
   ['iso_22301', 'ISO 22301'],
 ]
-
-function requireSupabase() {
-  if (supabaseConfigError || !supabase) {
-    throw new Error(supabaseConfigError || 'Supabase is not connected.')
-  }
-}
 
 function hasIsoValue(value) {
   if (value === null || value === undefined || value === false || value === 0) return false
@@ -30,19 +23,6 @@ function toDisplayText(value) {
     return Object.values(value).map(toDisplayText).filter(Boolean).join(', ')
   }
   return String(value)
-}
-
-function readableError(tableName, error) {
-  console.error(`Unable to query ${tableName}:`, error)
-  return new Error(`Unable to load audit master data from ${tableName}.`)
-}
-
-async function selectTable(tableName) {
-  requireSupabase()
-  const { data, error } = await supabase.from(tableName).select('*')
-
-  if (error) throw readableError(tableName, error)
-  return data ?? []
 }
 
 export function getIsoStandardsFromQuestion(row) {
@@ -84,8 +64,7 @@ export function normalizeAuditQuestion(row) {
 }
 
 export async function fetchAuditThemes() {
-  if (isBackendApiConfigured) return apiClient.get('themes')
-  return selectTable('audit_master_themes')
+  return apiClient.get('themes')
 }
 
 async function fetchAllBackendQuestions() {
@@ -101,23 +80,19 @@ async function fetchAllBackendQuestions() {
 }
 
 export async function fetchAuditQuestions() {
-  if (isBackendApiConfigured) {
-    const rows = await fetchAllBackendQuestions()
-    return rows.map((question) => ({
-      ...question,
-      id: question.questionKey,
-      standardCodes: question.isoStandards || [],
-      standardCode: question.isoStandards?.[0] || '',
-      referenceSop: question.auditorGuideline || question.whatToVerify || '',
-      pic: question.applicableFunction || 'Function Owner',
-      status: 'Not Started',
-      auditorCheck: 'Not Checked',
-      auditorNotes: '',
-      recommendation: question.riskReview || question.kpiReview || question.whatToVerify || '',
-    }))
-  }
-  const rows = await selectTable('audit_master_questions')
-  return rows.map(normalizeAuditQuestion)
+  const rows = await fetchAllBackendQuestions()
+  return rows.map((question) => ({
+    ...question,
+    id: question.questionKey,
+    standardCodes: question.isoStandards || [],
+    standardCode: question.isoStandards?.[0] || '',
+    referenceSop: question.auditorGuideline || question.whatToVerify || '',
+    pic: question.applicableFunction || 'Function Owner',
+    status: 'Not Started',
+    auditorCheck: 'Not Checked',
+    auditorNotes: '',
+    recommendation: question.riskReview || question.kpiReview || question.whatToVerify || '',
+  }))
 }
 
 export async function fetchQuestionsByIso(isoCode) {
@@ -161,7 +136,6 @@ export async function fetchQuestionsByFunction(functionName) {
 // Backward-compatible raw master getters used by the Knowledge Center tabs.
 export async function getAuditThemes() {
   const themes = await fetchAuditThemes()
-  if (!isBackendApiConfigured) return themes
   return themes.map((theme) => ({
     theme_id: theme.themeCode,
     audit_theme: theme.auditTheme,
@@ -173,9 +147,8 @@ export async function getAuditThemes() {
 }
 
 export async function getAuditQuestions() {
-  if (isBackendApiConfigured) {
-    const questions = await fetchAuditQuestions()
-    return questions.map((question) => ({
+  const questions = await fetchAuditQuestions()
+  return questions.map((question) => ({
       question_key: question.questionKey,
       theme_code: question.themeCode,
       system_domain: question.systemDomain,
@@ -196,22 +169,17 @@ export async function getAuditQuestions() {
       question_category: question.questionCategory,
       applicable_auditee: question.applicableAuditee,
       remarks: question.remarks,
-    }))
-  }
-  return selectTable('audit_master_questions')
+  }))
 }
 
 export async function getIsoCoverage() {
-  if (isBackendApiConfigured) return []
-  return selectTable('audit_master_iso_coverage')
+  return []
 }
 
 export async function getAuditMethodology() {
-  if (isBackendApiConfigured) return []
-  return selectTable('audit_master_methodology_steps')
+  return []
 }
 
 export async function getAuditPrinciples() {
-  if (isBackendApiConfigured) return []
-  return selectTable('audit_master_principles')
+  return []
 }

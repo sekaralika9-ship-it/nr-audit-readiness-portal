@@ -1,35 +1,38 @@
-# React + Vite
+# NR Audit Readiness Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Enterprise audit-readiness workspace built with React/Vite, an ASP.NET Core 8 API, and PostgreSQL. Authentication is owned by the API through ASP.NET Core Identity and signed JWTs.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-## Automated testing
-
-Run unit and component tests:
+Start PostgreSQL, then configure `backend/.env` from `backend/.env.example`. From `backend/`:
 
 ```bash
+export DATABASE_CONNECTION_STRING='Host=localhost;Port=5432;Database=nr_audit_readiness;Username=postgres;Password=your-password'
+export JWT_SIGNING_KEY='replace-with-a-random-secret-of-at-least-32-bytes'
+export ASPNETCORE_URLS='http://localhost:5000'
+dotnet ef database update --project AuditReadiness.Infrastructure --startup-project AuditReadiness.Api
+dotnet run --project AuditReadiness.Api
+```
+
+In another terminal, from the repository root:
+
+```bash
+cp .env.example .env.local
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173`. New accounts are stored in PostgreSQL and receive an eight-hour portal JWT.
+
+## Verification
+
+```bash
+npm run lint
 npm run test:run
+npm run build
+cd backend && dotnet test AuditReadiness.sln -c Release
 ```
 
-Run the browser tests that do not require an account:
+Authenticated Playwright tests use a dedicated non-production portal account. Copy `.env.e2e.example` to `.env.e2e.local`, fill the credentials, then run `npm run test:e2e`.
 
-```bash
-npm run test:e2e
-```
-
-To verify authenticated Supabase writes and RLS, copy `.env.e2e.example` to
-`.env.e2e.local` and add a dedicated non-production test account. The local file is
-ignored by Git. Authenticated tests create a temporary document and restore profile
-changes after verification.
+See [backend/README.md](backend/README.md) for API endpoints, migrations, and Railway deployment variables.
