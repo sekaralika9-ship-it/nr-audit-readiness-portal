@@ -1,12 +1,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY AuditReadiness.sln ./
 COPY AuditReadiness.Api/AuditReadiness.Api.csproj AuditReadiness.Api/
 COPY AuditReadiness.Application/AuditReadiness.Application.csproj AuditReadiness.Application/
 COPY AuditReadiness.Domain/AuditReadiness.Domain.csproj AuditReadiness.Domain/
 COPY AuditReadiness.Infrastructure/AuditReadiness.Infrastructure.csproj AuditReadiness.Infrastructure/
-COPY AuditReadiness.Tests/AuditReadiness.Tests.csproj AuditReadiness.Tests/
-RUN dotnet restore AuditReadiness.sln
+RUN dotnet restore AuditReadiness.Api/AuditReadiness.Api.csproj
 COPY . .
 RUN dotnet publish AuditReadiness.Api/AuditReadiness.Api.csproj -c Release -o /app/publish --no-restore
 
