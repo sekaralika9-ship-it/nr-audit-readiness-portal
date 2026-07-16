@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   AlertCircle,
   Archive,
@@ -20,6 +20,7 @@ import { evidenceStatuses, ownerFunctions } from '../data/evidenceManagementData
 import { getAllQuestions } from '../data/isoReadinessData.js'
 import useAuditMasterQuestions from '../hooks/useAuditMasterQuestions.js'
 import { getEvidenceItems, saveEvidenceItem } from '../services/evidenceService.js'
+import { addApiEvidence, getApiEvidence, isBackendApiConfigured } from '../services/workspaceApiService.js'
 
 const isoStandards = ['ISO 9001', 'ISO 14001', 'ISO 45001', 'ISO 37001', 'ISO 22301']
 
@@ -28,6 +29,7 @@ function optionValue(item) {
 }
 
 function EvidenceForm({ onCreate, requirements, context }) {
+  const [submitError, setSubmitError] = useState('')
   const [form, setForm] = useState({
     evidenceTitle: '',
     requirementId: '',
@@ -52,15 +54,16 @@ function EvidenceForm({ onCreate, requirements, context }) {
     setForm((current) => ({ ...current, [field]: value }))
   }
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
     if (!selectedRequirement) return
+    setSubmitError('')
 
     const standardCode = selectedRequirement.standardCodes.includes(context.iso)
       ? context.iso
       : selectedRequirement.standardCode || selectedRequirement.standardCodes[0] || ''
 
-    const saved = saveEvidenceItem({
+    const evidenceRecord = {
       id: `EV-${Date.now()}`,
       workspaceId: context.workspaceId,
       questionKey: selectedRequirement.questionKey || selectedRequirement.id,
@@ -74,7 +77,16 @@ function EvidenceForm({ onCreate, requirements, context }) {
       oneDriveLink: form.oneDriveLink,
       notes: form.notes,
       createdAt: new Date().toISOString(),
-    })
+    }
+    let saved
+    try {
+      saved = isBackendApiConfigured
+        ? await addApiEvidence(context.workspaceId, selectedRequirement, form)
+        : saveEvidenceItem(evidenceRecord)
+    } catch (error) {
+      setSubmitError(error.message || 'Unable to save evidence.')
+      return
+    }
     onCreate(saved)
     setForm((current) => ({
       ...current,
@@ -161,7 +173,7 @@ function EvidenceForm({ onCreate, requirements, context }) {
 
         <label className="block lg:col-span-2">
           <span className="text-sm font-semibold text-slate-700">OneDrive Evidence Link</span>
-          <input type="url" pattern="https://.*" title="Enter a secure URL starting with https://" value={form.oneDriveLink} onChange={(event) => updateField('oneDriveLink', event.target.value)} placeholder="Paste OneDrive evidence link" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100" />
+          <input type="url" pattern="https://.*" required={isBackendApiConfigured} title="Enter a secure URL starting with https://" value={form.oneDriveLink} onChange={(event) => updateField('oneDriveLink', event.target.value)} placeholder="Paste OneDrive evidence link" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100" />
           {form.oneDriveLink && !form.oneDriveLink.startsWith('https://') ? <span className="mt-1 block text-xs font-semibold text-amber-700">Use a valid URL starting with https://</span> : null}
         </label>
 
@@ -171,6 +183,7 @@ function EvidenceForm({ onCreate, requirements, context }) {
         </label>
 
         <div className="lg:col-span-2">
+          {submitError ? <p className="mb-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700" role="alert">{submitError}</p> : null}
           <Button type="submit" className="w-full py-3"><Plus size={18} /> Add Evidence Item</Button>
         </div>
       </form>
@@ -299,7 +312,12 @@ export default function EvidenceLibrary() {
   }
   const fallbackQuestions = useMemo(() => getAllQuestions(), [])
   const { questions: requirements, loading, message, usingFallback } = useAuditMasterQuestions(fallbackQuestions)
-  const [items, setItems] = useState(() => getEvidenceItems())
+  const [items, setItems] = useState(() => isBackendApiConfigured ? [] : getEvidenceItems())
+
+  useEffect(() => {
+    if (!isBackendApiConfigured || !context.workspaceId || !context.questionKey) return
+    getApiEvidence(context.workspaceId, context.questionKey).then(setItems).catch(() => setItems([]))
+  }, [context.questionKey, context.workspaceId])
 
   return (
     <div>

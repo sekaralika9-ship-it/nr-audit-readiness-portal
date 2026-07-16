@@ -1,0 +1,8 @@
+**/bin
+**/obj
+**/.vs
+**/.idea
+AuditReadiness.Tests
+.env
+.env.*
+!.env.example

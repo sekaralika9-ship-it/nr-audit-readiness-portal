@@ -1,4 +1,5 @@
 import { supabase, supabaseConfigError } from '../lib/supabaseClient.js'
+import { apiClient, isBackendApiConfigured } from '../lib/apiClient.js'
 
 const isoColumns = [
   ['iso_9001', 'ISO 9001'],
@@ -83,10 +84,38 @@ export function normalizeAuditQuestion(row) {
 }
 
 export async function fetchAuditThemes() {
+  if (isBackendApiConfigured) return apiClient.get('themes')
   return selectTable('audit_master_themes')
 }
 
+async function fetchAllBackendQuestions() {
+  const pageSize = 100
+  const rows = []
+
+  for (let page = 1; ; page += 1) {
+    const response = await apiClient.get(`questions?page=${page}&pageSize=${pageSize}`)
+    const batch = Array.isArray(response) ? response : response.data || []
+    rows.push(...batch)
+    if (batch.length < pageSize) return rows
+  }
+}
+
 export async function fetchAuditQuestions() {
+  if (isBackendApiConfigured) {
+    const rows = await fetchAllBackendQuestions()
+    return rows.map((question) => ({
+      ...question,
+      id: question.questionKey,
+      standardCodes: question.isoStandards || [],
+      standardCode: question.isoStandards?.[0] || '',
+      referenceSop: question.auditorGuideline || question.whatToVerify || '',
+      pic: question.applicableFunction || 'Function Owner',
+      status: 'Not Started',
+      auditorCheck: 'Not Checked',
+      auditorNotes: '',
+      recommendation: question.riskReview || question.kpiReview || question.whatToVerify || '',
+    }))
+  }
   const rows = await selectTable('audit_master_questions')
   return rows.map(normalizeAuditQuestion)
 }
@@ -131,21 +160,58 @@ export async function fetchQuestionsByFunction(functionName) {
 
 // Backward-compatible raw master getters used by the Knowledge Center tabs.
 export async function getAuditThemes() {
-  return fetchAuditThemes()
+  const themes = await fetchAuditThemes()
+  if (!isBackendApiConfigured) return themes
+  return themes.map((theme) => ({
+    theme_id: theme.themeCode,
+    audit_theme: theme.auditTheme,
+    audit_objective: theme.auditObjective,
+    primary_focus: theme.primaryFocus,
+    applicable_function: theme.applicableFunction,
+    related_iso_standards: theme.relatedIsoStandards,
+  }))
 }
 
 export async function getAuditQuestions() {
+  if (isBackendApiConfigured) {
+    const questions = await fetchAuditQuestions()
+    return questions.map((question) => ({
+      question_key: question.questionKey,
+      theme_code: question.themeCode,
+      system_domain: question.systemDomain,
+      objective: question.objective,
+      applicable_function: question.applicableFunction,
+      what_to_verify: question.whatToVerify,
+      audit_question: question.auditQuestion,
+      evidence: question.requiredEvidence,
+      kpi_review: question.kpiReview,
+      risk_review: question.riskReview,
+      iso_9001: question.standardCodes.includes('ISO 9001') ? 'Applicable' : '',
+      iso_14001: question.standardCodes.includes('ISO 14001') ? 'Applicable' : '',
+      iso_45001: question.standardCodes.includes('ISO 45001') ? 'Applicable' : '',
+      iso_37001: question.standardCodes.includes('ISO 37001') ? 'Applicable' : '',
+      iso_22301: question.standardCodes.includes('ISO 22301') ? 'Applicable' : '',
+      auditor_guideline: question.auditorGuideline,
+      evidence_indicator: question.evidenceIndicator,
+      question_category: question.questionCategory,
+      applicable_auditee: question.applicableAuditee,
+      remarks: question.remarks,
+    }))
+  }
   return selectTable('audit_master_questions')
 }
 
 export async function getIsoCoverage() {
+  if (isBackendApiConfigured) return []
   return selectTable('audit_master_iso_coverage')
 }
 
 export async function getAuditMethodology() {
+  if (isBackendApiConfigured) return []
   return selectTable('audit_master_methodology_steps')
 }
 
 export async function getAuditPrinciples() {
+  if (isBackendApiConfigured) return []
   return selectTable('audit_master_principles')
 }

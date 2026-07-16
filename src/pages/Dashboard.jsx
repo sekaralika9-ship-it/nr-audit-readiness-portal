@@ -20,6 +20,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import { isoStandards } from '../data/isoReadinessData.js'
 import { getEvidenceItems } from '../services/evidenceService.js'
 import { getStoredWorkspaces, setActiveStoredWorkspace } from '../utils/portalStorage.js'
+import { getApiWorkspaces, isBackendApiConfigured } from '../services/workspaceApiService.js'
 
 const metricIcons = [ClipboardCheck, FolderOpen, FileCheck2, ShieldCheck]
 
@@ -75,10 +76,14 @@ function toneIcon(tone) {
 }
 
 export default function Dashboard() {
-  const [workspaces, setWorkspaces] = useState(() => getStoredWorkspaces())
+  const [workspaces, setWorkspaces] = useState(() => isBackendApiConfigured ? [] : getStoredWorkspaces())
   const [evidenceItems, setEvidenceItems] = useState(() => getEvidenceItems())
 
   useEffect(() => {
+    if (isBackendApiConfigured) {
+      getApiWorkspaces().then(setWorkspaces).catch(() => setWorkspaces([]))
+      return undefined
+    }
     const refreshWorkspaces = () => setWorkspaces(getStoredWorkspaces())
     const refreshEvidence = () => setEvidenceItems(getEvidenceItems())
     window.addEventListener('nr-workspaces-updated', refreshWorkspaces)
@@ -145,7 +150,7 @@ export default function Dashboard() {
                     key={workspace.id}
                     to="/audit-readiness"
                     state={{ workspaceId: workspace.id }}
-                    onClick={() => setActiveStoredWorkspace(workspace.id)}
+                    onClick={() => { if (!isBackendApiConfigured) setActiveStoredWorkspace(workspace.id) }}
                     className="flex items-center justify-between gap-4 p-5 transition hover:bg-slate-50"
                   >
                     <div className="min-w-0">

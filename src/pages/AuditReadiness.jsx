@@ -29,6 +29,17 @@ import {
   setActiveStoredWorkspace,
 } from '../utils/portalStorage.js'
 import { deleteEvidenceByWorkspace, getEvidenceItems } from '../services/evidenceService.js'
+import {
+  createApiWorkspace,
+  deleteApiWorkspace,
+  getApiWorkspace,
+  getApiWorkspaceEvidence,
+  getApiWorkspaceQuestions,
+  getApiWorkspaces,
+  isBackendApiConfigured,
+  saveApiAssessment,
+  updateApiWorkspace,
+} from '../services/workspaceApiService.js'
 
 const auditees = [
   { code: 'all-auditees', name: 'All Auditees' },
@@ -147,12 +158,22 @@ function CapabilityCard({ label, description, icon: Icon, to, onClick }) {
 }
 
 function WorkspaceForm({ onCreate, initialValue = null, onCancel = null }) {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState(() => {
+    const start = new Date()
+    const end = new Date(start)
+    end.setDate(end.getDate() + 30)
+    return {
     name: initialValue?.name || '',
     standardId: initialValue?.standardId || 'iso-9001',
     auditeeCode: initialValue?.auditeeCode || auditees[1].code,
     functionName: initialValue?.functionName || auditees[1].name,
+    auditFunction: initialValue?.auditFunction || initialValue?.functionName || auditees[1].name,
+    auditPeriodStart: initialValue?.auditPeriodStart || start.toISOString().slice(0, 10),
+    auditPeriodEnd: initialValue?.auditPeriodEnd || end.toISOString().slice(0, 10),
+    leadAuditorName: initialValue?.leadAuditorName || '',
+    status: initialValue?.status || 'Draft',
     scope: initialValue?.scope || initialValue?.description || '',
+    }
   })
 
   function updateField(field, value) {
@@ -247,6 +268,35 @@ function WorkspaceForm({ onCreate, initialValue = null, onCancel = null }) {
             className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100"
           />
         </label>
+
+        <label className="block">
+          <span className="text-sm font-semibold text-slate-700">Audit Function</span>
+          <input required value={form.auditFunction} onChange={(event) => updateField('auditFunction', event.target.value)} placeholder="Function responsible for this audit" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
+        </label>
+
+        <label className="block">
+          <span className="text-sm font-semibold text-slate-700">Lead Auditor</span>
+          <input value={form.leadAuditorName} onChange={(event) => updateField('leadAuditorName', event.target.value)} placeholder="Lead auditor name" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
+        </label>
+
+        <label className="block">
+          <span className="text-sm font-semibold text-slate-700">Audit Period Start</span>
+          <input type="date" required value={form.auditPeriodStart} onChange={(event) => updateField('auditPeriodStart', event.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
+        </label>
+
+        <label className="block">
+          <span className="text-sm font-semibold text-slate-700">Audit Period End</span>
+          <input type="date" min={form.auditPeriodStart} required value={form.auditPeriodEnd} onChange={(event) => updateField('auditPeriodEnd', event.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
+        </label>
+
+        {initialValue ? (
+          <label className="block lg:col-span-2">
+            <span className="text-sm font-semibold text-slate-700">Workspace Status</span>
+            <select value={form.status} onChange={(event) => updateField('status', event.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+              {['Draft', 'Active', 'UnderReview', 'Completed', 'Archived'].map((value) => <option key={value} value={value}>{value === 'UnderReview' ? 'Under Review' : value}</option>)}
+            </select>
+          </label>
+        ) : null}
 
         <div className="lg:col-span-2">
           <div className="flex flex-wrap gap-3">
@@ -639,7 +689,9 @@ export default function AuditReadiness() {
   const [evidenceItems, setEvidenceItems] = useState(() => getEvidenceItems())
 
   useEffect(() => {
-    const refreshEvidence = () => setEvidenceItems(getEvidenceItems())
+    const refreshEvidence = () => {
+      if (!isBackendApiConfigured) setEvidenceItems(getEvidenceItems())
+    }
     window.addEventListener('nr-evidence-updated', refreshEvidence)
     window.addEventListener('focus', refreshEvidence)
     return () => {
@@ -647,6 +699,34 @@ export default function AuditReadiness() {
       window.removeEventListener('focus', refreshEvidence)
     }
   }, [])
+
+  useEffect(() => {
+    if (!isBackendApiConfigured) return
+    let active = true
+    const requestedId = location.state?.workspaceId
+    Promise.all([
+      getApiWorkspaces(),
+      requestedId ? getApiWorkspace(requestedId) : Promise.resolve(null),
+      requestedId ? getApiWorkspaceQuestions(requestedId) : Promise.resolve([]),
+    ])
+      .then(([items, requestedWorkspace, backendQuestions]) => {
+        if (!active) return
+        setSavedWorkspaces(items)
+        if (requestedWorkspace) {
+          setWorkspace(requestedWorkspace)
+          setQuestionUpdates(Object.fromEntries(backendQuestions.map((question) => [question.id, {
+            status: question.status,
+            auditorCheck: question.auditorCheck,
+            auditorNotes: question.auditorNotes,
+          }])))
+          getApiWorkspaceEvidence(requestedWorkspace.id, backendQuestions)
+            .then((backendEvidence) => { if (active) setEvidenceItems(backendEvidence) })
+            .catch((error) => { if (active) setCapabilityMessage(error.message || 'Unable to load backend evidence.') })
+        }
+      })
+      .catch((error) => { if (active) setCapabilityMessage(error.message || 'Unable to load backend workspaces.') })
+    return () => { active = false }
+  }, [location.state?.workspaceId])
 
   const hydratedQuestions = useMemo(
     () => masterQuestions.map((question) => ({ ...question, ...questionUpdates[question.id] })),
@@ -685,7 +765,11 @@ export default function AuditReadiness() {
       [id]: { ...questionUpdates[id], ...patch, updatedAt: new Date().toISOString() },
     }
     setQuestionUpdates(nextUpdates)
-    if (workspace) {
+    if (workspace && isBackendApiConfigured) {
+      saveApiAssessment(workspace.id, id, nextUpdates[id]).catch((error) => {
+        setCapabilityMessage(error.message || 'Unable to save the assessment to the backend.')
+      })
+    } else if (workspace) {
       const saved = saveStoredWorkspace({
         ...workspace,
         questionUpdates: nextUpdates,
@@ -697,7 +781,22 @@ export default function AuditReadiness() {
     setSelectedQuestion((current) => current?.id === id ? { ...current, ...patch } : current)
   }
 
-  function handleWorkspaceCreate(nextWorkspace) {
+  async function handleWorkspaceCreate(nextWorkspace) {
+    if (isBackendApiConfigured) {
+      try {
+        const saved = await createApiWorkspace(nextWorkspace)
+        setWorkspace(null)
+        setSavedWorkspaces((current) => [saved, ...current.filter((item) => item.id !== saved.id)])
+        setQuestionUpdates({})
+        setSelectedQuestion(null)
+        setQuery('')
+        setSelectedTheme('all-themes')
+        setCapabilityMessage('Workspace created in the audit backend. Select its card to open the detailed review.')
+      } catch (error) {
+        setCapabilityMessage(error.message || 'Unable to create the workspace.')
+      }
+      return
+    }
     saveStoredWorkspace({
       ...nextWorkspace,
       id: `WS-${Date.now()}`,
@@ -714,7 +813,21 @@ export default function AuditReadiness() {
     setCapabilityMessage('Workspace created and saved. Select its card to open the detailed workspace review.')
   }
 
-  function handleWorkspaceUpdate(updates) {
+  async function handleWorkspaceUpdate(updates) {
+    if (isBackendApiConfigured) {
+      try {
+        const saved = await updateApiWorkspace(workspace.id, { ...workspace, ...updates })
+        setWorkspace(saved)
+        setSavedWorkspaces((current) => current.map((item) => item.id === saved.id ? saved : item))
+        setSelectedQuestion(null)
+        setSelectedTheme('all-themes')
+        setEditingWorkspace(false)
+        setCapabilityMessage('Workspace changes saved to the audit backend.')
+      } catch (error) {
+        setCapabilityMessage(error.message || 'Unable to update the workspace.')
+      }
+      return
+    }
     const previousStandard = workspace.standardId
     const saved = saveStoredWorkspace({
       ...workspace,
@@ -731,7 +844,32 @@ export default function AuditReadiness() {
     setCapabilityMessage('Workspace changes saved.')
   }
 
-  function openSavedWorkspace(workspaceId) {
+  async function openSavedWorkspace(workspaceId) {
+    if (isBackendApiConfigured) {
+      try {
+        const [saved, backendQuestions] = await Promise.all([
+          getApiWorkspace(workspaceId),
+          getApiWorkspaceQuestions(workspaceId),
+        ])
+        const backendEvidence = await getApiWorkspaceEvidence(workspaceId, backendQuestions)
+        const updates = Object.fromEntries(backendQuestions.map((question) => [question.id, {
+          status: question.status,
+          auditorCheck: question.auditorCheck,
+          auditorNotes: question.auditorNotes,
+        }]))
+        setWorkspace(saved)
+        setEvidenceItems(backendEvidence)
+        setQuestionUpdates(updates)
+        setSelectedQuestion(null)
+        setSelectedTheme('all-themes')
+        setEditingWorkspace(false)
+        setQuery('')
+        setCapabilityMessage('Backend workspace opened with its saved assessments.')
+      } catch (error) {
+        setCapabilityMessage(error.message || 'Unable to open the workspace.')
+      }
+      return
+    }
     const saved = setActiveStoredWorkspace(workspaceId)
     if (!saved) return
     setWorkspace(saved)
@@ -743,12 +881,24 @@ export default function AuditReadiness() {
     setCapabilityMessage('Saved workspace opened and ready to present.')
   }
 
-  function removeSavedWorkspace(workspaceId) {
+  async function removeSavedWorkspace(workspaceId) {
     const workspaceToDelete = savedWorkspaces.find((item) => item.id === workspaceId)
     const confirmed = window.confirm(
       `Delete "${workspaceToDelete?.name || 'this workspace'}"? Its linked evidence will also be deleted. This action cannot be undone.`,
     )
     if (!confirmed) return
+
+    if (isBackendApiConfigured) {
+      try {
+        await deleteApiWorkspace(workspaceId)
+        setSavedWorkspaces((current) => current.filter((item) => item.id !== workspaceId))
+        if (workspace?.id === workspaceId) setWorkspace(null)
+        setCapabilityMessage('Workspace and its related records were deleted from the backend.')
+      } catch (error) {
+        setCapabilityMessage(error.message || 'Unable to delete the workspace.')
+      }
+      return
+    }
 
     deleteEvidenceByWorkspace(workspaceId)
     const nextWorkspaces = deleteStoredWorkspace(workspaceId)
@@ -802,7 +952,7 @@ export default function AuditReadiness() {
   }
 
   const activeMetrics = workspace
-    ? calculateWorkspaceMetrics(workspace, masterQuestions, evidenceItems)
+    ? calculateWorkspaceMetrics({ ...workspace, questionStates: questionUpdates }, masterQuestions, evidenceItems)
     : null
 
   return (
