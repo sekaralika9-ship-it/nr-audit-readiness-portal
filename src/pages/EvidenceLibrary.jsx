@@ -20,7 +20,7 @@ import { evidenceStatuses, ownerFunctions } from '../data/evidenceManagementData
 import { getAllQuestions } from '../data/isoReadinessData.js'
 import useAuditMasterQuestions from '../hooks/useAuditMasterQuestions.js'
 import { getEvidenceItems, saveEvidenceItem } from '../services/evidenceService.js'
-import { addApiEvidence, getApiEvidence, getApiEvidenceLibrary, isBackendApiConfigured } from '../services/workspaceApiService.js'
+import { addApiEvidence, getApiEvidence, getApiEvidenceLibrary, getApiWorkspaceQuestions, isBackendApiConfigured } from '../services/workspaceApiService.js'
 
 const isoStandards = ['ISO 9001', 'ISO 14001', 'ISO 45001', 'ISO 37001', 'ISO 22301']
 
@@ -135,22 +135,34 @@ function EvidenceForm({ onCreate, requirements, context }) {
           />
         </label>
 
-        <label className="block lg:col-span-2">
-          <span className="text-sm font-semibold text-slate-700">Mapped Audit Requirement</span>
-          <select
-            value={effectiveRequirementId}
-            onChange={(event) => updateField('requirementId', event.target.value)}
-            required
-            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100"
-          >
-            <option value="">Select audit requirement</option>
-            {requirements.map((item) => (
-              <option key={item.id} value={item.questionKey || item.id}>
-                {item.standardCodes.join(', ') || 'ISO'} · {item.themeCode || 'Theme'} · {item.questionKey || item.id} — {item.auditQuestion}
-              </option>
-            ))}
-          </select>
-        </label>
+        {context.questionKey ? (
+          <div className="lg:col-span-2">
+            <p className="text-sm font-semibold text-slate-700">Mapped Audit Requirement</p>
+            <div className="mt-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+              <p className="text-xs font-bold uppercase tracking-wide text-emerald-700">Automatically linked from the selected question</p>
+              <p className="mt-1 text-sm font-semibold leading-6 text-[#0B1F3A]">
+                {selectedRequirement?.questionKey || context.questionKey} — {selectedRequirement?.auditQuestion || 'Selected audit question'}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <label className="block lg:col-span-2">
+            <span className="text-sm font-semibold text-slate-700">Mapped Audit Requirement</span>
+            <select
+              value={effectiveRequirementId}
+              onChange={(event) => updateField('requirementId', event.target.value)}
+              required
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100"
+            >
+              <option value="">Select audit requirement</option>
+              {requirements.map((item) => (
+                <option key={item.id} value={item.questionKey || item.id}>
+                  {item.standardCodes.join(', ') || 'ISO'} · {item.themeCode || 'Theme'} · {item.questionKey || item.id} — {item.auditQuestion}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
         <label className="block">
           <span className="text-sm font-semibold text-slate-700">Owner Function</span>
@@ -313,14 +325,31 @@ export default function EvidenceLibrary() {
   const fallbackQuestions = useMemo(() => getAllQuestions(), [])
   const { questions: requirements, loading, message, usingFallback } = useAuditMasterQuestions(fallbackQuestions)
   const [items, setItems] = useState(() => isBackendApiConfigured ? [] : getEvidenceItems())
+  const [contextRequirement, setContextRequirement] = useState(null)
 
   useEffect(() => {
     if (!isBackendApiConfigured) return
-    const request = context.workspaceId && context.questionKey
-      ? getApiEvidence(context.workspaceId, context.questionKey)
-      : getApiEvidenceLibrary()
-    request.then(setItems).catch(() => setItems([]))
+    if (context.workspaceId && context.questionKey) {
+      Promise.all([
+        getApiEvidence(context.workspaceId, context.questionKey),
+        getApiWorkspaceQuestions(context.workspaceId),
+      ])
+        .then(([savedEvidence, workspaceQuestions]) => {
+          setItems(savedEvidence)
+          setContextRequirement(workspaceQuestions.find((question) =>
+            (question.questionKey || question.id) === context.questionKey,
+          ) || null)
+        })
+        .catch(() => {
+          setItems([])
+          setContextRequirement(null)
+        })
+      return
+    }
+    getApiEvidenceLibrary().then(setItems).catch(() => setItems([]))
   }, [context.questionKey, context.workspaceId])
+
+  const evidenceRequirements = contextRequirement ? [contextRequirement] : requirements
 
   return (
     <div>
@@ -332,13 +361,13 @@ export default function EvidenceLibrary() {
       </div>
       {message ? <Card className={`mb-6 p-4 ${usingFallback ? 'border-amber-200 bg-amber-50' : ''}`}><div className="flex items-center gap-3 text-amber-800" role="status"><AlertCircle size={18} /><p className="text-sm font-semibold">{message}</p></div></Card> : null}
       <div className="grid items-start gap-6 xl:grid-cols-[500px_1fr]">
-        <div className="xl:sticky xl:top-24"><EvidenceForm requirements={requirements} context={context} onCreate={(item) => setItems((current) => [item, ...current.filter((entry) => entry.id !== item.id)])} /></div>
+        <div className="xl:sticky xl:top-24"><EvidenceForm requirements={evidenceRequirements} context={context} onCreate={(item) => setItems((current) => [item, ...current.filter((entry) => entry.id !== item.id)])} /></div>
         <EvidenceRegister items={items} contextQuestionKey={context.questionKey} contextWorkspaceId={context.workspaceId} />
       </div>
       <section className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {[["Evidence Mapping", Link2], ["Document Readiness", FileCheck2], ["Evidence Upload Preparation", UploadCloud], ["Controlled Archive", Archive]].map(([label, Icon]) => <Card key={label} className="p-5"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-[#00A651]"><Icon size={21} /></div><p className="mt-4 text-sm font-semibold leading-5 text-slate-700">{label}</p></Card>)}
       </section>
-      <div className="mt-6"><RequirementCatalog requirements={requirements} loading={loading} /></div>
+      <div className="mt-6"><RequirementCatalog requirements={evidenceRequirements} loading={loading && !contextRequirement} /></div>
     </div>
   )
 }
