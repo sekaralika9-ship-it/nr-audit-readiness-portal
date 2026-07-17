@@ -27,11 +27,15 @@ SMTP_PASSWORD=replace-with-provider-app-password
 SMTP_FROM_EMAIL=sender@example.com
 SMTP_FROM_NAME=NR Audit Readiness Portal
 SMTP_USE_SSL=true
+REGISTRATION_ALLOWED_EMAILS=approved.employee@example.com
+REGISTRATION_ALLOWED_DOMAINS=nusantararegas.com
 ```
 
 `DATABASE_CONNECTION_STRING` also accepts a `postgres://` or `postgresql://` URL, including Railway's database URL. Never commit database credentials or the JWT signing key.
 
 SMTP is required to deliver password-reset links in production. For local Development without SMTP, the Forgot Password page displays a one-hour development reset link instead. Never commit the SMTP password; for Gmail use an App Password rather than the normal account password.
+
+Production account registration is closed by default. Set `REGISTRATION_ALLOWED_EMAILS` to a comma-separated list of approved addresses and/or `REGISTRATION_ALLOWED_DOMAINS` to approved company domains. `REGISTRATION_ALLOW_ALL=true` should only be used intentionally for local demos. Existing accounts can still sign in when registration is closed.
 
 ## Local commands
 
@@ -85,6 +89,9 @@ SMTP_PASSWORD=<email-provider-app-password>
 SMTP_FROM_EMAIL=<reset-email-sender>
 SMTP_FROM_NAME=NR Audit Readiness Portal
 SMTP_USE_SSL=true
+REGISTRATION_ALLOWED_EMAILS=<comma-separated-approved-addresses>
+# Or, after the official company domain is confirmed:
+REGISTRATION_ALLOWED_DOMAINS=<approved-company-domain>
 ```
 
 `APPLY_MIGRATIONS=true` applies pending EF Core migrations before the API starts. Use it for the current single-instance demo deployment. For a multi-instance production rollout, run migrations as a separate release job.
@@ -96,3 +103,23 @@ VITE_API_BASE_URL=https://your-api.up.railway.app/api/v1
 ```
 
 The master tables are created by migrations. Import the supplied 13-theme and 218-question CSV files once into a new hosted database before presenting the full question catalog.
+
+## PostgreSQL backups
+
+Railway's native scheduled backups should be enabled for the Postgres volume in the Railway dashboard. Keep a separate encrypted export before schema changes and before important demonstrations:
+
+```bash
+cd backend
+export DATABASE_PUBLIC_URL='<Railway Postgres public URL>'
+read -s 'BACKUP_ENCRYPTION_PASSWORD?Backup encryption password: '
+export BACKUP_ENCRYPTION_PASSWORD
+./scripts/backup-postgres.sh
+```
+
+Backup files are encrypted with AES-256 and excluded from Git. Copy them to an approved company-controlled storage location. Test restoration into a separate empty database—not production—using:
+
+```bash
+export RESTORE_DATABASE_URL='<separate test database URL>'
+export CONFIRM_RESTORE=RESTORE_NR_AUDIT_DATABASE
+./scripts/restore-postgres.sh ./backups/nr-audit-readiness-<timestamp>.dump.enc
+```

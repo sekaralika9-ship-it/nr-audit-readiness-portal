@@ -66,6 +66,7 @@ builder.Services.AddCors(options => options.AddPolicy("Frontend", policy =>
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddSingleton<IRegistrationAccessPolicy, ConfigurationRegistrationAccessPolicy>();
 builder.Services.AddSingleton<IPasswordResetEmailSender, SmtpPasswordResetEmailSender>();
 var connectionString = DatabaseConnection.Resolve(builder.Configuration);
 builder.Services.AddHealthChecks().AddNpgSql(connectionString, name: "postgresql", tags: ["ready"]);

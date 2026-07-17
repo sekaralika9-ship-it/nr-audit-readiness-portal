@@ -64,7 +64,7 @@ export default function SignUp() {
                 Create your portal account
               </h1>
               <p className="mt-3 max-w-md text-sm leading-6 text-slate-600">
-                Register your account before accessing the audit readiness workspace.
+                Register with an email address approved by the portal administrator.
               </p>
             </div>
 

@@ -32,6 +32,7 @@ public sealed class AuthController(
     UserManager<ApplicationUser> userManager,
     RoleManager<IdentityRole<Guid>> roleManager,
     IJwtTokenService tokenService,
+    IRegistrationAccessPolicy registrationAccessPolicy,
     IPasswordResetEmailSender passwordResetEmailSender,
     IConfiguration configuration,
     IWebHostEnvironment environment) : ControllerBase
@@ -41,6 +42,14 @@ public sealed class AuthController(
     [HttpPost("register"), AllowAnonymous]
     public async Task<ActionResult<ApiResponse<AuthTokenDto>>> Register(RegisterRequest request)
     {
+        if (!registrationAccessPolicy.IsAllowed(request.Email))
+            return StatusCode(StatusCodes.Status403Forbidden, new ProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Title = "Account registration is restricted.",
+                Detail = "Contact the portal administrator to approve this email address."
+            });
+
         var user = new ApplicationUser
         {
             Id = Guid.NewGuid(),

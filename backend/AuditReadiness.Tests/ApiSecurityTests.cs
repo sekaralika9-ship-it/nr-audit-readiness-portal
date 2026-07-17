@@ -9,11 +9,13 @@ using AuditReadiness.Api;
 using AuditReadiness.Api.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuditReadiness.Tests;
@@ -101,6 +103,52 @@ public sealed class ApiSecurityTests : IClassFixture<AuditApiFactory>
             newPassword = "AuditPortal789!"
         });
         reusedToken.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Register_RejectsUnapprovedEmailWhenAllowlistIsConfigured()
+    {
+        using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureAppConfiguration((_, configuration) => configuration.AddInMemoryCollection(
+                new Dictionary<string, string?>
+                {
+                    ["REGISTRATION_ALLOWED_EMAILS"] = "approved@example.com"
+                })));
+        var client = factory.CreateClient();
+
+        var rejected = await client.PostAsJsonAsync("/api/v1/auth/register", new
+        {
+            email = $"unapproved-{Guid.NewGuid():N}@example.com",
+            password = "AuditPortal123!",
+            fullName = "Unapproved User",
+            function = "Internal Audit"
+        });
+
+        rejected.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await rejected.Content.ReadFromJsonAsync<ProblemDetails>())!.Title
+            .Should().Be("Account registration is restricted.");
+    }
+
+    [Fact]
+    public async Task Register_AllowsApprovedDomainWhenAllowlistIsConfigured()
+    {
+        using var factory = _factory.WithWebHostBuilder(builder =>
+            builder.ConfigureAppConfiguration((_, configuration) => configuration.AddInMemoryCollection(
+                new Dictionary<string, string?>
+                {
+                    ["REGISTRATION_ALLOWED_DOMAINS"] = "nusantararegas.com"
+                })));
+        var client = factory.CreateClient();
+
+        var accepted = await client.PostAsJsonAsync("/api/v1/auth/register", new
+        {
+            email = $"employee-{Guid.NewGuid():N}@nusantararegas.com",
+            password = "AuditPortal123!",
+            fullName = "Approved Employee",
+            function = "Internal Audit"
+        });
+
+        accepted.StatusCode.Should().Be(HttpStatusCode.OK, await accepted.Content.ReadAsStringAsync());
     }
 
     [Fact]

@@ -16,6 +16,9 @@ coverage
 playwright-report
 test-results
 *.local
+backups/
+*.dump
+*.dump.enc
 
 # Editor directories and files
 .vscode/*
