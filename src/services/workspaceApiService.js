@@ -5,7 +5,7 @@ export { isBackendApiConfigured }
 
 const isoIdByCode = new Map(isoStandards.map((item) => [item.code, item.id]))
 const resultToUi = {
-  NotAssessed: 'Not Checked',
+  NotAssessed: 'Not Assessed',
   Ok: 'OK',
   Ofi: 'OFI',
   Minor: 'Minor',
@@ -14,6 +14,7 @@ const resultToUi = {
 }
 const resultToApi = {
   'Not Checked': 'NotAssessed',
+  'Not Assessed': 'NotAssessed',
   OK: 'Ok',
   OFI: 'Ofi',
   Minor: 'Minor',
@@ -34,6 +35,7 @@ export function fromApiWorkspace(item) {
     auditeeName: item.auditeeName,
     functionName: item.auditeeName,
     auditFunction: item.auditFunction,
+    auditLocation: item.auditLocation || '',
     auditPeriodStart: item.auditPeriodStart,
     auditPeriodEnd: item.auditPeriodEnd,
     leadAuditorId: item.leadAuditorId,
@@ -54,6 +56,7 @@ function toApiWorkspace(item) {
     auditPeriodStart: item.auditPeriodStart,
     auditPeriodEnd: item.auditPeriodEnd,
     auditFunction: item.auditFunction || item.functionName,
+    auditLocation: item.auditLocation || null,
     auditeeId: item.auditeeCode,
     auditeeName: item.functionName,
     leadAuditorId: item.leadAuditorId || null,
@@ -90,10 +93,24 @@ export async function getApiWorkspaceQuestions(id) {
   return items.map((item) => ({
     ...item.question,
     id: item.question.questionKey,
+    standardCodes: item.question.isoStandards || [],
+    standardCode: item.question.isoStandards?.[0] || '',
+    themeCode: item.question.functionName || item.question.locationName || item.question.section,
+    systemDomain: item.question.section === 'CORE' ? 'Core Questions' : item.question.section === 'SPECIFIC' ? 'Function-Specific / Location Questions' : 'Legacy Questions',
+    objective: item.question.auditType || item.question.reference || '',
+    whatToVerify: item.question.auditTrail || '',
     requiredEvidence: item.question.requiredEvidence,
+    auditorGuideline: item.question.samplingGuide || '',
+    referenceSop: item.question.reference || '',
+    applicableFunction: item.question.functionName || item.question.locationName || '',
     status: item.assessment?.checklistStatus || 'Not Started',
-    auditorCheck: resultToUi[item.assessment?.assessmentResult] || 'Not Checked',
+    auditorCheck: resultToUi[item.assessment?.assessmentResult] || 'Not Assessed',
     auditorNotes: item.assessment?.auditorNotes || '',
+    auditeeResponse: item.assessment?.auditeeResponse || '',
+    recommendation: item.assessment?.correctiveAction || '',
+    pic: item.assessment?.assignedPerson || '',
+    dueDate: item.assessment?.dueDate || '',
+    assessmentUpdatedAt: item.assessment?.updatedAt || null,
     evidenceCount: item.evidenceCount,
   }))
 }
@@ -105,8 +122,8 @@ export async function saveApiAssessment(workspaceId, questionKey, state) {
     checklistCompleted: state.status === 'Ready',
     auditorNotes: state.auditorNotes || null,
     auditeeResponse: state.auditeeResponse || null,
-    correctiveAction: state.correctiveAction || null,
-    assignedPerson: state.assignedPerson || null,
+    correctiveAction: state.recommendation || state.correctiveAction || null,
+    assignedPerson: state.pic || state.assignedPerson || null,
     dueDate: state.dueDate || null,
   })
 }
@@ -139,6 +156,15 @@ export async function getApiWorkspaceEvidence(workspaceId, questions) {
       getApiEvidence(workspaceId, question.questionKey || question.id)),
   )
   return evidenceGroups.flat()
+}
+
+export async function getApiEvidenceLibrary() {
+  const workspaces = await getApiWorkspaces()
+  const workspaceEvidence = await Promise.all(workspaces.map(async (workspace) => {
+    const questions = await getApiWorkspaceQuestions(workspace.id)
+    return getApiWorkspaceEvidence(workspace.id, questions)
+  }))
+  return workspaceEvidence.flat()
 }
 
 export async function addApiEvidence(workspaceId, question, form) {

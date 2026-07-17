@@ -20,7 +20,7 @@ import EmptyState from '../components/ui/EmptyState.jsx'
 import { isoStandards } from '../data/isoReadinessData.js'
 import { getEvidenceItems } from '../services/evidenceService.js'
 import { getStoredWorkspaces, setActiveStoredWorkspace } from '../utils/portalStorage.js'
-import { getApiWorkspaces, isBackendApiConfigured } from '../services/workspaceApiService.js'
+import { getApiEvidenceLibrary, getApiWorkspaces, isBackendApiConfigured } from '../services/workspaceApiService.js'
 
 const metricIcons = [ClipboardCheck, FolderOpen, FileCheck2, ShieldCheck]
 
@@ -77,11 +77,19 @@ function toneIcon(tone) {
 
 export default function Dashboard() {
   const [workspaces, setWorkspaces] = useState(() => isBackendApiConfigured ? [] : getStoredWorkspaces())
-  const [evidenceItems, setEvidenceItems] = useState(() => getEvidenceItems())
+  const [evidenceItems, setEvidenceItems] = useState(() => isBackendApiConfigured ? [] : getEvidenceItems())
 
   useEffect(() => {
     if (isBackendApiConfigured) {
-      getApiWorkspaces().then(setWorkspaces).catch(() => setWorkspaces([]))
+      Promise.all([getApiWorkspaces(), getApiEvidenceLibrary()])
+        .then(([savedWorkspaces, savedEvidence]) => {
+          setWorkspaces(savedWorkspaces)
+          setEvidenceItems(savedEvidence)
+        })
+        .catch(() => {
+          setWorkspaces([])
+          setEvidenceItems([])
+        })
       return undefined
     }
     const refreshWorkspaces = () => setWorkspaces(getStoredWorkspaces())

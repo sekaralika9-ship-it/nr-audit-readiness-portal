@@ -43,6 +43,22 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
         return row is null ? null : ToQuestion(row);
     }
 
+    public async Task<IReadOnlyList<KeyQuestionDto>> GetKeyQuestionsAsync(string? function, string? location, string? section, string? isoStandard, CancellationToken cancellationToken)
+    {
+        var query = db.KeyQuestions.AsNoTracking().Where(x => x.IsActive);
+        if (!string.IsNullOrWhiteSpace(function))
+        {
+            var scopes = FunctionNameNormalizer.WorkspaceScopes(function, function).ToArray();
+            query = query.Where(x => x.NormalizedFunctionName != null && scopes.Contains(x.NormalizedFunctionName));
+        }
+        if (!string.IsNullOrWhiteSpace(location)) query = query.Where(x => x.LocationName != null && x.LocationName.ToLower() == location.Trim().ToLower());
+        if (!string.IsNullOrWhiteSpace(section)) query = query.Where(x => x.Section.ToLower() == section.Trim().ToLower());
+        var rows = (await query.OrderBy(x => x.FunctionName).ThenBy(x => x.LocationName).ThenBy(x => x.Section).ThenBy(x => x.DisplayOrder).ToListAsync(cancellationToken)).Select(ToKeyQuestion);
+        if (!string.IsNullOrWhiteSpace(isoStandard) && !isoStandard.Equals("All ISO", StringComparison.OrdinalIgnoreCase))
+            rows = rows.Where(x => x.IsoStandards.Contains(isoStandard.Trim(), StringComparer.OrdinalIgnoreCase));
+        return rows.ToList();
+    }
+
     public async Task<IReadOnlyList<WorkspaceDto>> GetWorkspacesAsync(UserContext user, CancellationToken cancellationToken)
     {
         var query = db.Workspaces.AsNoTracking().Include(x => x.Members).AsQueryable();
@@ -56,7 +72,7 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
         var workspace = new AuditWorkspace
         {
             WorkspaceName = Clean(request.WorkspaceName), AuditPeriodStart = request.AuditPeriodStart, AuditPeriodEnd = request.AuditPeriodEnd,
-            AuditFunction = Clean(request.AuditFunction), AuditeeId = Clean(request.AuditeeId), AuditeeName = Clean(request.AuditeeName),
+            AuditFunction = Clean(request.AuditFunction), AuditLocation = CleanNullable(request.AuditLocation), AuditeeId = Clean(request.AuditeeId), AuditeeName = Clean(request.AuditeeName),
             LeadAuditorId = request.LeadAuditorId, LeadAuditorName = CleanNullable(request.LeadAuditorName),
             SelectedIsoStandards = NormalizeIso(request.SelectedIsoStandards), WorkspaceStatus = request.WorkspaceStatus,
             CreatedBy = user.UserId, CreatedAt = now, UpdatedAt = now,
@@ -80,6 +96,7 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
         workspace.AuditPeriodStart = request.AuditPeriodStart;
         workspace.AuditPeriodEnd = request.AuditPeriodEnd;
         workspace.AuditFunction = Clean(request.AuditFunction);
+        workspace.AuditLocation = CleanNullable(request.AuditLocation);
         workspace.AuditeeId = Clean(request.AuditeeId);
         workspace.AuditeeName = Clean(request.AuditeeName);
         workspace.LeadAuditorId = request.LeadAuditorId;
@@ -220,12 +237,14 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
     {
         var workspace = await AuthorizedWorkspaceAsync(workspaceId, user, false, cancellationToken);
         var questions = await QuestionsForWorkspaceAsync(workspace, cancellationToken);
-        var assessments = await db.Assessments.AsNoTracking().Where(x => x.WorkspaceId == workspaceId).ToListAsync(cancellationToken);
+        var applicableQuestionKeys = questions.Select(x => x.QuestionKey).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var assessments = (await db.Assessments.AsNoTracking().Where(x => x.WorkspaceId == workspaceId).ToListAsync(cancellationToken))
+            .Where(x => applicableQuestionKeys.Contains(x.QuestionKey)).ToList();
         var byQuestion = assessments.ToDictionary(x => x.QuestionKey);
         var evidenceCounts = (await db.Evidence.AsNoTracking().Where(x => x.WorkspaceId == workspaceId).Select(x => x.QuestionKey).ToListAsync(cancellationToken))
             .GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
         FindingGroupDto Group(string key, IEnumerable<AuditQuestionAssessment> values) => new(key, values.Count(x => x.AssessmentResult == AssessmentResult.Ok), values.Count(x => x.AssessmentResult == AssessmentResult.Ofi), values.Count(x => x.AssessmentResult == AssessmentResult.Minor), values.Count(x => x.AssessmentResult == AssessmentResult.Major), values.Count(x => x.AssessmentResult == AssessmentResult.NotApplicable));
-        var byTheme = questions.GroupBy(x => x.ThemeCode).Select(group => Group(group.Key, group.Where(x => byQuestion.ContainsKey(x.QuestionKey)).Select(x => byQuestion[x.QuestionKey]))).ToList();
+        var byTheme = questions.GroupBy(x => x.FunctionName ?? x.LocationName ?? x.Section).Select(group => Group(group.Key, group.Where(x => byQuestion.ContainsKey(x.QuestionKey)).Select(x => byQuestion[x.QuestionKey]))).ToList();
         var byIso = workspace.SelectedIsoStandards.Select(iso => Group(iso, questions.Where(x => x.IsoStandards.Contains(iso)).Where(x => byQuestion.ContainsKey(x.QuestionKey)).Select(x => byQuestion[x.QuestionKey]))).ToList();
         var assessed = assessments.Count(x => x.AssessmentResult != AssessmentResult.NotAssessed);
         return new(ToWorkspace(workspace), questions.Count, assessed,
@@ -234,7 +253,14 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
             assessments.Count(x => x.AssessmentResult == AssessmentResult.NotApplicable), questions.Count == 0 ? 0 : Math.Round(assessed * 100m / questions.Count, 2),
             byTheme, byIso, questions.Select(x => new QuestionEvidenceSummaryDto(x.QuestionKey, evidenceCounts.GetValueOrDefault(x.QuestionKey))).ToList(),
             questions.Where(x => evidenceCounts.GetValueOrDefault(x.QuestionKey) == 0).Select(x => x.QuestionKey).ToList(),
-            questions.Where(x => !byQuestion.ContainsKey(x.QuestionKey)).Select(x => x.QuestionKey).ToList());
+            questions.Where(x => !byQuestion.ContainsKey(x.QuestionKey)).Select(x => x.QuestionKey).ToList(),
+            questions.Select(x =>
+            {
+                byQuestion.TryGetValue(x.QuestionKey, out var assessment);
+                return new ReportQuestionDto(x.QuestionKey, x.Section, x.AuditQuestion, x.FunctionName, x.LocationName, x.IsoClauses,
+                    assessment?.AssessmentResult ?? AssessmentResult.NotAssessed, assessment?.AuditorNotes, assessment?.CorrectiveAction,
+                    assessment?.AssignedPerson, evidenceCounts.GetValueOrDefault(x.QuestionKey));
+            }).ToList());
     }
 
     public async Task<IReadOnlyList<ActivityDto>> GetActivitiesAsync(Guid workspaceId, UserContext user, CancellationToken cancellationToken)
@@ -254,16 +280,39 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
         return workspace;
     }
 
-    private async Task<List<QuestionDto>> QuestionsForWorkspaceAsync(AuditWorkspace workspace, CancellationToken cancellationToken)
+    private async Task<List<KeyQuestionDto>> QuestionsForWorkspaceAsync(AuditWorkspace workspace, CancellationToken cancellationToken)
     {
-        var all = (await MasterQuestions().ToListAsync(cancellationToken)).Select(ToQuestion);
-        var selected = workspace.SelectedIsoStandards;
-        return all.Where(x => string.IsNullOrWhiteSpace(workspace.AuditeeId) || workspace.AuditeeId.Equals("all-auditees", StringComparison.OrdinalIgnoreCase) ||
+        var rows = await db.KeyQuestions.AsNoTracking().Where(x => x.IsActive).OrderBy(x => x.Section).ThenBy(x => x.DisplayOrder).ToListAsync(cancellationToken);
+        var scopes = FunctionNameNormalizer.WorkspaceScopes(workspace.AuditFunction, workspace.AuditeeName);
+        var location = FunctionNameNormalizer.Normalize(workspace.AuditLocation);
+        var matched = rows.Where(x =>
+                (x.NormalizedFunctionName is not null && scopes.Contains(x.NormalizedFunctionName)) ||
+                (!string.IsNullOrWhiteSpace(location) && FunctionNameNormalizer.Normalize(x.LocationName) == location))
+            .Select(ToKeyQuestion)
+            .Where(x => x.IsoStandards.Length == 0 || x.IsoStandards.Any(iso => workspace.SelectedIsoStandards.Contains(iso, StringComparer.OrdinalIgnoreCase)))
+            .GroupBy(x => NormalizeQuestionText(x.AuditQuestion))
+            .Select(group => group.OrderBy(x => x.Section == "SPECIFIC" ? 0 : 1).First())
+            .OrderBy(x => x.Section == "CORE" ? 0 : 1).ThenBy(x => x.DisplayOrder).ToList();
+        if (matched.Count > 0) return matched;
+
+        // Before the additive catalog exists, retain the original behavior. Once seeded, only explicitly
+        // referenced historical questions remain visible; new workspaces never receive the full old bank.
+        var catalogAvailable = rows.Count > 0;
+        var historicalKeys = catalogAvailable
+            ? (await db.Assessments.AsNoTracking().Where(x => x.WorkspaceId == workspace.Id).Select(x => x.QuestionKey).ToListAsync(cancellationToken))
+                .Concat(await db.Evidence.AsNoTracking().Where(x => x.WorkspaceId == workspace.Id).Select(x => x.QuestionKey).ToListAsync(cancellationToken))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase)
+            : [];
+        var legacy = (await MasterQuestions().ToListAsync(cancellationToken)).Select(ToQuestion)
+            .Where(x => !catalogAvailable || historicalKeys.Contains(x.QuestionKey))
+            .Where(x => string.IsNullOrWhiteSpace(workspace.AuditeeId) || workspace.AuditeeId.Equals("all-auditees", StringComparison.OrdinalIgnoreCase) ||
                 (string.IsNullOrWhiteSpace(x.ApplicableAuditee)
                     ? x.ThemeCode.Equals(workspace.AuditeeId, StringComparison.OrdinalIgnoreCase)
                     : ContainsDelimitedValue(x.ApplicableAuditee, workspace.AuditeeId)))
             .Where(x => string.IsNullOrWhiteSpace(workspace.AuditFunction) || (x.ApplicableFunction ?? "").Contains("Semua Fungsi", StringComparison.OrdinalIgnoreCase) || (x.ApplicableFunction ?? "").Contains(workspace.AuditFunction, StringComparison.OrdinalIgnoreCase))
-            .Where(x => x.IsoStandards.Any(iso => selected.Contains(iso, StringComparer.OrdinalIgnoreCase))).OrderBy(x => x.ThemeCode).ThenBy(x => x.QuestionKey).ToList();
+            .Where(x => x.IsoStandards.Any(iso => workspace.SelectedIsoStandards.Contains(iso, StringComparer.OrdinalIgnoreCase)))
+            .OrderBy(x => x.ThemeCode).ThenBy(x => x.QuestionKey);
+        return legacy.Select(x => new KeyQuestionDto(x.QuestionKey, x.ApplicableFunction, null, "LEGACY", x.AuditQuestion, x.QuestionCategory, x.Remarks, x.WhatToVerify, x.RequiredEvidence, x.AuditorGuideline, new Dictionary<string, string>(), x.IsoStandards, 0, "audit_master_questions")).ToList();
     }
 
     private async Task EnsureQuestionAsync(AuditWorkspace workspace, string questionKey, CancellationToken cancellationToken)
@@ -280,7 +329,7 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
     private static void CheckConcurrency(AuditWorkspace workspace, DateTimeOffset? expected) { if (expected.HasValue && workspace.UpdatedAt != expected.Value) throw new ConflictException("Workspace was updated by another user. Reload it and retry."); }
 
     private void AddActivity(Guid workspaceId, Guid userId, string action, string entityType, string entityId, object? oldValue, object? newValue) => db.ActivityLogs.Add(new() { WorkspaceId = workspaceId, UserId = userId, ActionType = action, EntityType = entityType, EntityId = entityId, OldValue = oldValue is null ? null : JsonSerializer.Serialize(oldValue), NewValue = newValue is null ? null : JsonSerializer.Serialize(newValue) });
-    private static WorkspaceDto ToWorkspace(AuditWorkspace x) => new(x.Id, x.WorkspaceName, x.AuditPeriodStart, x.AuditPeriodEnd, x.AuditFunction, x.AuditeeId, x.AuditeeName, x.LeadAuditorId, x.LeadAuditorName, x.SelectedIsoStandards, x.WorkspaceStatus, x.CreatedBy, x.CreatedAt, x.UpdatedAt, x.Members.Select(m => new WorkspaceMemberDto(m.Id, m.UserId, m.UserName, m.UserEmail, m.MemberRole)).ToList());
+    private static WorkspaceDto ToWorkspace(AuditWorkspace x) => new(x.Id, x.WorkspaceName, x.AuditPeriodStart, x.AuditPeriodEnd, x.AuditFunction, x.AuditLocation, x.AuditeeId, x.AuditeeName, x.LeadAuditorId, x.LeadAuditorName, x.SelectedIsoStandards, x.WorkspaceStatus, x.CreatedBy, x.CreatedAt, x.UpdatedAt, x.Members.Select(m => new WorkspaceMemberDto(m.Id, m.UserId, m.UserName, m.UserEmail, m.MemberRole)).ToList());
     private static AssessmentDto ToAssessment(AuditQuestionAssessment x) => new(x.Id, x.WorkspaceId, x.QuestionKey, x.AssessmentResult, x.ChecklistStatus, x.ChecklistCompleted, x.AuditorNotes, x.AuditeeResponse, x.CorrectiveAction, x.AssignedPerson, x.DueDate, x.ReviewedBy, x.ReviewedAt, x.CreatedBy, x.CreatedAt, x.UpdatedAt);
     private static EvidenceDto ToEvidence(AuditEvidence x) => new(x.Id, x.WorkspaceId, x.QuestionKey, x.ThemeCode, x.IsoStandard, x.EvidenceDescription, x.EvidenceCategory, x.SourceProvider, x.SourceUrl, x.StorageUrl, x.FileName, x.MimeType, x.FileSize, x.Version, x.UploadedBy, x.CreatedAt, x.UpdatedAt);
     private static QuestionDto ToQuestion(AuditMasterQuestion x)
@@ -289,6 +338,12 @@ public sealed class AuditService(AuditReadinessDbContext db, IEnumerable<IExtern
         if (HasIso(x.Iso9001)) standards.Add("ISO 9001"); if (HasIso(x.Iso14001)) standards.Add("ISO 14001"); if (HasIso(x.Iso45001)) standards.Add("ISO 45001"); if (HasIso(x.Iso37001)) standards.Add("ISO 37001"); if (HasIso(x.Iso22301)) standards.Add("ISO 22301");
         return new(x.QuestionKey, x.ThemeCode, x.SystemDomain, x.Objective, x.ApplicableFunction, x.WhatToVerify, x.AuditQuestion, x.Evidence, x.KpiReview, x.RiskReview, [.. standards], x.AuditorGuideline, x.EvidenceIndicator, x.QuestionCategory, x.ApplicableAuditee, x.Remarks);
     }
+    private static KeyQuestionDto ToKeyQuestion(AuditKeyQuestion x)
+    {
+        var clauses = x.IsoClauses ?? [];
+        return new(x.QuestionKey, x.FunctionName, x.LocationName, x.Section, x.QuestionText, x.AuditType, x.Reference, x.AuditTrail, x.ExpectedEvidence, x.SamplingGuide, clauses, clauses.Keys.Order().ToArray(), x.DisplayOrder, x.SourceDocument);
+    }
+    private static string NormalizeQuestionText(string value) => string.Concat(value.ToLowerInvariant().Where(char.IsLetterOrDigit));
     private static bool HasIso(string? value) => !string.IsNullOrWhiteSpace(value) && !new[] { "false", "no", "n", "0", "-", "n/a", "not applicable" }.Contains(value.Trim(), StringComparer.OrdinalIgnoreCase);
     private static bool ContainsDelimitedValue(string? values, string expected) => (values ?? "")
         .Split([',', ';', '|'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)

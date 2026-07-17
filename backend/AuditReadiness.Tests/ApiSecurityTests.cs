@@ -6,9 +6,11 @@ using System.Security.Claims;
 using System.Text;
 using AuditReadiness.Infrastructure;
 using AuditReadiness.Api;
+using AuditReadiness.Api.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -54,6 +56,51 @@ public sealed class ApiSecurityTests : IClassFixture<AuditApiFactory>
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authentication.Data.AccessToken);
         var response = await client.GetAsync("/api/v1/auth/me");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task ForgotAndResetPassword_IssueSingleUseTokenAndAllowNewPassword()
+    {
+        var client = _factory.CreateClient();
+        var email = $"password-reset-{Guid.NewGuid():N}@example.com";
+        const string originalPassword = "AuditPortal123!";
+        const string newPassword = "AuditPortal456!";
+        var register = await client.PostAsJsonAsync("/api/v1/auth/register", new
+        {
+            email,
+            password = originalPassword,
+            fullName = "Password Reset Test",
+            function = "Internal Audit"
+        });
+        register.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var forgot = await client.PostAsJsonAsync("/api/v1/auth/forgot-password", new { email });
+        forgot.StatusCode.Should().Be(HttpStatusCode.OK, await forgot.Content.ReadAsStringAsync());
+        var resetInstructions = await forgot.Content.ReadFromJsonAsync<ApiResponse<ForgotPasswordDto>>();
+        resetInstructions!.Data!.DevelopmentResetUrl.Should().NotBeNullOrWhiteSpace();
+        var resetUri = new Uri(resetInstructions.Data.DevelopmentResetUrl!);
+        var resetQuery = QueryHelpers.ParseQuery(resetUri.Query);
+
+        var reset = await client.PostAsJsonAsync("/api/v1/auth/reset-password", new
+        {
+            email = resetQuery["email"].ToString(),
+            token = resetQuery["token"].ToString(),
+            newPassword
+        });
+        reset.StatusCode.Should().Be(HttpStatusCode.OK, await reset.Content.ReadAsStringAsync());
+
+        (await client.PostAsJsonAsync("/api/v1/auth/login", new { email, password = originalPassword }))
+            .StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        (await client.PostAsJsonAsync("/api/v1/auth/login", new { email, password = newPassword }))
+            .StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var reusedToken = await client.PostAsJsonAsync("/api/v1/auth/reset-password", new
+        {
+            email,
+            token = resetQuery["token"].ToString(),
+            newPassword = "AuditPortal789!"
+        });
+        reusedToken.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]

@@ -1,0 +1,4255 @@
+[
+  {
+    "questionKey": "KQ-HSSE-CORE-01",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "HIRADC → PTW → Operasi",
+    "expectedEvidence": "HIRADC, PTW, Inspection, Incident",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-02",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-03",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "HIRADC → PTW → Operasi",
+    "expectedEvidence": "HIRADC, PTW, Inspection, Incident",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-04",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-05",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-06",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-07",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-CORE-08",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-01",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "PR → RFQ → Evaluasi → PO",
+    "expectedEvidence": "PR, RFQ, BA Evaluasi, PO, Due Diligence",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-02",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-03",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "PR → RFQ → Evaluasi → PO",
+    "expectedEvidence": "PR, RFQ, BA Evaluasi, PO, Due Diligence",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-04",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-05",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-06",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-07",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-PROC-CORE-08",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-01",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Recruitment / Training",
+    "expectedEvidence": "Training Matrix, Competency, Recruitment",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-02",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-03",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Recruitment / Training",
+    "expectedEvidence": "Training Matrix, Competency, Recruitment",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-04",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-05",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-06",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-07",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HCQM-CORE-08",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-01",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Audit Program",
+    "expectedEvidence": "Audit Plan, NCR",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-02",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-03",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Audit Program",
+    "expectedEvidence": "Audit Plan, NCR",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-04",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-05",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-06",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-07",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-CORE-08",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-01",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Backup / Access",
+    "expectedEvidence": "Backup, Access Log",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-02",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-03",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Backup / Access",
+    "expectedEvidence": "Backup, Access Log",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-04",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-05",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-06",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-07",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-ISGA-CORE-08",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-01",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal Review",
+    "expectedEvidence": "Legal Register, Contract",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-02",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-03",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal Review",
+    "expectedEvidence": "Legal Register, Contract",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-04",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-05",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-06",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-07",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-CORE-08",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-01",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Voucher → Posting",
+    "expectedEvidence": "Voucher, Approval, Reconciliation",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-02",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-03",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Voucher → Posting",
+    "expectedEvidence": "Voucher, Approval, Reconciliation",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-04",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-05",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-06",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-07",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CTRL-CORE-08",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-01",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Payment Process",
+    "expectedEvidence": "Payment Voucher, Bank Transfer",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-02",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-03",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Payment Process",
+    "expectedEvidence": "Payment Voucher, Bank Transfer",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-04",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-05",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-06",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-07",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TRSY-CORE-08",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-01",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Board Meeting",
+    "expectedEvidence": "Minutes, Resolution",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-02",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-03",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Board Meeting",
+    "expectedEvidence": "Minutes, Resolution",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-04",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-05",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-06",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-07",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-CORE-08",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-01",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "PM → Inspection",
+    "expectedEvidence": "PM Schedule, Inspection",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-02",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-03",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "PM → Inspection",
+    "expectedEvidence": "PM Schedule, Inspection",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-04",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-05",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-06",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-07",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-AIMM-CORE-08",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-01",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Operational Log",
+    "expectedEvidence": "Log Sheet, Permit",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-02",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-03",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Operational Log",
+    "expectedEvidence": "Log Sheet, Permit",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-04",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-05",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-06",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-07",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-CORE-08",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-01",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Contract Lifecycle",
+    "expectedEvidence": "Contract, Customer Feedback",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-02",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-03",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Contract Lifecycle",
+    "expectedEvidence": "Contract, Customer Feedback",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-04",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-05",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-06",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-07",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-CORE-08",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-01",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Planning → KPI Review",
+    "expectedEvidence": "RKAP, KPI Dashboard",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-02",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-03",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Planning → KPI Review",
+    "expectedEvidence": "RKAP, KPI Dashboard",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-04",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-05",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-06",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-07",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-SPP-CORE-08",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-01",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk Assessment",
+    "expectedEvidence": "Risk Register, BIA",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-02",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-03",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk Assessment",
+    "expectedEvidence": "Risk Register, BIA",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-04",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-05",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-06",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-07",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-RSG-CORE-08",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-01",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa tujuan utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Design → MOC",
+    "expectedEvidence": "Drawing, MOC",
+    "samplingGuide": "Telusuri 1 proses end-to-end",
+    "isoClauses": {
+      "ISO 9001": "4.4;6.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-02",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa risiko utama proses ini?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Risk identification",
+    "expectedEvidence": "Risk Register",
+    "samplingGuide": "Ambil risiko tertinggi",
+    "isoClauses": {
+      "ISO 9001": "6.1",
+      "ISO 14001": "6.1",
+      "ISO 45001": "6.1",
+      "ISO 37001": "4.5",
+      "ISO 22301": "6.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-03",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Tunjukkan 1 sampel proses terbaru.",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Design → MOC",
+    "expectedEvidence": "Drawing, MOC",
+    "samplingGuide": "1 sampel terbaru",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "8",
+      "ISO 45001": "8",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-04",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kompetensi dipastikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Personel pelaksana",
+    "expectedEvidence": "Competency matrix, training",
+    "samplingGuide": "1 personel",
+    "isoClauses": {
+      "ISO 9001": "7.2",
+      "ISO 45001": "7.2",
+      "ISO 37001": "7.3",
+      "ISO 22301": "7.2"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-05",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana dokumen dikendalikan?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Dokumen proses",
+    "expectedEvidence": "SOP, Form, Record",
+    "samplingGuide": "Cek revisi terbaru",
+    "isoClauses": {
+      "ISO 9001": "7.5",
+      "ISO 14001": "7.5",
+      "ISO 45001": "7.5",
+      "ISO 37001": "7.5",
+      "ISO 22301": "7.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-06",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kinerja dipantau?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Monitoring KPI",
+    "expectedEvidence": "Dashboard, KPI",
+    "samplingGuide": "3 bulan terakhir",
+    "isoClauses": {
+      "ISO 9001": "9.1",
+      "ISO 14001": "9.1",
+      "ISO 45001": "9.1",
+      "ISO 37001": "9.1",
+      "ISO 22301": "9.1"
+    },
+    "displayOrder": 6,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-07",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Bagaimana kepatuhan dipenuhi?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "Legal & compliance",
+    "expectedEvidence": "Legal register, permits",
+    "samplingGuide": "1 regulasi utama",
+    "isoClauses": {
+      "ISO 9001": "8",
+      "ISO 14001": "6.1.3",
+      "ISO 45001": "9.1.2",
+      "ISO 37001": "8",
+      "ISO 22301": "8"
+    },
+    "displayOrder": 7,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-TECH-CORE-08",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "CORE",
+    "questionText": "Apa improvement sejak audit terakhir?",
+    "auditType": "Audit Execution Matrix",
+    "reference": null,
+    "auditTrail": "CAPA",
+    "expectedEvidence": "NCR, OFI, Action Plan",
+    "samplingGuide": "1 temuan sebelumnya",
+    "isoClauses": {
+      "ISO 9001": "10.2",
+      "ISO 14001": "10.2",
+      "ISO 45001": "10.2",
+      "ISO 37001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 8,
+    "sourceDocument": "Master_Audit_Execution_Matrix_Nusantara_Regas_v1.xlsx"
+  },
+  {
+    "questionKey": "KQ-HSSE-SPECIFIC-01",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses identifikasi bahaya dan penilaian risiko K3 (HIRADC) dilakukan dan diperbarui secara berkala?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 6.1.2 · SMK3 Prinsip 2 (Perencanaan K3)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "6.1.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HSSE-SPECIFIC-02",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana program pemantauan kesehatan kerja (MCU) dilaksanakan dan ditindaklanjuti?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 9.1.1 (Pemantauan) · SMK3 Prinsip 3 (Pelaksanaan Rencana K3)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "9.1.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HSSE-SPECIFIC-03",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses investigasi dan pelaporan insiden/kecelakaan kerja dilakukan?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 10.2 (Insiden, Ketidaksesuaian & Tindakan Korektif) · SMK3 Prinsip 4",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "10.2 (Insiden, Ketidaksesuaian"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HSSE-SPECIFIC-04",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah ketersediaan dan kepatuhan penggunaan APD dipantau secara rutin?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.2 (Eliminasi Bahaya & Pengurangan Risiko K3)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.2 (Eliminasi Bahaya"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HSSE-SPECIFIC-05",
+    "functionName": "HSSE",
+    "normalizedFunctionName": "hsse",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pemenuhan peraturan perundangan K3 dipantau dan dievaluasi?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 9.1.2 (Evaluasi Kepatuhan) · SMK3 Prinsip 1 & 5",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "9.1.2"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-PROC-SPECIFIC-01",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses seleksi, evaluasi, dan kualifikasi vendor/pemasok dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 8.4.1 (Pengendalian Penyedia Eksternal)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "8.4.1"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-PROC-SPECIFIC-02",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat kebijakan gratifikasi dan pengendalian conflict of interest dalam proses pengadaan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.4 (Kontrol Non-Finansial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.4"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-PROC-SPECIFIC-03",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana mekanisme pelaporan bila ada indikasi suap atau gratifikasi dari rekanan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.9 (Peningkatan Keprihatinan/Whistleblowing)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.9"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-PROC-SPECIFIC-04",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah dokumen kontrak dan purchase order dikendalikan sesuai prosedur mutu?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 7.5 & 8.4.3",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.5"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-PROC-SPECIFIC-05",
+    "functionName": "Procurement",
+    "normalizedFunctionName": "procurement",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses due diligence terhadap rekanan/vendor baru dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.2 (Uji Kelayakan/Due Diligence)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.2"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HCQM-SPECIFIC-01",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses identifikasi kebutuhan kompetensi dan pelatihan karyawan dilakukan?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 9001:2015 & ISO 45001:2018 Klausul 7.2 (Kompetensi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "7.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HCQM-SPECIFIC-02",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah efektivitas pelatihan dievaluasi dan didokumentasikan?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 9001:2015 Klausul 7.2 & 7.3 (Kepedulian)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.2"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HCQM-SPECIFIC-03",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana aspek kesehatan (medical check up) dipertimbangkan dalam proses rekrutmen?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "SMK3 Prinsip 3 (Pelaksanaan Rencana K3)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HCQM-SPECIFIC-04",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengendalian dokumen sistem manajemen mutu dilakukan di unit ini?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 9001:2015 Klausul 7.5 (Informasi Terdokumentasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.5"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-HCQM-SPECIFIC-05",
+    "functionName": "Human Capital & Quality Management",
+    "normalizedFunctionName": "human capital quality management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah ada mekanisme penilaian kinerja yang mengaitkan kepatuhan terhadap SMT/K3?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 9001:2015 Klausul 9.1 (Pemantauan, Pengukuran, Analisis & Evaluasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "9.1 (Pemantauan, Pengukuran, Analisis"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-SPECIFIC-01",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana perencanaan program audit internal disusun (pendekatan berbasis risiko)?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Klausul Audit Internal - seluruh standar)",
+    "reference": "ISO 9001/14001/45001 & ISO 37001/22301 Klausul 9.2.1 (Program Audit Internal)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-SPECIFIC-02",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana tindak lanjut temuan audit sebelumnya dipantau hingga dinyatakan closed?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Klausul Audit Internal - seluruh standar)",
+    "reference": "Klausul 10.2 (Ketidaksesuaian & Tindakan Korektif) - seluruh standar",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-SPECIFIC-03",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah auditor internal memiliki kompetensi dan independensi yang memadai?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Klausul Audit Internal - seluruh standar)",
+    "reference": "Klausul 7.2 (Kompetensi) - seluruh standar",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-SPECIFIC-04",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana hasil audit dikomunikasikan kepada manajemen puncak?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Klausul Audit Internal - seluruh standar)",
+    "reference": "Klausul 9.3 (Tinjauan Manajemen) & 7.4 (Komunikasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AUDIT-SPECIFIC-05",
+    "functionName": "Audit Executive",
+    "normalizedFunctionName": "audit executive",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah metodologi audit internal mencakup keempat sistem manajemen (SMT, SMK3, SMAP, BCMS) secara terintegrasi?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Klausul Audit Internal - seluruh standar)",
+    "reference": "Klausul 9.2.2 (Pelaksanaan Program Audit) - seluruh standar",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-ISGA-SPECIFIC-01",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kebijakan backup data dan disaster recovery diterapkan dan diuji?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.4 (Rencana & Prosedur Keberlangsungan Bisnis)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.4 (Rencana"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-ISGA-SPECIFIC-02",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah pengendalian akses sistem informasi (user access management) dijalankan secara konsisten?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.1 (Perencanaan & Pengendalian Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.1 (Perencanaan"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-ISGA-SPECIFIC-03",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kesiapan infrastruktur TI dalam mendukung kelangsungan operasional saat terjadi gangguan?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.3 (Strategi & Solusi Keberlangsungan Bisnis)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.3 (Strategi"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-ISGA-SPECIFIC-04",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengelolaan aset dan fasilitas kantor dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 9001:2015 Klausul 7.1.3 (Infrastruktur)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.1.3"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-ISGA-SPECIFIC-05",
+    "functionName": "Information System & General Affair",
+    "normalizedFunctionName": "information system general affair",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah uji coba (drill/test) rencana pemulihan sistem dilakukan secara berkala?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.5 (Program Latihan/Exercise)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.5"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-SPECIFIC-01",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pemantauan kepatuhan terhadap peraturan perundang-undangan yang berlaku dilakukan?",
+    "auditType": "SMT (ISO 14001/45001), SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 14001:2015 & ISO 45001:2018 Klausul 9.1.2 (Evaluasi Kepatuhan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "9.1.2"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-SPECIFIC-02",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah whistleblowing system berjalan efektif dan bagaimana penanganan laporannya?",
+    "auditType": "SMT (ISO 14001/45001), SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 8.9 (Peningkatan Keprihatinan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.9"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-SPECIFIC-03",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses review kontrak untuk memastikan klausul anti-suap sudah tercakup?",
+    "auditType": "SMT (ISO 14001/45001), SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 8.4 (Kontrol Non-Finansial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.4"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-SPECIFIC-04",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah unit ini terlibat dalam pengkajian risiko hukum terkait keberlangsungan bisnis?",
+    "auditType": "SMT (ISO 14001/45001), SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.2 (Analisis Dampak Bisnis & Penilaian Risiko)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.2 (Analisis Dampak Bisnis"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LEGAL-SPECIFIC-05",
+    "functionName": "Legal & Compliance",
+    "normalizedFunctionName": "legal compliance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana dokumentasi kepatuhan regulasi (regulatory compliance) dikelola dan diperbarui?",
+    "auditType": "SMT (ISO 14001/45001), SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 4.2 (Kebutuhan Pihak Berkepentingan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "4.2"
+    },
+    "displayOrder": 5,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CTRL-SPECIFIC-01",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengendalian internal atas pelaporan keuangan dijalankan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 9.1 (Pemantauan & Pengukuran)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "9.1 (Pemantauan"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CTRL-SPECIFIC-02",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat kontrol untuk mendeteksi transaksi yang berindikasi gratifikasi/suap?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.3 (Kontrol Finansial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.3"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CTRL-SPECIFIC-03",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses rekonsiliasi dan verifikasi data keuangan dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.3 (Kontrol Finansial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.3"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CTRL-SPECIFIC-04",
+    "functionName": "Controller",
+    "normalizedFunctionName": "controller",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah laporan keuangan direview sesuai prosedur mutu yang berlaku?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 7.5 (Informasi Terdokumentasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.5"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TRSY-SPECIFIC-01",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengendalian otorisasi pembayaran dan pencairan dana dilakukan?",
+    "auditType": "SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.3 (Kontrol Finansial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.3"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TRSY-SPECIFIC-02",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat segregation of duties untuk mencegah penyalahgunaan wewenang?",
+    "auditType": "SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.3 (Kontrol Finansial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.3"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TRSY-SPECIFIC-03",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses due diligence terhadap pihak ketiga sebelum dilakukan transaksi finansial?",
+    "auditType": "SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.2 (Uji Kelayakan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.2"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TRSY-SPECIFIC-04",
+    "functionName": "Treasury",
+    "normalizedFunctionName": "treasury",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah transaksi mencurigakan dilaporkan sesuai kebijakan anti-suap perusahaan?",
+    "auditType": "SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.9 & 8.10 (Pelaporan & Investigasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.9"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-SPECIFIC-01",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengelolaan dokumen korporasi (RUPS, keputusan Direksi) dilakukan?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 7.5 (Informasi Terdokumentasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "7.5"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-SPECIFIC-02",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kebijakan anti-suap dikomunikasikan kepada pemangku kepentingan?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 7.4 (Komunikasi) & 5.2 (Kebijakan Anti-Penyuapan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "7.4"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-SPECIFIC-03",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kesiapan aspek hukum korporasi dalam mendukung rencana keberlangsungan bisnis?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.4 (Rencana & Prosedur Keberlangsungan Bisnis)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.4 (Rencana"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-CORSEC-SPECIFIC-04",
+    "functionName": "Corporate Secretary",
+    "normalizedFunctionName": "corporate secretary",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat pelaporan gratifikasi yang diterima oleh manajemen/Direksi?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 8.7 (Hadiah, Keramahtamahan & Sumbangan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.7 (Hadiah, Keramahtamahan"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AIMM-SPECIFIC-01",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana program pemeliharaan preventif terhadap aset kritikal dijalankan?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.1 (Perencanaan & Pengendalian Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.1 (Perencanaan"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AIMM-SPECIFIC-02",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah inspeksi keselamatan peralatan dilakukan sesuai jadwal yang ditetapkan?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 9.1.1 (Pemantauan & Pengukuran)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "9.1.1 (Pemantauan"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AIMM-SPECIFIC-03",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana penanganan temuan inspeksi/anomali pada peralatan?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 10.2 (Ketidaksesuaian & Tindakan Korektif)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "10.2 (Ketidaksesuaian"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-AIMM-SPECIFIC-04",
+    "functionName": "Asset Integrity & Maintenance Management",
+    "normalizedFunctionName": "asset integrity maintenance management",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah dilakukan analisis risiko terhadap integritas aset (RBI/FMEA)?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 6.1.2 (Identifikasi Bahaya & Penilaian Risiko)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "6.1.2 (Identifikasi Bahaya"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-SPECIFIC-01",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana prosedur keselamatan operasi transportasi LNG diterapkan?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.1 (Perencanaan Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.1"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-SPECIFIC-02",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah pelatihan tanggap darurat bagi kru FSRU dilakukan secara berkala?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.2 (Kesiapsiagaan & Tanggap Darurat)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.2 (Kesiapsiagaan"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-SPECIFIC-03",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pemantauan kepatuhan terhadap regulasi keselamatan pelayaran/LNG?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 9.1.2 (Evaluasi Kepatuhan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "9.1.2"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LNGOPS-SPECIFIC-04",
+    "functionName": "LNG Transportation & FSRU Operation",
+    "normalizedFunctionName": "lng transportation fsru operation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah evaluasi kinerja operasional dan insiden dilakukan secara berkala?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 9.1 & 10.2",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "9.1"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-GASORF-SPECIFIC-01",
+    "functionName": "Gas Distribusi & Man. ORF",
+    "normalizedFunctionName": "gas distribusi man orf",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengendalian operasional ORF dilakukan untuk menjaga keandalan pasokan?",
+    "auditType": "SMT (ISO 45001:2018, ISO 14001:2015), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 & ISO 14001:2015 Klausul 8.1 (Perencanaan & Pengendalian Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 14001": "8.1 (Perencanaan"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-GASORF-SPECIFIC-02",
+    "functionName": "Gas Distribusi & Man. ORF",
+    "normalizedFunctionName": "gas distribusi man orf",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat prosedur keselamatan khusus untuk area ORF dan distribusi gas?",
+    "auditType": "SMT (ISO 45001:2018, ISO 14001:2015), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.1",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.1"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-GASORF-SPECIFIC-03",
+    "functionName": "Gas Distribusi & Man. ORF",
+    "normalizedFunctionName": "gas distribusi man orf",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pemeliharaan dan kalibrasi peralatan distribusi dilakukan?",
+    "auditType": "SMT (ISO 45001:2018, ISO 14001:2015), SMK3 (PP 50/2012)",
+    "reference": "ISO 9001:2015 Klausul 7.1.5 (Sumber Daya Pemantauan & Pengukuran)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.1.5 (Sumber Daya Pemantauan"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-GASORF-SPECIFIC-04",
+    "functionName": "Gas Distribusi & Man. ORF",
+    "normalizedFunctionName": "gas distribusi man orf",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah tersedia rencana tanggap darurat untuk potensi kebocoran gas?",
+    "auditType": "SMT (ISO 45001:2018, ISO 14001:2015), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 & ISO 14001:2015 Klausul 8.2 (Kesiapsiagaan & Tanggap Darurat)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 14001": "8.2 (Kesiapsiagaan"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-SPECIFIC-01",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses negosiasi dan pengendalian kontrak komersial dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 8.2 (Persyaratan untuk Produk & Jasa)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "8.2 (Persyaratan untuk Produk"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-SPECIFIC-02",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat kebijakan anti-suap dalam interaksi dengan pelanggan/mitra bisnis?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.4 (Kontrol Non-Finansial - Komersial)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.4"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-SPECIFIC-03",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana evaluasi kepuasan pelanggan dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 9.1.2 (Kepuasan Pelanggan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "9.1.2"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-COMLNG-SPECIFIC-04",
+    "functionName": "Commercial LNG & Gas",
+    "normalizedFunctionName": "commercial lng gas",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengendalian terhadap risiko komersial (harga, volume, dsb.) dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 6.1 (Tindakan Mengatasi Risiko & Peluang)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "6.1 (Tindakan Mengatasi Risiko"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-SPP-SPECIFIC-01",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana perencanaan strategis mempertimbangkan risiko keberlangsungan bisnis?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 6.1 (Tindakan Mengatasi Risiko & Peluang)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "6.1 (Tindakan Mengatasi Risiko"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-SPP-SPECIFIC-02",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah indikator kinerja (KPI) perusahaan dipantau dan dievaluasi secara berkala?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 9001:2015 Klausul 9.1 (Pemantauan, Pengukuran, Analisis & Evaluasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "9.1 (Pemantauan, Pengukuran, Analisis"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-SPP-SPECIFIC-03",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana rencana kontinjensi disiapkan untuk skenario gangguan operasional pelabuhan?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.3 (Strategi & Solusi Keberlangsungan Bisnis)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.3 (Strategi"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-SPP-SPECIFIC-04",
+    "functionName": "Strategic Planning Port & Performance",
+    "normalizedFunctionName": "strategic planning port performance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah dilakukan review terhadap pencapaian target strategis perusahaan?",
+    "auditType": "SMT (ISO 9001:2015), BCMS (ISO 22301:2019)",
+    "reference": "ISO 9001:2015 Klausul 9.3 (Tinjauan Manajemen)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "9.3"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RSG-SPECIFIC-01",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kerangka manajemen risiko perusahaan (risk appetite, risk register) disusun?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 6.1 (Tindakan Mengatasi Risiko & Peluang)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "6.1 (Tindakan Mengatasi Risiko"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RSG-SPECIFIC-02",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah risiko suap/korupsi telah tercakup dalam risk register perusahaan?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 Klausul 4.5 (Penilaian Risiko Penyuapan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "4.5"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RSG-SPECIFIC-03",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses Business Impact Analysis (BIA) dilakukan untuk mendukung BCMS?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.2 (Analisis Dampak Bisnis & Penilaian Risiko)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.2 (Analisis Dampak Bisnis"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RSG-SPECIFIC-04",
+    "functionName": "Risk Strategy & Governance",
+    "normalizedFunctionName": "risk strategy governance",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana tata kelola risiko dilaporkan secara berkala kepada manajemen puncak?",
+    "auditType": "SMAP (ISO 37001:2016), BCMS (ISO 22301:2019)",
+    "reference": "ISO 37001:2016 & ISO 22301:2019 Klausul 9.3 (Tinjauan Manajemen)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "9.3"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RISKIMP-SPECIFIC-01",
+    "functionName": "Risk Implementation",
+    "normalizedFunctionName": "risk implementation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana mitigasi risiko operasional diimplementasikan di lapangan?",
+    "auditType": "SMT (ISO 45001:2018), BCMS (ISO 22301:2019)",
+    "reference": "ISO 45001:2018 Klausul 8.1.2 (Eliminasi Bahaya & Pengurangan Risiko)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.2 (Eliminasi Bahaya"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RISKIMP-SPECIFIC-02",
+    "functionName": "Risk Implementation",
+    "normalizedFunctionName": "risk implementation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah rencana keberlangsungan bisnis (business continuity plan) diuji secara berkala?",
+    "auditType": "SMT (ISO 45001:2018), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.5 (Program Latihan/Exercise)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.5"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RISKIMP-SPECIFIC-03",
+    "functionName": "Risk Implementation",
+    "normalizedFunctionName": "risk implementation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pemantauan efektivitas pengendalian risiko dilakukan?",
+    "auditType": "SMT (ISO 45001:2018), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 9.1 (Pemantauan & Pengukuran)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "9.1 (Pemantauan"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-RISKIMP-SPECIFIC-04",
+    "functionName": "Risk Implementation",
+    "normalizedFunctionName": "risk implementation",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat laporan insiden yang berpotensi mengancam kelangsungan operasional?",
+    "auditType": "SMT (ISO 45001:2018), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 10.2 (Ketidaksesuaian & Tindakan Korektif)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "10.2 (Ketidaksesuaian"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TECH-SPECIFIC-01",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana aspek keselamatan dipertimbangkan dalam proses desain dan rekayasa?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.1 & ISO 9001:2015 Klausul 8.3 (Desain & Pengembangan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.1",
+      "ISO 9001": "8.3 (Desain"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TECH-SPECIFIC-02",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah standar teknis dan spesifikasi proyek dikendalikan sesuai prosedur mutu?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 9001:2015 Klausul 7.5 (Informasi Terdokumentasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "7.5"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TECH-SPECIFIC-03",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses manajemen perubahan (Management of Change) untuk modifikasi teknis dilakukan?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.3 (Manajemen Perubahan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.3"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-TECH-SPECIFIC-04",
+    "functionName": "Technical & Engineering",
+    "normalizedFunctionName": "technical engineering",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah evaluasi risiko K3 dilakukan pada setiap tahapan proyek teknik?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 6.1.2 (Identifikasi Bahaya & Penilaian Risiko)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "6.1.2 (Identifikasi Bahaya"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-BDEV-SPECIFIC-01",
+    "functionName": "Business Development",
+    "normalizedFunctionName": "business development",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana proses evaluasi kelayakan proyek/bisnis baru dilakukan?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 6.1 (Tindakan Mengatasi Risiko & Peluang)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "6.1 (Tindakan Mengatasi Risiko"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-BDEV-SPECIFIC-02",
+    "functionName": "Business Development",
+    "normalizedFunctionName": "business development",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah due diligence terhadap mitra bisnis baru mencakup aspek anti-suap?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 8.2 (Uji Kelayakan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "8.2"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-BDEV-SPECIFIC-03",
+    "functionName": "Business Development",
+    "normalizedFunctionName": "business development",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pengendalian mutu diterapkan dalam pengembangan proposal bisnis?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 9001:2015 Klausul 8.1 (Perencanaan & Pengendalian Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "8.1 (Perencanaan"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-BDEV-SPECIFIC-04",
+    "functionName": "Business Development",
+    "normalizedFunctionName": "business development",
+    "locationName": null,
+    "section": "SPECIFIC",
+    "questionText": "Apakah dilakukan pemantauan risiko reputasi dalam pengembangan bisnis baru?",
+    "auditType": "SMT (ISO 9001:2015), SMAP (ISO 37001:2016)",
+    "reference": "ISO 37001:2016 Klausul 4.5 (Penilaian Risiko Penyuapan)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "4.5"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCORF-SPECIFIC-01",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan ORF Muara Karang & Rumah Singgah",
+    "section": "SPECIFIC",
+    "questionText": "Apakah kondisi fisik fasilitas ORF sesuai dengan standar keselamatan yang berlaku?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.1 (Perencanaan & Pengendalian Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.1 (Perencanaan"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCORF-SPECIFIC-02",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan ORF Muara Karang & Rumah Singgah",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pelaksanaan housekeeping dan 5R di area kerja ORF?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.1.2 (Pengendalian Risiko K3)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.2"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCORF-SPECIFIC-03",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan ORF Muara Karang & Rumah Singgah",
+    "section": "SPECIFIC",
+    "questionText": "Apakah rambu K3, jalur evakuasi, dan APAR tersedia dan berfungsi dengan baik?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "ISO 45001:2018 Klausul 8.2 (Kesiapsiagaan & Tanggap Darurat)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.2 (Kesiapsiagaan"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCORF-SPECIFIC-04",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan ORF Muara Karang & Rumah Singgah",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kondisi dan kelayakan fasilitas Rumah Singgah bagi pekerja?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012)",
+    "reference": "SMK3 Prinsip 3 (Pelaksanaan Rencana K3)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCWH-SPECIFIC-01",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Warehouse Sunter",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana sistem penyimpanan dan penataan barang di Warehouse Sunter dilakukan?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018)",
+    "reference": "ISO 9001:2015 Klausul 8.5 (Penyediaan Produk & Jasa)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "8.5 (Penyediaan Produk"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCWH-SPECIFIC-02",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Warehouse Sunter",
+    "section": "SPECIFIC",
+    "questionText": "Apakah terdapat pengendalian keluar-masuk barang (inventory control) yang memadai?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018)",
+    "reference": "ISO 9001:2015 Klausul 8.5.4 (Pemeliharaan/Preservasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "8.5.4"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCWH-SPECIFIC-03",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Warehouse Sunter",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kondisi keselamatan gudang (APAR, jalur evakuasi, penanganan B3 bila ada)?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018)",
+    "reference": "ISO 45001:2018 Klausul 8.2 (Kesiapsiagaan & Tanggap Darurat)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.2 (Kesiapsiagaan"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCWH-SPECIFIC-04",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Warehouse Sunter",
+    "section": "SPECIFIC",
+    "questionText": "Apakah tersedia bukti stock opname/inspeksi gudang secara berkala?",
+    "auditType": "SMT (ISO 9001:2015, ISO 45001:2018)",
+    "reference": "ISO 9001:2015 Klausul 9.1 (Pemantauan & Pengukuran)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 9001": "9.1 (Pemantauan"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCHQ-SPECIFIC-01",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Kantor Pusat (Wisma Nusantara)",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kondisi umum fasilitas Kantor Pusat mendukung operasional dan keselamatan kerja?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Tinjauan Umum)",
+    "reference": "ISO 45001:2018 Klausul 8.1.1 & 7.1 (Sumber Daya)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.1.1"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCHQ-SPECIFIC-02",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Kantor Pusat (Wisma Nusantara)",
+    "section": "SPECIFIC",
+    "questionText": "Apakah kebijakan anti-suap tersosialisasi dan terpampang di lingkungan kantor?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Tinjauan Umum)",
+    "reference": "ISO 37001:2016 Klausul 7.4 (Komunikasi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 37001": "7.4"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCHQ-SPECIFIC-03",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Kantor Pusat (Wisma Nusantara)",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana kesiapan sarana tanggap darurat (jalur evakuasi, titik kumpul) di Kantor Pusat?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Tinjauan Umum)",
+    "reference": "ISO 45001:2018 Klausul 8.2 & ISO 22301:2019 Klausul 8.4",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "8.2",
+      "ISO 22301": "8.4"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCHQ-SPECIFIC-04",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Kantor Pusat (Wisma Nusantara)",
+    "section": "SPECIFIC",
+    "questionText": "Apakah pengendalian akses fisik ke area kerja sudah memadai?",
+    "auditType": "SMT, SMK3, SMAP, BCMS (Tinjauan Umum)",
+    "reference": "ISO 22301:2019 Klausul 8.1 (Perencanaan & Pengendalian Operasional)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.1 (Perencanaan"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCISPS-SPECIFIC-01",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Pos ISPS Green Bay Muara Karang",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pelaksanaan prosedur keamanan sesuai ISPS Code di pos tersebut?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.4 (Rencana & Prosedur Keberlangsungan Bisnis)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.4 (Rencana"
+    },
+    "displayOrder": 1,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCISPS-SPECIFIC-02",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Pos ISPS Green Bay Muara Karang",
+    "section": "SPECIFIC",
+    "questionText": "Apakah personel Pos ISPS memiliki kompetensi/sertifikasi keamanan yang sesuai?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012), BCMS (ISO 22301:2019)",
+    "reference": "ISO 45001:2018 Klausul 7.2 (Kompetensi)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "7.2"
+    },
+    "displayOrder": 2,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCISPS-SPECIFIC-03",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Pos ISPS Green Bay Muara Karang",
+    "section": "SPECIFIC",
+    "questionText": "Bagaimana pencatatan dan pelaporan insiden keamanan dilakukan?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012), BCMS (ISO 22301:2019)",
+    "reference": "ISO 45001:2018 Klausul 10.2 & ISO 22301:2019 Klausul 10.2",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 45001": "10.2",
+      "ISO 22301": "10.2"
+    },
+    "displayOrder": 3,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  },
+  {
+    "questionKey": "KQ-LOCISPS-SPECIFIC-04",
+    "functionName": null,
+    "normalizedFunctionName": null,
+    "locationName": "Tinjauan Pos ISPS Green Bay Muara Karang",
+    "section": "SPECIFIC",
+    "questionText": "Apakah dilakukan uji coba/latihan skenario keamanan secara berkala?",
+    "auditType": "SMT (ISO 45001:2018), SMK3 (PP 50/2012), BCMS (ISO 22301:2019)",
+    "reference": "ISO 22301:2019 Klausul 8.5 (Program Latihan/Exercise)",
+    "auditTrail": null,
+    "expectedEvidence": null,
+    "samplingGuide": null,
+    "isoClauses": {
+      "ISO 22301": "8.5"
+    },
+    "displayOrder": 4,
+    "sourceDocument": "Daftar_Pertanyaan_Audit_Internal_2026_Referensi_Klausul.docx"
+  }
+]

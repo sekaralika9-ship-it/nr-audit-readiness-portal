@@ -2,6 +2,9 @@ using AuditReadiness.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Text.Json;
 
 namespace AuditReadiness.Infrastructure;
 
@@ -16,6 +19,7 @@ public sealed class AuditReadinessDbContext(DbContextOptions<AuditReadinessDbCon
     public DbSet<AuditDocument> Documents => Set<AuditDocument>();
     public DbSet<AuditMasterTheme> MasterThemes => Set<AuditMasterTheme>();
     public DbSet<AuditMasterQuestion> MasterQuestions => Set<AuditMasterQuestion>();
+    public DbSet<AuditKeyQuestion> KeyQuestions => Set<AuditKeyQuestion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,6 +53,7 @@ public sealed class AuditReadinessDbContext(DbContextOptions<AuditReadinessDbCon
             entity.Property(x => x.AuditPeriodStart).HasColumnName("audit_period_start");
             entity.Property(x => x.AuditPeriodEnd).HasColumnName("audit_period_end");
             entity.Property(x => x.AuditFunction).HasColumnName("audit_function").HasMaxLength(200);
+            entity.Property(x => x.AuditLocation).HasColumnName("audit_location").HasMaxLength(250);
             entity.Property(x => x.AuditeeId).HasColumnName("auditee_id").HasMaxLength(50);
             entity.Property(x => x.AuditeeName).HasColumnName("auditee_name").HasMaxLength(200);
             entity.Property(x => x.LeadAuditorId).HasColumnName("lead_auditor_id");
@@ -214,5 +219,42 @@ public sealed class AuditReadinessDbContext(DbContextOptions<AuditReadinessDbCon
             entity.Property(x => x.Remarks).HasColumnName("remarks");
             entity.Property(x => x.CreatedAt).HasColumnName("created_at");
         });
+
+        modelBuilder.Entity<AuditKeyQuestion>(entity =>
+        {
+            entity.ToTable("audit_key_questions");
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Id).HasColumnName("id");
+            entity.Property(x => x.QuestionKey).HasColumnName("question_key").HasMaxLength(100);
+            entity.Property(x => x.FunctionName).HasColumnName("function_name").HasMaxLength(250);
+            entity.Property(x => x.NormalizedFunctionName).HasColumnName("normalized_function_name").HasMaxLength(250);
+            entity.Property(x => x.LocationName).HasColumnName("location_name").HasMaxLength(250);
+            entity.Property(x => x.Section).HasColumnName("section").HasMaxLength(20);
+            entity.Property(x => x.QuestionText).HasColumnName("question_text").HasMaxLength(3000);
+            entity.Property(x => x.AuditType).HasColumnName("audit_type").HasMaxLength(1000);
+            entity.Property(x => x.Reference).HasColumnName("reference").HasMaxLength(2000);
+            entity.Property(x => x.AuditTrail).HasColumnName("audit_trail").HasMaxLength(3000);
+            entity.Property(x => x.ExpectedEvidence).HasColumnName("expected_evidence").HasMaxLength(3000);
+            entity.Property(x => x.SamplingGuide).HasColumnName("sampling_guide").HasMaxLength(3000);
+            var clausesProperty = entity.Property(x => x.IsoClauses)
+                .HasConversion(new ValueConverter<Dictionary<string, string>, string>(
+                    value => SerializeClauses(value), value => DeserializeClauses(value)))
+                .HasColumnName("iso_clauses").HasColumnType("jsonb");
+            clausesProperty.Metadata.SetValueComparer(new ValueComparer<Dictionary<string, string>>(
+                (left, right) => SerializeClauses(left) == SerializeClauses(right),
+                value => SerializeClauses(value).GetHashCode(),
+                value => DeserializeClauses(SerializeClauses(value))));
+            entity.Property(x => x.DisplayOrder).HasColumnName("display_order");
+            entity.Property(x => x.SourceDocument).HasColumnName("source_document").HasMaxLength(255);
+            entity.Property(x => x.IsActive).HasColumnName("is_active");
+            entity.Property(x => x.CreatedAt).HasColumnName("created_at");
+            entity.Property(x => x.UpdatedAt).HasColumnName("updated_at");
+            entity.HasIndex(x => x.QuestionKey).IsUnique();
+            entity.HasIndex(x => new { x.NormalizedFunctionName, x.Section, x.DisplayOrder });
+            entity.HasIndex(x => new { x.LocationName, x.DisplayOrder });
+        });
     }
+
+    private static string SerializeClauses(Dictionary<string, string>? value) => JsonSerializer.Serialize(value ?? []);
+    private static Dictionary<string, string> DeserializeClauses(string value) => JsonSerializer.Deserialize<Dictionary<string, string>>(value) ?? [];
 }

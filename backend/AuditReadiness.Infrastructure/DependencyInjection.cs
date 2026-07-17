@@ -25,7 +25,10 @@ public static class DependencyInjection
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
         })
             .AddRoles<IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<AuditReadinessDbContext>();
+            .AddEntityFrameworkStores<AuditReadinessDbContext>()
+            .AddDefaultTokenProviders();
+        services.Configure<DataProtectionTokenProviderOptions>(options =>
+            options.TokenLifespan = TimeSpan.FromHours(1));
         services.AddScoped<IAuditService, AuditService>();
         services.AddSingleton<IExternalFileProvider, OneDriveFileProvider>();
         services.AddSingleton<IExternalFileProvider, GenericExternalFileProvider>();

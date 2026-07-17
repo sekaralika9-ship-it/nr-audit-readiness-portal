@@ -7,6 +7,7 @@ public sealed class AuditWorkspace
     public DateOnly AuditPeriodStart { get; set; }
     public DateOnly AuditPeriodEnd { get; set; }
     public required string AuditFunction { get; set; }
+    public string? AuditLocation { get; set; }
     public required string AuditeeId { get; set; }
     public required string AuditeeName { get; set; }
     public Guid? LeadAuditorId { get; set; }
@@ -144,4 +145,26 @@ public sealed class AuditMasterQuestion
     public string? ApplicableAuditee { get; set; }
     public string? Remarks { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
+}
+
+public sealed class AuditKeyQuestion
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public required string QuestionKey { get; set; }
+    public string? FunctionName { get; set; }
+    public string? NormalizedFunctionName { get; set; }
+    public string? LocationName { get; set; }
+    public required string Section { get; set; }
+    public required string QuestionText { get; set; }
+    public string? AuditType { get; set; }
+    public string? Reference { get; set; }
+    public string? AuditTrail { get; set; }
+    public string? ExpectedEvidence { get; set; }
+    public string? SamplingGuide { get; set; }
+    public Dictionary<string, string> IsoClauses { get; set; } = [];
+    public int DisplayOrder { get; set; }
+    public required string SourceDocument { get; set; }
+    public bool IsActive { get; set; } = true;
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
 }

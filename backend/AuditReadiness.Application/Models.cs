@@ -16,6 +16,7 @@ public class CreateWorkspaceRequest : IValidatableObject
     public DateOnly AuditPeriodStart { get; init; }
     public DateOnly AuditPeriodEnd { get; init; }
     [Required, MaxLength(200)] public string AuditFunction { get; init; } = "";
+    [MaxLength(250)] public string? AuditLocation { get; init; }
     [Required, MaxLength(50)] public string AuditeeId { get; init; } = "";
     [Required, MaxLength(200)] public string AuditeeName { get; init; } = "";
     public Guid? LeadAuditorId { get; init; }
@@ -39,11 +40,12 @@ public sealed class UpdateWorkspaceRequest : CreateWorkspaceRequest
 public sealed record UpdateWorkspaceStatusRequest(WorkspaceStatus WorkspaceStatus, DateTimeOffset? ExpectedUpdatedAt);
 
 public sealed record WorkspaceMemberDto(Guid Id, Guid UserId, string UserName, string UserEmail, WorkspaceMemberRole MemberRole);
-public sealed record WorkspaceDto(Guid Id, string WorkspaceName, DateOnly AuditPeriodStart, DateOnly AuditPeriodEnd, string AuditFunction, string AuditeeId, string AuditeeName, Guid? LeadAuditorId, string? LeadAuditorName, string[] SelectedIsoStandards, WorkspaceStatus WorkspaceStatus, Guid CreatedBy, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt, IReadOnlyList<WorkspaceMemberDto> AuditorTeam);
+public sealed record WorkspaceDto(Guid Id, string WorkspaceName, DateOnly AuditPeriodStart, DateOnly AuditPeriodEnd, string AuditFunction, string? AuditLocation, string AuditeeId, string AuditeeName, Guid? LeadAuditorId, string? LeadAuditorName, string[] SelectedIsoStandards, WorkspaceStatus WorkspaceStatus, Guid CreatedBy, DateTimeOffset CreatedAt, DateTimeOffset UpdatedAt, IReadOnlyList<WorkspaceMemberDto> AuditorTeam);
 
 public sealed record ThemeDto(string ThemeCode, string AuditTheme, string? AuditObjective, string? PrimaryFocus, string? ApplicableFunction, string? RelatedIsoStandards);
 public sealed record QuestionDto(string QuestionKey, string ThemeCode, string? SystemDomain, string? Objective, string? ApplicableFunction, string? WhatToVerify, string AuditQuestion, string? RequiredEvidence, string? KpiReview, string? RiskReview, string[] IsoStandards, string? AuditorGuideline, string? EvidenceIndicator, string? QuestionCategory, string? ApplicableAuditee, string? Remarks);
-public sealed record WorkspaceQuestionDto(QuestionDto Question, AssessmentDto? Assessment, int EvidenceCount, bool AssessmentCompleted);
+public sealed record KeyQuestionDto(string QuestionKey, string? FunctionName, string? LocationName, string Section, string AuditQuestion, string? AuditType, string? Reference, string? AuditTrail, string? RequiredEvidence, string? SamplingGuide, IReadOnlyDictionary<string, string> IsoClauses, string[] IsoStandards, int DisplayOrder, string SourceDocument);
+public sealed record WorkspaceQuestionDto(KeyQuestionDto Question, AssessmentDto? Assessment, int EvidenceCount, bool AssessmentCompleted);
 
 public sealed class UpsertAssessmentRequest
 {
@@ -80,7 +82,8 @@ public sealed record EvidenceDto(Guid Id, Guid WorkspaceId, string QuestionKey, 
 public sealed record ActivityDto(Guid Id, Guid WorkspaceId, Guid UserId, string ActionType, string EntityType, string EntityId, string? OldValue, string? NewValue, DateTimeOffset CreatedAt);
 public sealed record FindingGroupDto(string Key, int Ok, int Ofi, int Minor, int Major, int NotApplicable);
 public sealed record QuestionEvidenceSummaryDto(string QuestionKey, int EvidenceCount);
-public sealed record WorkspaceReportDto(WorkspaceDto Workspace, int TotalQuestions, int AssessedQuestions, int OkCount, int OfiCount, int MinorCount, int MajorCount, int NotApplicableCount, decimal CompletionPercentage, IReadOnlyList<FindingGroupDto> FindingsByTheme, IReadOnlyList<FindingGroupDto> FindingsByIso, IReadOnlyList<QuestionEvidenceSummaryDto> EvidenceCountPerQuestion, IReadOnlyList<string> QuestionsWithoutEvidence, IReadOnlyList<string> QuestionsWithoutAssessment);
+public sealed record ReportQuestionDto(string QuestionKey, string Category, string QuestionText, string? FunctionName, string? LocationName, IReadOnlyDictionary<string, string> IsoClauses, AssessmentResult AssessmentResult, string? AuditorNotes, string? Recommendation, string? Pic, int EvidenceCount);
+public sealed record WorkspaceReportDto(WorkspaceDto Workspace, int TotalQuestions, int AssessedQuestions, int OkCount, int OfiCount, int MinorCount, int MajorCount, int NotApplicableCount, decimal CompletionPercentage, IReadOnlyList<FindingGroupDto> FindingsByTheme, IReadOnlyList<FindingGroupDto> FindingsByIso, IReadOnlyList<QuestionEvidenceSummaryDto> EvidenceCountPerQuestion, IReadOnlyList<string> QuestionsWithoutEvidence, IReadOnlyList<string> QuestionsWithoutAssessment, IReadOnlyList<ReportQuestionDto> Questions);
 
 public sealed record PagedResult<T>(IReadOnlyList<T> Items, int Page, int PageSize, int TotalItems)
 {

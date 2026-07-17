@@ -6,19 +6,27 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 const mocks = vi.hoisted(() => ({
   login: vi.fn(),
   signup: vi.fn(),
+  post: vi.fn(),
 }))
 
 vi.mock('../context/AuthContext.jsx', () => ({
   useAuth: () => ({ login: mocks.login, signup: mocks.signup }),
 }))
 
+vi.mock('../lib/apiClient.js', () => ({
+  apiClient: { post: mocks.post },
+}))
+
 import Login from './Login.jsx'
 import SignUp from './SignUp.jsx'
+import ForgotPassword from './ForgotPassword.jsx'
+import ResetPassword from './ResetPassword.jsx'
 
 describe('authentication pages', () => {
   beforeEach(() => {
     mocks.login.mockReset()
     mocks.signup.mockReset()
+    mocks.post.mockReset()
   })
 
   it('trims email and submits login credentials', async () => {
@@ -66,5 +74,39 @@ describe('authentication pages', () => {
       password: 'secret123',
     })
     expect(mocks.signup).toHaveBeenCalledOnce()
+  })
+
+  it('requests password reset instructions from the backend', async () => {
+    const user = userEvent.setup()
+    mocks.post.mockResolvedValue({ message: 'Prepared', developmentResetUrl: 'http://localhost/reset-password' })
+    render(<ForgotPassword />, { wrapper: MemoryRouter })
+
+    await user.type(screen.getByLabelText('Email'), 'auditor@example.com')
+    await user.click(screen.getByRole('button', { name: 'Send Reset Instructions' }))
+
+    await waitFor(() => expect(mocks.post).toHaveBeenCalledWith('auth/forgot-password', { email: 'auditor@example.com' }))
+    expect(screen.getByRole('heading', { name: 'Check your email' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Open local development reset link' })).toBeInTheDocument()
+  })
+
+  it('submits matching new passwords with the reset token', async () => {
+    const user = userEvent.setup()
+    mocks.post.mockResolvedValue({})
+    render(
+      <MemoryRouter initialEntries={['/reset-password?email=auditor%40example.com&token=reset-token']}>
+        <ResetPassword />
+      </MemoryRouter>,
+    )
+
+    await user.type(screen.getByLabelText('New Password'), 'NewPassword123!')
+    await user.type(screen.getByLabelText('Confirm New Password'), 'NewPassword123!')
+    await user.click(screen.getByRole('button', { name: 'Reset Password' }))
+
+    await waitFor(() => expect(mocks.post).toHaveBeenCalledWith('auth/reset-password', {
+      email: 'auditor@example.com',
+      token: 'reset-token',
+      newPassword: 'NewPassword123!',
+    }))
+    expect(screen.getByRole('heading', { name: 'Password reset successfully' })).toBeInTheDocument()
   })
 })

@@ -66,6 +66,7 @@ builder.Services.AddCors(options => options.AddPolicy("Frontend", policy =>
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddSingleton<IPasswordResetEmailSender, SmtpPasswordResetEmailSender>();
 var connectionString = DatabaseConnection.Resolve(builder.Configuration);
 builder.Services.AddHealthChecks().AddNpgSql(connectionString, name: "postgresql", tags: ["ready"]);
 builder.Services.AddEndpointsApiExplorer();
@@ -82,6 +83,7 @@ if (builder.Configuration.GetValue<bool>("APPLY_MIGRATIONS"))
     await using var scope = app.Services.CreateAsyncScope();
     var database = scope.ServiceProvider.GetRequiredService<AuditReadinessDbContext>();
     await database.Database.MigrateAsync();
+    await KeyQuestionSeeder.SeedAsync(database);
 }
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();

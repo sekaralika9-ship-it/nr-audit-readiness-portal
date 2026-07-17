@@ -20,7 +20,7 @@ import { evidenceStatuses, ownerFunctions } from '../data/evidenceManagementData
 import { getAllQuestions } from '../data/isoReadinessData.js'
 import useAuditMasterQuestions from '../hooks/useAuditMasterQuestions.js'
 import { getEvidenceItems, saveEvidenceItem } from '../services/evidenceService.js'
-import { addApiEvidence, getApiEvidence, isBackendApiConfigured } from '../services/workspaceApiService.js'
+import { addApiEvidence, getApiEvidence, getApiEvidenceLibrary, isBackendApiConfigured } from '../services/workspaceApiService.js'
 
 const isoStandards = ['ISO 9001', 'ISO 14001', 'ISO 45001', 'ISO 37001', 'ISO 22301']
 
@@ -315,8 +315,11 @@ export default function EvidenceLibrary() {
   const [items, setItems] = useState(() => isBackendApiConfigured ? [] : getEvidenceItems())
 
   useEffect(() => {
-    if (!isBackendApiConfigured || !context.workspaceId || !context.questionKey) return
-    getApiEvidence(context.workspaceId, context.questionKey).then(setItems).catch(() => setItems([]))
+    if (!isBackendApiConfigured) return
+    const request = context.workspaceId && context.questionKey
+      ? getApiEvidence(context.workspaceId, context.questionKey)
+      : getApiEvidenceLibrary()
+    request.then(setItems).catch(() => setItems([]))
   }, [context.questionKey, context.workspaceId])
 
   return (

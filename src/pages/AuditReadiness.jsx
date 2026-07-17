@@ -53,7 +53,7 @@ const allIsoStandard = {
 }
 
 const workspaceStandards = [allIsoStandard, ...isoStandards]
-const auditorCheckOptions = ['Not Checked', 'OK', 'OFI', 'Minor', 'Major']
+const auditorCheckOptions = ['Not Assessed', 'OK', 'OFI', 'Minor', 'Major']
 const questionStatusOptions = ['Not Started', 'In Progress', 'Ready', 'Needs Review']
 
 function auditorTone(value) {
@@ -97,6 +97,7 @@ function calculateWorkspaceMetrics(workspace, allQuestions, evidenceItems) {
   const count = (field, value) => values.filter((item) => item[field] === value).length
   return {
     total: values.length,
+    notAssessed: values.filter((item) => !item.auditorCheck || item.auditorCheck === 'Not Assessed' || item.auditorCheck === 'Not Checked').length,
     notStarted: count('status', 'Not Started'),
     inProgress: count('status', 'In Progress'),
     ready: count('status', 'Ready'),
@@ -105,6 +106,7 @@ function calculateWorkspaceMetrics(workspace, allQuestions, evidenceItems) {
     ofi: count('auditorCheck', 'OFI'),
     minor: count('auditorCheck', 'Minor'),
     major: count('auditorCheck', 'Major'),
+    completion: values.length ? Math.round(values.filter((item) => item.auditorCheck && !['Not Assessed', 'Not Checked'].includes(item.auditorCheck)).length * 100 / values.length) : 0,
     evidence: evidenceItems.filter((item) => item.workspaceId === workspace?.id).length,
     documents: 0,
   }
@@ -168,6 +170,7 @@ function WorkspaceForm({ onCreate, initialValue = null, onCancel = null }) {
     auditeeCode: initialValue?.auditeeCode || auditees[1].code,
     functionName: initialValue?.functionName || auditees[1].name,
     auditFunction: initialValue?.auditFunction || initialValue?.functionName || auditees[1].name,
+    auditLocation: initialValue?.auditLocation || '',
     auditPeriodStart: initialValue?.auditPeriodStart || start.toISOString().slice(0, 10),
     auditPeriodEnd: initialValue?.auditPeriodEnd || end.toISOString().slice(0, 10),
     leadAuditorName: initialValue?.leadAuditorName || '',
@@ -249,6 +252,7 @@ function WorkspaceForm({ onCreate, initialValue = null, onCancel = null }) {
                 ...current,
                 auditeeCode: auditee?.code || '',
                 functionName: auditee?.name || '',
+                auditFunction: auditee?.name || '',
               }))
             }}
             className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100"
@@ -277,6 +281,17 @@ function WorkspaceForm({ onCreate, initialValue = null, onCancel = null }) {
         <label className="block">
           <span className="text-sm font-semibold text-slate-700">Lead Auditor</span>
           <input value={form.leadAuditorName} onChange={(event) => updateField('leadAuditorName', event.target.value)} placeholder="Lead auditor name" className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100" />
+        </label>
+
+        <label className="block lg:col-span-2">
+          <span className="text-sm font-semibold text-slate-700">Audit Location (Optional)</span>
+          <select value={form.auditLocation} onChange={(event) => updateField('auditLocation', event.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm shadow-sm outline-none transition focus:border-blue-300 focus:ring-4 focus:ring-blue-100">
+            <option value="">No location review</option>
+            <option>Tinjauan ORF Muara Karang &amp; Rumah Singgah</option>
+            <option>Tinjauan Warehouse Sunter</option>
+            <option>Tinjauan Kantor Pusat (Wisma Nusantara)</option>
+            <option>Tinjauan Pos ISPS Green Bay Muara Karang</option>
+          </select>
         </label>
 
         <label className="block">
@@ -385,7 +400,7 @@ function WorkspaceSummary({ workspace, onEdit }) {
           </div>
         </div>
       </div>
-      <div className="grid divide-y divide-slate-100 md:grid-cols-4 md:divide-x md:divide-y-0">
+      <div className="grid divide-y divide-slate-100 md:grid-cols-3 xl:grid-cols-6 md:divide-x md:divide-y-0">
         <div className="px-6 py-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">ISO scope</p>
           <p className="mt-2 text-sm font-bold text-[#0B1F3A]">{standard?.code}</p>
@@ -397,6 +412,16 @@ function WorkspaceSummary({ workspace, onEdit }) {
         <div className="px-6 py-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Auditee</p>
           <p className="mt-2 text-sm font-bold text-[#0B1F3A]">{workspace.auditeeCode ? `${workspace.auditeeCode} — ` : ''}{workspace.functionName}</p>
+        </div>
+        <div className="px-6 py-5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Function / Location</p>
+          <p className="mt-2 text-sm font-bold text-[#0B1F3A]">{workspace.auditFunction || workspace.functionName}</p>
+          {workspace.auditLocation ? <p className="mt-1 text-xs leading-5 text-slate-500">{workspace.auditLocation}</p> : null}
+        </div>
+        <div className="px-6 py-5">
+          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Audit Team</p>
+          <p className="mt-2 text-sm font-bold text-[#0B1F3A]">{workspace.leadAuditorName || 'Lead auditor not assigned'}</p>
+          <p className="mt-1 text-xs text-slate-500">{workspace.auditorTeam?.length || 0} team member(s)</p>
         </div>
         <div className="flex flex-col gap-3 px-6 py-5">
           <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Workspace resources</p>
@@ -412,15 +437,14 @@ function WorkspaceSummary({ workspace, onEdit }) {
 
 function WorkspaceMetrics({ metrics }) {
   const items = [
-    ['Total Questions', metrics.total, 'slate'],
-    ['Not Started', metrics.notStarted, 'slate'],
-    ['In Progress', metrics.inProgress, 'blue'],
+    ['Total Key Questions', metrics.total, 'slate'],
+    ['Not Assessed', metrics.notAssessed, 'slate'],
+    ['OK', metrics.ok, 'green'],
+    ['OFI', metrics.ofi, 'blue'],
+    ['MINOR', metrics.minor, 'orange'],
+    ['MAJOR', metrics.major, 'red'],
+    ['Completion', `${metrics.completion}%`, 'blue'],
     ['Ready', metrics.ready, 'green'],
-    ['Needs Review', metrics.needsReview, 'orange'],
-    ['Auditor OK', metrics.ok, 'green'],
-    ['Auditor OFI', metrics.ofi, 'blue'],
-    ['Auditor Minor', metrics.minor, 'orange'],
-    ['Auditor Major', metrics.major, 'red'],
     ['Linked Evidence', metrics.evidence, 'blue'],
     ['Linked Documents', metrics.documents, 'slate'],
   ]
@@ -479,10 +503,10 @@ function QuestionRow({ question, isSelected, onSelect, onAuditorCheckChange, onS
             </select>
           </label>
           <label className="text-xs font-bold text-slate-500" onClick={(event) => event.stopPropagation()}>
-            Auditor Check
+            Result
             <select
               aria-label={`Auditor Check for ${question.auditQuestion}`}
-              value={question.auditorCheck || 'Not Checked'}
+              value={question.auditorCheck || 'Not Assessed'}
               onChange={(event) => onAuditorCheckChange(question.id, event.target.value)}
               className="mt-1.5 block rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100"
             >
@@ -574,7 +598,7 @@ function DocumentPocket({ question, workspaceId }) {
   )
 }
 
-function QuestionDetail({ question, onStatusChange, onAuditorCheckChange, onAuditorNotesChange, evidenceItems, workspaceId }) {
+function QuestionDetail({ question, onStatusChange, onAuditorCheckChange, onAuditorNotesChange, onAssessmentFieldChange, evidenceItems, workspaceId }) {
   if (!question) {
     return (
       <Card className="p-8">
@@ -592,14 +616,17 @@ function QuestionDetail({ question, onStatusChange, onAuditorCheckChange, onAudi
   }
 
   const fields = [
-    ['ISO Reference', question.standardCodes.join(', ') || '—'],
+    ['ISO Reference', Object.entries(question.isoClauses || {}).map(([standard, clause]) => `${standard}: ${clause}`).join('; ') || question.standardCodes.join(', ') || '—'],
     ['Theme / Domain', [question.themeCode, question.systemDomain].filter(Boolean).join(' · ') || '—'],
+    ['Question Section', question.section === 'CORE' ? 'Core Questions' : question.section === 'SPECIFIC' ? 'Function-Specific / Location Questions' : question.section || '—'],
+    ['Audit Type', question.auditType || '—'],
     ['Objective', question.objective || '—'],
     ['What to Verify', question.whatToVerify || '—'],
     ['Required Evidence', question.requiredEvidence],
     ['KPI Review', question.kpiReview || '—'],
     ['Risk Review', question.riskReview || '—'],
     ['Auditor Guideline', question.auditorGuideline || '—'],
+    ['Sampling Guide', question.samplingGuide || '—'],
     ['Applicable Function', question.applicableFunction || '—'],
     ['Reference SOP / TKO / TKI / Work Instruction', question.referenceSop || '—'],
     ['PIC', question.pic || 'Function Owner'],
@@ -630,11 +657,11 @@ function QuestionDetail({ question, onStatusChange, onAuditorCheckChange, onAudi
           </select>
         </div>
         <div className="grid gap-2 px-5 py-4 lg:grid-cols-[160px_1fr]">
-          <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Auditor Check</p>
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Assessment Result</p>
           <div>
             <select
               aria-label="Auditor Check"
-              value={question.auditorCheck || 'Not Checked'}
+              value={question.auditorCheck || 'Not Assessed'}
               onChange={(event) => onAuditorCheckChange(question.id, event.target.value)}
               className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-blue-100"
             >
@@ -654,6 +681,22 @@ function QuestionDetail({ question, onStatusChange, onAuditorCheckChange, onAudi
             className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100"
           />
         </div>
+        <div className="grid gap-2 px-5 py-4 lg:grid-cols-[160px_1fr]">
+          <label htmlFor="recommendation" className="text-xs font-bold uppercase tracking-wide text-slate-500">Recommendation / Follow-up</label>
+          <textarea id="recommendation" value={question.recommendation || ''} onChange={(event) => onAssessmentFieldChange(question.id, { recommendation: event.target.value })} rows={3} placeholder="Record recommendation or corrective action" className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100" />
+        </div>
+        <div className="grid gap-4 px-5 py-4 lg:grid-cols-[160px_1fr]">
+          <p className="text-xs font-bold uppercase tracking-wide text-slate-500">PIC &amp; Due Date</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <input aria-label="Assessment PIC" value={question.pic || ''} onChange={(event) => onAssessmentFieldChange(question.id, { pic: event.target.value })} placeholder="Person in charge" className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100" />
+            <input aria-label="Follow-up Due Date" type="date" value={question.dueDate || ''} onChange={(event) => onAssessmentFieldChange(question.id, { dueDate: event.target.value })} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100" />
+          </div>
+        </div>
+        <div className="grid gap-2 px-5 py-4 lg:grid-cols-[160px_1fr]">
+          <label htmlFor="auditee-response" className="text-xs font-bold uppercase tracking-wide text-slate-500">Auditee Response</label>
+          <textarea id="auditee-response" value={question.auditeeResponse || ''} onChange={(event) => onAssessmentFieldChange(question.id, { auditeeResponse: event.target.value })} rows={2} placeholder="Record response or follow-up information" className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:ring-4 focus:ring-blue-100" />
+        </div>
+        {question.assessmentUpdatedAt ? <div className="px-5 py-3 text-xs text-slate-500">Last assessment update: {formatWorkspaceDate(question.assessmentUpdatedAt)}</div> : null}
         <EvidencePocket question={question} items={evidenceItems} workspaceId={workspaceId} />
         <DocumentPocket question={question} workspaceId={workspaceId} />
       </div>
@@ -686,6 +729,7 @@ export default function AuditReadiness() {
   const [questionUpdates, setQuestionUpdates] = useState(
     () => initialWorkspace?.questionStates || initialWorkspace?.questionUpdates || {},
   )
+  const [backendWorkspaceQuestions, setBackendWorkspaceQuestions] = useState([])
   const [evidenceItems, setEvidenceItems] = useState(() => getEvidenceItems())
 
   useEffect(() => {
@@ -714,10 +758,15 @@ export default function AuditReadiness() {
         setSavedWorkspaces(items)
         if (requestedWorkspace) {
           setWorkspace(requestedWorkspace)
+          setBackendWorkspaceQuestions(backendQuestions)
           setQuestionUpdates(Object.fromEntries(backendQuestions.map((question) => [question.id, {
             status: question.status,
             auditorCheck: question.auditorCheck,
             auditorNotes: question.auditorNotes,
+            recommendation: question.recommendation,
+            pic: question.pic,
+            dueDate: question.dueDate,
+            auditeeResponse: question.auditeeResponse,
           }])))
           getApiWorkspaceEvidence(requestedWorkspace.id, backendQuestions)
             .then((backendEvidence) => { if (active) setEvidenceItems(backendEvidence) })
@@ -729,8 +778,9 @@ export default function AuditReadiness() {
   }, [location.state?.workspaceId])
 
   const hydratedQuestions = useMemo(
-    () => masterQuestions.map((question) => ({ ...question, ...questionUpdates[question.id] })),
-    [masterQuestions, questionUpdates],
+    () => (isBackendApiConfigured && workspace ? backendWorkspaceQuestions : masterQuestions)
+      .map((question) => ({ ...question, ...questionUpdates[question.id] })),
+    [backendWorkspaceQuestions, masterQuestions, questionUpdates, workspace],
   )
 
   const themeCodes = useMemo(
@@ -817,7 +867,18 @@ export default function AuditReadiness() {
     if (isBackendApiConfigured) {
       try {
         const saved = await updateApiWorkspace(workspace.id, { ...workspace, ...updates })
+        const refreshedQuestions = await getApiWorkspaceQuestions(workspace.id)
         setWorkspace(saved)
+        setBackendWorkspaceQuestions(refreshedQuestions)
+        setQuestionUpdates(Object.fromEntries(refreshedQuestions.map((question) => [question.id, {
+          status: question.status,
+          auditorCheck: question.auditorCheck,
+          auditorNotes: question.auditorNotes,
+          recommendation: question.recommendation,
+          pic: question.pic,
+          dueDate: question.dueDate,
+          auditeeResponse: question.auditeeResponse,
+        }])))
         setSavedWorkspaces((current) => current.map((item) => item.id === saved.id ? saved : item))
         setSelectedQuestion(null)
         setSelectedTheme('all-themes')
@@ -856,8 +917,13 @@ export default function AuditReadiness() {
           status: question.status,
           auditorCheck: question.auditorCheck,
           auditorNotes: question.auditorNotes,
+          recommendation: question.recommendation,
+          pic: question.pic,
+          dueDate: question.dueDate,
+          auditeeResponse: question.auditeeResponse,
         }]))
         setWorkspace(saved)
+        setBackendWorkspaceQuestions(backendQuestions)
         setEvidenceItems(backendEvidence)
         setQuestionUpdates(updates)
         setSelectedQuestion(null)
@@ -952,7 +1018,7 @@ export default function AuditReadiness() {
   }
 
   const activeMetrics = workspace
-    ? calculateWorkspaceMetrics({ ...workspace, questionStates: questionUpdates }, masterQuestions, evidenceItems)
+    ? calculateWorkspaceMetrics({ ...workspace, questionStates: questionUpdates }, hydratedQuestions, evidenceItems)
     : null
 
   return (
@@ -1067,7 +1133,7 @@ export default function AuditReadiness() {
                   </div>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4" aria-label="Theme Code">
-                  <button type="button" onClick={() => setSelectedTheme('all-themes')} className={`rounded-full border px-3 py-1.5 text-xs font-bold transition ${selectedTheme === 'all-themes' ? 'border-[#005BAC] bg-[#005BAC] text-white shadow-sm' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-[#005BAC]'}`}>All Themes</button>
+                  <button type="button" onClick={() => setSelectedTheme('all-themes')} className={`rounded-full border px-3 py-1.5 text-xs font-bold transition ${selectedTheme === 'all-themes' ? 'border-[#005BAC] bg-[#005BAC] text-white shadow-sm' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-[#005BAC]'}`}>All Functions</button>
                   {themeCodes.map((code) => (
                     <button key={code} type="button" onClick={() => setSelectedTheme(code)} className={`rounded-full border px-3 py-1.5 text-xs font-bold transition ${selectedTheme === code ? 'border-[#005BAC] bg-[#005BAC] text-white shadow-sm' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-[#005BAC]'}`}>{code}</button>
                   ))}
@@ -1075,21 +1141,31 @@ export default function AuditReadiness() {
               </div>
 
               <div className="max-h-[680px] overflow-y-auto nr-scrollbar">
-                {questions.map((question) => (
-                  <QuestionRow
-                    key={question.id}
-                    question={question}
-                    isSelected={selectedQuestion?.id === question.id}
-                    onSelect={setSelectedQuestion}
-                    onStatusChange={(id, value) => updateQuestion(id, { status: value })}
-                    onAuditorCheckChange={(id, value) => updateQuestion(id, { auditorCheck: value })}
-                    evidenceCount={evidenceItems.filter((item) => item.workspaceId === workspace.id && item.questionKey === (question.questionKey || question.id)).length}
-                  />
+                {questions.map((question, index) => (
+                  <div key={question.id}>
+                    {question.section && question.section !== questions[index - 1]?.section ? (
+                      <div className="border-b border-slate-200 bg-slate-100 px-5 py-3">
+                        <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#0B1F3A]">
+                          {question.section === 'CORE' ? 'Core Questions' : question.section === 'SPECIFIC' ? 'Function-Specific / Location Questions' : 'Legacy Questions'}
+                        </p>
+                      </div>
+                    ) : null}
+                    <QuestionRow
+                      question={question}
+                      isSelected={selectedQuestion?.id === question.id}
+                      onSelect={setSelectedQuestion}
+                      onStatusChange={(id, value) => updateQuestion(id, { status: value })}
+                      onAuditorCheckChange={(id, value) => updateQuestion(id, { auditorCheck: value })}
+                      evidenceCount={evidenceItems.filter((item) => item.workspaceId === workspace.id && item.questionKey === (question.questionKey || question.id)).length}
+                    />
+                  </div>
                 ))}
                 {!masterLoading && questions.length === 0 ? (
                   <div className="p-6 text-center">
-                    <p className="text-sm font-bold text-[#0B1F3A]">No audit master questions found.</p>
-                    <p className="mt-1 text-sm text-slate-500">Try another ISO standard or function.</p>
+                    <p className="text-sm font-bold text-[#0B1F3A]">No source key questions match this workspace.</p>
+                    <p className="mt-1 text-sm text-slate-500">
+                      The imported audit matrix does not contain key questions for this function and ISO scope. Edit the workspace to select a supported function or ISO standard.
+                    </p>
                   </div>
                 ) : null}
               </div>
@@ -1101,6 +1177,7 @@ export default function AuditReadiness() {
                 onStatusChange={(id, value) => updateQuestion(id, { status: value })}
                 onAuditorCheckChange={(id, value) => updateQuestion(id, { auditorCheck: value })}
                 onAuditorNotesChange={(id, value) => updateQuestion(id, { auditorNotes: value })}
+                onAssessmentFieldChange={updateQuestion}
                 evidenceItems={evidenceItems}
                 workspaceId={workspace.id}
               />

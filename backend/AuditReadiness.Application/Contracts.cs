@@ -6,6 +6,7 @@ public interface IAuditService
     Task<ThemeDto?> GetThemeAsync(string themeCode, CancellationToken cancellationToken);
     Task<PagedResult<QuestionDto>> GetQuestionsAsync(string? themeCode, string? function, string? isoStandard, string? search, int page, int pageSize, CancellationToken cancellationToken);
     Task<QuestionDto?> GetQuestionAsync(string questionKey, CancellationToken cancellationToken);
+    Task<IReadOnlyList<KeyQuestionDto>> GetKeyQuestionsAsync(string? function, string? location, string? section, string? isoStandard, CancellationToken cancellationToken);
     Task<IReadOnlyList<WorkspaceDto>> GetWorkspacesAsync(UserContext user, CancellationToken cancellationToken);
     Task<WorkspaceDto> CreateWorkspaceAsync(CreateWorkspaceRequest request, UserContext user, CancellationToken cancellationToken);
     Task<WorkspaceDto> GetWorkspaceAsync(Guid workspaceId, UserContext user, CancellationToken cancellationToken);

@@ -4,14 +4,28 @@ import { CheckCircle2, Mail } from 'lucide-react'
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Logo from '../components/layout/Logo.jsx'
 import Button from '../components/ui/Button.jsx'
+import { apiClient } from '../lib/apiClient.js'
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [developmentResetUrl, setDevelopmentResetUrl] = useState('')
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    setSubmitted(true)
+    setError('')
+    setLoading(true)
+    try {
+      const result = await apiClient.post('auth/forgot-password', { email: email.trim() })
+      setDevelopmentResetUrl(result.developmentResetUrl || '')
+      setSubmitted(true)
+    } catch (requestError) {
+      setError(requestError.message || 'Unable to prepare password reset instructions.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -26,12 +40,17 @@ export default function ForgotPassword() {
                 Reset your password
               </h1>
               <p className="mt-2 max-w-md text-sm leading-6 text-slate-600">
-                Enter your registered email address. This prototype will show a reset confirmation message.
+                Enter your registered email address and we will send you a secure password reset link.
               </p>
             </div>
 
             {!submitted ? (
               <form onSubmit={handleSubmit} className="mt-10 max-w-md space-y-5">
+                {error ? (
+                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {error}
+                  </div>
+                ) : null}
                 <label className="block">
                   <span className="text-sm font-semibold text-slate-700">Email</span>
                   <div className="mt-2 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 focus-within:ring-4 focus-within:ring-blue-100">
@@ -47,8 +66,8 @@ export default function ForgotPassword() {
                   </div>
                 </label>
 
-                <Button type="submit" className="w-full">
-                  Send Reset Instruction
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? 'Preparing reset link...' : 'Send Reset Instructions'}
                 </Button>
 
                 <p className="text-center text-sm text-slate-600">
@@ -62,12 +81,21 @@ export default function ForgotPassword() {
               <div className="mt-10 max-w-md rounded-2xl border border-emerald-100 bg-emerald-50 p-6">
                 <CheckCircle2 className="text-[#00A651]" size={34} />
                 <h2 className="mt-4 text-lg font-bold text-[#0B1F3A]">
-                  Reset instruction prepared
+                  Check your email
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  If this were connected to backend authentication, a password reset instruction would be sent to{' '}
+                  If an account exists for this address, password reset instructions were sent to{' '}
                   <span className="font-bold">{email}</span>.
                 </p>
+
+                {developmentResetUrl ? (
+                  <a
+                    href={developmentResetUrl}
+                    className="mt-5 inline-flex rounded-xl border border-emerald-200 bg-white px-4 py-2.5 text-sm font-bold text-[#005BAC]"
+                  >
+                    Open local development reset link
+                  </a>
+                ) : null}
 
                 <Link
                   to="/login"
@@ -80,7 +108,7 @@ export default function ForgotPassword() {
           </div>
 
           <p className="mt-10 text-xs leading-5 text-slate-500">
-            Password reset is simulated for prototype presentation.
+            Reset links are time-limited and can only be used once.
           </p>
         </div>
 

@@ -20,9 +20,18 @@ JWT_AUDIENCE=nr-audit-readiness-portal
 FRONTEND_URL=http://localhost:5173
 ASPNETCORE_URLS=http://0.0.0.0:5000
 APPLY_MIGRATIONS=false
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=sender@example.com
+SMTP_PASSWORD=replace-with-provider-app-password
+SMTP_FROM_EMAIL=sender@example.com
+SMTP_FROM_NAME=NR Audit Readiness Portal
+SMTP_USE_SSL=true
 ```
 
 `DATABASE_CONNECTION_STRING` also accepts a `postgres://` or `postgresql://` URL, including Railway's database URL. Never commit database credentials or the JWT signing key.
+
+SMTP is required to deliver password-reset links in production. For local Development without SMTP, the Forgot Password page displays a one-hour development reset link instead. Never commit the SMTP password; for Gmail use an App Password rather than the normal account password.
 
 ## Local commands
 
@@ -41,6 +50,8 @@ Create an account with `POST /api/v1/auth/register`, or use the web registration
 
 - `POST /api/v1/auth/register`
 - `POST /api/v1/auth/login`
+- `POST /api/v1/auth/forgot-password`
+- `POST /api/v1/auth/reset-password`
 - `GET|PUT /api/v1/auth/me`
 - `GET /api/v1/themes`
 - `GET /api/v1/questions`
@@ -67,6 +78,13 @@ FRONTEND_URL=https://nr-audit-readiness-portal.vercel.app
 ASPNETCORE_URLS=http://0.0.0.0:8080
 ASPNETCORE_ENVIRONMENT=Production
 APPLY_MIGRATIONS=true
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=<reset-email-sender>
+SMTP_PASSWORD=<email-provider-app-password>
+SMTP_FROM_EMAIL=<reset-email-sender>
+SMTP_FROM_NAME=NR Audit Readiness Portal
+SMTP_USE_SSL=true
 ```
 
 `APPLY_MIGRATIONS=true` applies pending EF Core migrations before the API starts. Use it for the current single-instance demo deployment. For a multi-instance production rollout, run migrations as a separate release job.

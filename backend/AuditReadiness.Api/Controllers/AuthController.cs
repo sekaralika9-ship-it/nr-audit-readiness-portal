@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 using AuditReadiness.Infrastructure;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuditReadiness.Api.Controllers;
 
 public sealed record LoginRequest([Required, EmailAddress] string Email, [Required] string Password);
+public sealed record ForgotPasswordRequest([Required, EmailAddress] string Email);
+public sealed record ForgotPasswordDto(string Message, string? DevelopmentResetUrl = null);
+public sealed record ResetPasswordRequest(
+    [Required, EmailAddress] string Email,
+    [Required] string Token,
+    [Required, MinLength(10)] string NewPassword);
 public sealed record RegisterRequest(
     [Required, EmailAddress] string Email,
     [Required, MinLength(10)] string Password,
@@ -23,8 +31,13 @@ public sealed record UpdateProfileRequest(
 public sealed class AuthController(
     UserManager<ApplicationUser> userManager,
     RoleManager<IdentityRole<Guid>> roleManager,
-    IJwtTokenService tokenService) : ControllerBase
+    IJwtTokenService tokenService,
+    IPasswordResetEmailSender passwordResetEmailSender,
+    IConfiguration configuration,
+    IWebHostEnvironment environment) : ControllerBase
 {
+    private const string ResetMessage = "If the email is registered, password reset instructions have been prepared.";
+
     [HttpPost("register"), AllowAnonymous]
     public async Task<ActionResult<ApiResponse<AuthTokenDto>>> Register(RegisterRequest request)
     {
@@ -66,6 +79,52 @@ public sealed class AuthController(
         return Ok(ApiResponse<AuthTokenDto>.Ok(await tokenService.CreateAsync(user)));
     }
 
+    [HttpPost("forgot-password"), AllowAnonymous]
+    public async Task<ActionResult<ApiResponse<ForgotPasswordDto>>> ForgotPassword(ForgotPasswordRequest request)
+    {
+        var user = await userManager.FindByEmailAsync(request.Email.Trim());
+        if (user is null || string.IsNullOrWhiteSpace(user.Email))
+            return Ok(ApiResponse<ForgotPasswordDto>.Ok(new ForgotPasswordDto(ResetMessage), ResetMessage));
+
+        var identityToken = await userManager.GeneratePasswordResetTokenAsync(user);
+        var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(identityToken));
+        var frontendUrl = (configuration["FRONTEND_URL"] ?? "http://localhost:5173").TrimEnd('/');
+        var resetUrl = $"{frontendUrl}/reset-password?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+        var sent = await passwordResetEmailSender.SendAsync(user.Email, user.FullName, resetUrl, HttpContext.RequestAborted);
+
+        var developmentUrl = !sent && (environment.IsDevelopment() || environment.IsEnvironment("Testing"))
+            ? resetUrl
+            : null;
+        return Ok(ApiResponse<ForgotPasswordDto>.Ok(new ForgotPasswordDto(ResetMessage, developmentUrl), ResetMessage));
+    }
+
+    [HttpPost("reset-password"), AllowAnonymous]
+    public async Task<ActionResult<ApiResponse<object>>> ResetPassword(ResetPasswordRequest request)
+    {
+        var user = await userManager.FindByEmailAsync(request.Email.Trim());
+        if (user is null) return InvalidResetToken();
+
+        string identityToken;
+        try
+        {
+            identityToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
+        }
+        catch (FormatException)
+        {
+            return InvalidResetToken();
+        }
+
+        var result = await userManager.ResetPasswordAsync(user, identityToken, request.NewPassword);
+        if (!result.Succeeded)
+            return ValidationProblem(new ValidationProblemDetails(new Dictionary<string, string[]>
+            {
+                ["resetPassword"] = result.Errors.Select(x => x.Description).ToArray()
+            }));
+
+        await userManager.ResetAccessFailedCountAsync(user);
+        return Ok(ApiResponse<object>.Ok(new { }, "Password reset successfully. You can now sign in."));
+    }
+
     [HttpGet("me"), Authorize]
     public async Task<ActionResult<ApiResponse<PortalUserDto>>> Me()
     {
@@ -96,4 +155,10 @@ public sealed class AuthController(
     }
 
     private static string? Clean(string? value) => string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+
+    private ActionResult<ApiResponse<object>> InvalidResetToken() => ValidationProblem(
+        new ValidationProblemDetails(new Dictionary<string, string[]>
+        {
+            ["resetPassword"] = ["The password reset link is invalid or has expired."]
+        }));
 }

@@ -30,4 +30,19 @@ public sealed class MasterDataController(IAuditService service) : ControllerBase
         var result = await service.GetQuestionAsync(questionKey, cancellationToken);
         return result is null ? Problem(statusCode: 404, title: "Question not found") : Ok(ApiResponse<QuestionDto>.Ok(result));
     }
+
+    [HttpGet("key-questions")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<KeyQuestionDto>>>> KeyQuestions(
+        [FromQuery(Name = "function")] string? functionName, [FromQuery] string? auditee, [FromQuery] string? location,
+        [FromQuery] string? category, [FromQuery] string? section, [FromQuery] string? isoStandard,
+        [FromQuery] string[]? isoStandards, [FromQuery] Guid? workspaceId, CancellationToken cancellationToken)
+    {
+        if (workspaceId.HasValue)
+        {
+            var workspaceQuestions = await service.GetWorkspaceQuestionsAsync(workspaceId.Value, User.ToUserContext(), cancellationToken);
+            return Ok(ApiResponse<IReadOnlyList<KeyQuestionDto>>.Ok(workspaceQuestions.Select(x => x.Question).ToList()));
+        }
+        var selectedIso = isoStandard ?? isoStandards?.FirstOrDefault();
+        return Ok(ApiResponse<IReadOnlyList<KeyQuestionDto>>.Ok(await service.GetKeyQuestionsAsync(functionName ?? auditee, location, section ?? category, selectedIso, cancellationToken)));
+    }
 }
